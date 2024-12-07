@@ -1,4 +1,4 @@
-import * as FakeData from "../utils/FakeData.js";
+import * as FakeData from "../utils/FakeData.js"
 
 // Load data function
 function loadData(){
@@ -6,6 +6,7 @@ function loadData(){
     var ev = FakeData.getDailyEventExamples().concat(FakeData.getOneTimeEventExamples());
     bodyEl.innerHTML += ev[0].buildHeadersHTML();
     for (let e of ev) {
+        console.log(`Loaded: ${e}`)
         bodyEl.appendChild(e.buildElement());
         bodyEl.innerHTML += "<br/>";
     }
@@ -57,5 +58,5 @@ logoutBtn.addEventListener('click', gotoLogin);
 themeToggleBtn.addEventListener('click', toggle);
 themeToggleBtnDark.addEventListener('click', toggle);
 
-// Call the loadData function to populate the page
+console.log("Loading Data")
 loadData();
