@@ -1,7 +1,0 @@
-img {
-    transition:transform 0.25s ease;
-}
-
-img:hover {
-    transform:scale(4);
-}

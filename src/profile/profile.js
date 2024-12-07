@@ -1,16 +1,13 @@
-import { WP_Event } from "../utils/DataClasses.js";
-import * as FakeData from "../utils/FakeData.js";
 
-// Load data function
-function loadData(){
-    var bodyEl = document.getElementById("app");
-    var ev = FakeData.getDailyEventExamples().concat(FakeData.getOneTimeEventExamples());
-    bodyEl.innerHTML += ev[0].buildHeadersHTML();
-    for (let e of ev) {
-        bodyEl.appendChild(e.buildElement());
-        bodyEl.innerHTML += "<br/>";
-    }
-}
+clickAction => function () {
+    const name = prompt('Enter your name:', 'John Doe');
+    const bio = prompt('Enter your bio:', 'Web Developer | Tech Enthusiast | Lifelong Learner');
+    const about = prompt('Enter about me text:', 'I am a passionate web developer...');
+
+    if (name) document.getElementById('name').textContent = name;
+    if (bio) document.getElementById('bio').textContent = bio;
+    if (about) document.getElementById('about').textContent = about;
+};
 
 // Toggle dark theme
 const toggle = () => document.documentElement.classList.toggle('dark');
@@ -58,5 +55,3 @@ logoutBtn.addEventListener('click', gotoLogin);
 themeToggleBtn.addEventListener('click', toggle);
 themeToggleBtnDark.addEventListener('click', toggle);
 
-// Call the loadData function to populate the page
-loadData();
