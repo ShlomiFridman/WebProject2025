@@ -53,6 +53,7 @@ export class WP_Event {
             <th class="border border-slate-600 ">Max Bookings</th>
             <th class="border border-slate-600 ">Days Opened</th>
             <th class="border border-slate-600 ">Event Type</th>
+            <th class="border border-slate-600 "></th>
         </tr>`;
         return headers
     }
@@ -108,6 +109,24 @@ export class Daily_Event extends WP_Event {
             <td class="openDays">${dayNames.toString()}</td>
             <td class="eventType">${this.type.toString()}</td>
         `;
+        if (this.id%3){
+            rowDiv.innerHTML += `
+                <td class="eventType">
+                    <button class="w-full bg-green-500 text-white p-3 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        Book Event
+                    <button>
+                </td>
+            `;
+        }
+        else{
+            rowDiv.innerHTML += `
+                <td class="eventType">
+                    <button class="w-full bg-red-500 text-white p-3 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        Cancel Booking
+                    <button>
+                </td>
+            `;
+        }
         return rowDiv;
     }
 }
@@ -128,6 +147,24 @@ export class OneTime_Event extends WP_Event {
             <td class="maxPossibleBookings">Only at date</td>
             <td class="maxPossibleBookings">Event</td>
         `;
+        if (this.id%3){
+            rowDiv.innerHTML += `
+                <td class="eventType">
+                    <button class="w-full bg-green-500 text-white p-3 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        Book Event
+                    <button>
+                </td>
+            `;
+        }
+        else{
+            rowDiv.innerHTML += `
+                <td class="eventType">
+                    <button class="w-full bg-red-500 text-white p-3 rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        Cancel Booking
+                    <button>
+                </td>
+            `;
+        }
         return rowDiv;
     }
 }

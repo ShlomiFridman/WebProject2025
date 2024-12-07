@@ -1,4 +1,3 @@
-import { WP_Event } from "../utils/DataClasses.js";
 import * as FakeData from "../utils/FakeData.js";
 
 // Load data function
