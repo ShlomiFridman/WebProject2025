@@ -17,3 +17,8 @@ const users = [
     return new Response(JSON.stringify(users), { status: 200 });
   }
   
+// TODO GET - login - params: username, password
+//		if invalid username or password return null or 4XX code (such as access denied)
+
+// TODO POST - register - params: user object
+//		if invalid data or username already exist, return 4XX code

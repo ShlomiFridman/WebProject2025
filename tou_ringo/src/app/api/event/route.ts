@@ -17,3 +17,12 @@ const users = [
     return new Response(JSON.stringify(users), { status: 200 });
   }
   
+// TODO GET - get events - params: username
+//		if the username is empty (or null) get all events
+//		else get the events created by the username
+
+// TODO POST - create event - params: event object
+
+// TODO PUT - update event - params: event id, event object
+
+// TODO DELETE - remove event - params: event id

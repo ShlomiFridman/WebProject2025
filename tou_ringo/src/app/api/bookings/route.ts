@@ -17,3 +17,8 @@ const users = [
     return new Response(JSON.stringify(users), { status: 200 });
   }
   
+// TODO GET - get bookings by user - params: username
+
+// TODO POST - create new booking - params: booking object
+
+// TODO DELETE - removes booking - params: booking id
