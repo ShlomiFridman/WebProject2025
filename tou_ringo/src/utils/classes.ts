@@ -4,7 +4,7 @@ export class Account{
     public username: string = "";
     public password: string = "";
 
-    public Account(username: string, password: string){
+    constructor(username: string, password: string){
         this.username = username;
         this.password = password;
     }
@@ -14,10 +14,10 @@ export class TR_Image {
     public img_id: number;
     public event_id: number;
     public title: string;
-    public data: Blob;
+    public data: Buffer;
     public img_type: string;
 
-    constructor(img_id: number, event_id: number, title: string, data: Blob, img_type: string) {
+    constructor(img_id: number, event_id: number, title: string, data: Buffer, img_type: string) {
         this.img_id = img_id;
         this.event_id = event_id;
         this.title = title;

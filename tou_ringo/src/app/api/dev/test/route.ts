@@ -1,17 +1,13 @@
 
+import { accountExamples } from '@/utils/examplesData';
 import { NextResponse } from 'next/server';
-// import { createCollections } from '../dev_module';
 
-export async function POST() {
+export async function GET() {
     try {
-      
-      // await createCollections();
-
-
-
-      // Return a success message with inserted data
+      console.log("GET test");
       return NextResponse.json({
-        message: 'Collections created'
+        message: 'TEST',
+        accounts: accountExamples
       });
     } catch (error) {
       console.error('Error creating collections in MongoDB:', error);
