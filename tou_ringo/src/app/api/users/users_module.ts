@@ -1,5 +1,0 @@
-
-
-// TODO login
-
-// TODO register
