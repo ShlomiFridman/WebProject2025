@@ -1,10 +1,9 @@
-import { accountExamples, bookingExamples, eventExamples, imageExamples, reviewExamples } from "@/utils/examplesData";
+import { accountExamples, bookingExamples, eventExamples, reviewExamples } from "@/utils/examplesData";
 import * as Models from "@/db_utils/collectionModels";
 
 export async function createExamples() {
     const results = await Promise.allSettled([
         Models.AccountModel.insertMany(accountExamples),
-        // Models.TR_ImageModel.insertMany(imageExamples),
         Models.TR_EventModel.insertMany(eventExamples),
         Models.BookingModel.insertMany(bookingExamples),
         Models.ReviewModel.insertMany(reviewExamples),

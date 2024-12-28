@@ -11,19 +11,23 @@ export class Account{
 }
 
 export class TR_Image {
-    public img_id: number;
-    public event_id: number;
     public title: string;
     public data: Buffer;
     public img_type: string;
+    public img_src;
 
-    constructor(img_id: number, event_id: number, title: string, data: Buffer, img_type: string) {
-        this.img_id = img_id;
-        this.event_id = event_id;
+    constructor(title: string, data: Buffer, img_type: string) {
         this.title = title;
         this.data = data;
         this.img_type = img_type;
+        this.img_src = this.bufferToSrc();
     }
+
+    private bufferToSrc():string {
+        const base64Data = this.data.toString('base64');
+        return `data:image/${this.img_type};base64,${base64Data}`;
+    }
+    
 }
 
 export class TR_Event {

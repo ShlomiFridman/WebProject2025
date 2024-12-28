@@ -23,7 +23,7 @@ const imagesPromises = imageNames.map(async (name, index) => {
     const imagePath = path.join(process.cwd(), 'public', 'event_images', `${simpleName}.${extension}`); // Assuming images are JPG files
     const imageData = await fs.promises.readFile(imagePath);
     // const blob = new Blob([imageData], {type: `image/${extension}`});
-    return new TR_Image(index + 1, index + 101, capitalized, imageData, extension);
+    return new TR_Image(capitalized, imageData, extension);
   });
 
 // Account examples
@@ -46,7 +46,7 @@ export const accountExamples1 = ()=> {
 }
 
 // TR_Image examples
-export const imageExamples = await Promise.all(imagesPromises);
+const imageExamples = await Promise.all(imagesPromises);
 // export const imageExamples = [
 //     new TR_Image(1, 101, "Image1", new Blob(["data1"]), "jpeg"),
 //     new TR_Image(2, 102, "Image2", new Blob(["data2"]), "png"),

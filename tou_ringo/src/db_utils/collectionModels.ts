@@ -14,14 +14,11 @@ export const AccountModel = db.models.Account || db.model('Account', accountSche
 
 // TR_Image Schemay
 const trImageSchema = new Schema({
-    img_id: { type: Number, required: true, unique: true },
-    event_id: { type: Number, required: true },
     title: { type: String, required: true },
     data: { type: Buffer, required: true }, // Blob data is stored as Buffer
     img_type: { type: String, required: true },
 });
-trImageSchema.index({ event_id: 1 });
-export const TR_ImageModel = db.models.TR_Image || db.model('TR_Image', trImageSchema);
+// export const TR_ImageModel = db.models.TR_Image || db.model('TR_Image', trImageSchema);
 
 // TR_Event Schema
 const trEventSchema = new Schema({
