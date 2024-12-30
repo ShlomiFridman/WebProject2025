@@ -1,6 +1,7 @@
 
 import { NextResponse } from 'next/server';
 import { createExamples } from '../dev_module';
+import { bookingExamples } from '@/utils/examplesData';
 
 export async function POST() {
     try {
@@ -20,7 +21,8 @@ export async function POST() {
       try {
         console.log("GET test");
         return NextResponse.json({
-          message: 'TEST'
+          message: 'TEST',
+          Bookings: bookingExamples
         });
       } catch (error) {
         console.error('Error creating collections in MongoDB:', error);
