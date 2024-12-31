@@ -1,0 +1,2 @@
+email: webProject2025@hotmail.com
+pass: web2025project
