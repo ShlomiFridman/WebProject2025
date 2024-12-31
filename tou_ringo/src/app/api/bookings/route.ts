@@ -17,16 +17,9 @@ export async function GET(request: Request) {
         }
 
         const bookings = await getBookingsByUser(username);
-        if (!bookings || bookings.length === 0) {
-            return NextResponse.json(
-                { message: "No bookings found for the user" },
-                { status: 404 } // Not Found
-            );
-        }
-
-        return NextResponse.json(bookings, { status: 200 }); // Success
+        return NextResponse.json({bookings: bookings}, { status: 200 }); // Success
     } catch (err) {
-        console.error("GET - Error fetching bookings:", err);
+        console.error("Bookings GET - Error fetching bookings:", err);
         return NextResponse.json(
             { message: "Error occurred while fetching bookings" },
             { status: 500 } // Internal Server Error
@@ -40,16 +33,10 @@ export async function POST(request: Request) {
         const reqBody = await request.json();
 
         // Normalize data
-        const booking = {
-          booking_id: parseInt(reqBody.booking_id?.$numberInt || reqBody.booking_id),
-          creator_username: reqBody.creator_username,
-          event_id: parseInt(reqBody.event_id?.$numberInt || reqBody.event_id),
-          date: reqBody.date,
-          amount: parseInt(reqBody.amount?.$numberInt || reqBody.amount),
-        };
+        const booking = reqBody.booking;
 
         // Validate the normalized booking data
-        if (!booking.booking_id || !booking.creator_username || !booking.event_id || !booking.date || !booking.amount) {
+        if (!booking) {
           return NextResponse.json(
               { message: "Invalid booking data" },
               { status: 400 } // Bad Request
@@ -61,9 +48,9 @@ export async function POST(request: Request) {
 
       console.log("Booking successfully created:", createdBooking);
 
-      return NextResponse.json(createdBooking, { status: 201 }); // Created
+      return NextResponse.json({booking: createdBooking}, { status: 201 }); // Created
   } catch (err) {
-      console.error("POST - Error creating a new booking:", err);
+      console.error("Bookings POST - Error creating a new booking:", err);
       return NextResponse.json(
           { message: "Error occurred while creating the booking" },
           { status: 500 } // Internal Server Error
@@ -78,7 +65,7 @@ export async function DELETE(request: Request) {
         const booking_id_string = searchParams.get('booking_id');
         const booking_id = Number(booking_id_string);
 
-        if (!booking_id) {
+        if (!booking_id_string) {
             return NextResponse.json(
                 { message: "Booking ID is missing" },
                 { status: 400 } // Bad Request

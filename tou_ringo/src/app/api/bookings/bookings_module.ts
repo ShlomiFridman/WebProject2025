@@ -4,7 +4,7 @@ import { Booking } from "@/utils/classes";
 // Get all bookings by a specific user
 export async function getBookingsByUser(creator_username: String) {
     try {
-        const bookings = await BookingModel.find({ creator_username });
+        const bookings = await BookingModel.find({ creator_username: creator_username });
         return bookings;
     } catch (err) {
         console.error(`getBookingsByUser - Error fetching bookings for creator_username=${creator_username}:`, err);
