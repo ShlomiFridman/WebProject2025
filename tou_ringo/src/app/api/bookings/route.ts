@@ -17,7 +17,9 @@ export async function GET(request: Request) {
         }
 
         const bookings = await getBookingsByUser(username);
-        return NextResponse.json({bookings: bookings}, { status: 200 }); // Success
+        return NextResponse.json(
+            {result: bookings}, 
+            { status: 200 }); // Success
     } catch (err) {
         console.error("Bookings GET - Error fetching bookings:", err);
         return NextResponse.json(
@@ -48,7 +50,9 @@ export async function POST(request: Request) {
 
       console.log("Booking successfully created:", createdBooking);
 
-      return NextResponse.json({booking: createdBooking}, { status: 201 }); // Created
+      return NextResponse.json(
+        {result: createdBooking}, 
+        {status: 201}); // Created
   } catch (err) {
       console.error("Bookings POST - Error creating a new booking:", err);
       return NextResponse.json(
@@ -80,7 +84,9 @@ export async function DELETE(request: Request) {
             );
         }
 
-        return NextResponse.json({ message: "Booking deleted successfully" }, { status: 200 }); // Success
+        return NextResponse.json(
+            { message: "Booking deleted successfully" }, 
+            { status: 200 }); // Success
     } catch (err) {
         console.error("DELETE - Error deleting booking:", err);
         return NextResponse.json(

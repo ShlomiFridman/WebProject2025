@@ -20,7 +20,9 @@ export async function GET(request: Request){
                 {status: 401} // Unauthorized
             );
         }
-        return NextResponse.json({}, {status: 200})
+        return NextResponse.json(
+            {},
+            {status: 200})
     } catch (err){
         return NextResponse.json({
             message: "Error occured during login process"
@@ -41,7 +43,7 @@ export async function POST(request: Request){
             );
         }
         return NextResponse.json({
-            account: loggedAccount
+            result: loggedAccount
         }, {status: 200})
     } catch (err){
         return NextResponse.json({

@@ -7,7 +7,7 @@ export async function GET() {
       console.log("GET test");
       return NextResponse.json({
         message: 'TEST',
-        accounts: accountExamples
+        result: accountExamples
       });
     } catch (error) {
       console.error('Error creating collections in MongoDB:', error);

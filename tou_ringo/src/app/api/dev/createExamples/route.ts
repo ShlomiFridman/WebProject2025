@@ -22,7 +22,7 @@ export async function POST() {
         console.log("GET test");
         return NextResponse.json({
           message: 'TEST',
-          Bookings: bookingExamples
+          result: bookingExamples
         });
       } catch (error) {
         console.error('Error creating collections in MongoDB:', error);
