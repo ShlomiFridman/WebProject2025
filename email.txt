@@ -1,2 +1,11 @@
 email: webProject2025@hotmail.com
 pass: web2025project
+
+mongoDB atlas
+email: webProject2025@hotmail.com
+pass: pass1web
+
+db user
+username: webproject2025
+pass: tW0Nzw81mbiOGMv6
+

@@ -23,7 +23,7 @@ export class TR_Image {
         this.img_src = this.bufferToSrc();
     }
 
-    private bufferToSrc():string {
+    bufferToSrc():string {
         const base64Data = this.data.toString('base64');
         return `data:image/${this.img_type};base64,${base64Data}`;
     }

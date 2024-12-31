@@ -2,14 +2,14 @@ import { AccountModel } from "@/db_utils/collectionModels";
 import { Account } from "@/utils/classes";
 
 // TODO login
-export async function verifyAccount(account: Account){
+export async function verifyAccount(username: string, password: string){
     try {
-        const exists = await AccountModel.exists({ username: account.username, password: account.password });
+        const exists = await AccountModel.exists({ username: username, password: password});
         return exists;
       } catch (err) {
-        console.error("verifyAccount - error for account: ", account);
+        console.error(`verifyAccount - error for account: { username=${username} , pass=${password}}`);
         console.error('verifyAccount - Error checking if account exist:', err);
-        return 500;
+        throw err;
       }
 }
 
@@ -25,7 +25,7 @@ export async function registerAccount(newAccount: Account){
             return 422;
           } else {
             console.error('Registered - Other error:', err);
-            return 500;
+            throw err;
           }
         
     }

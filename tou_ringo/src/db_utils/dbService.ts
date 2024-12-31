@@ -4,7 +4,7 @@ class DB_Service {
   private static instance: DB_Service | null = null;
   private connection: Connection | null = null;
 
-  private uri: string = process.env.MONGODB_URI || "mongodb+srv://shlomiFridman:tou_ringo@cluster0.70fsz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+  private uri: string = process.env.MONGODB_URI || "mongodb+srv://webproject2025:tW0Nzw81mbiOGMv6@touringo.2iyin.mongodb.net/?retryWrites=true&w=majority&appName=touRingo";
   private dbName: string = process.env.MONGODB_DB_NAME || "tou_ringo";
 
   private constructor() {

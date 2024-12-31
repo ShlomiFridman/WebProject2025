@@ -1,25 +1,51 @@
-// src/app/api/login/route.ts
+import { NextResponse } from 'next/server';
+import { verifyAccount, registerAccount } from './users_module';
 
-// for testing
-// Hardcoded users (you can replace this with actual database logic)
-// const users = [
-//     { id: 1, name: 'John Doe' },
-//     { id: 2, name: 'Jane Doe' },
-//     { id: 3, name: 'Alice Smith' },
-//   ];
-  
-//   // Handle GET request (login + fetch users)
-//   export async function GET(req: Request) {
-//     // Get username and password from query parameters
-//     const url = new URL(req.url);
-  
-  
-//     // If authenticated, return the list of users
-//     return new Response(JSON.stringify(users), { status: 200 });
-//   }
-  
-// TODO GET - login - params: username, password
-//		if invalid username or password return null or 4XX code (such as access denied)
+export async function GET(request: Request){
+    try{
+        const { searchParams } = new URL(request.url);
+        const username = searchParams.get("username")
+        const pass = searchParams.get("password")
+        if (!username || !pass){
+            return NextResponse.json(
+                {message: "Username or password are missing"},
+                {status: 400} // Bad Request
+            )
+        }
+        const loggedAccount = await verifyAccount(username, pass);
+        if (loggedAccount == null){
+            return NextResponse.json({
+                message:"Username or password aren't correct"
+            },
+                {status: 401} // Unauthorized
+            );
+        }
+        return NextResponse.json({}, {status: 200})
+    } catch (err){
+        return NextResponse.json({
+            message: "Error occured during login process"
+        }, {status: 500})
+    }
+}
 
-// TODO POST - register - params: user object
-//		if invalid data or username already exist, return 4XX code
+export async function POST(request: Request){
+    try{
+        const reqBody = await request.json();
+        const account = reqBody.account;
+        const loggedAccount = await registerAccount(account);
+        if (loggedAccount == 422){
+            return NextResponse.json({
+                message:"username already taken"
+            },
+                {status: 422 } // Not Acceptable
+            );
+        }
+        return NextResponse.json({
+            account: loggedAccount
+        }, {status: 200})
+    } catch (err){
+        return NextResponse.json({
+            message: "Error occured during register process"
+        }, {status: 500})
+    }
+}
