@@ -7,7 +7,7 @@ export async function verifyAccount(username: string, password: string){
         const exists = await AccountModel.exists({ username: username, password: password});
         return exists;
       } catch (err) {
-        console.error(`verifyAccount - error for account: { username=${username} , pass=${password}}`);
+        console.error(`verifyAccount - error for account: username=${username}, `);
         console.error('verifyAccount - Error checking if account exist:', err);
         throw err;
       }
