@@ -1,7 +1,7 @@
 // src/app/api/login/route.ts
   
 import { TR_Event } from "@/utils/classes";
-import { getAllEvents, getEventsByCreator } from "./event_module";
+import { getAllEvents, getEventsByCreator } from "./events_module";
 import { NextResponse } from "next/server";
 
 // TODO GET - get events - params: username

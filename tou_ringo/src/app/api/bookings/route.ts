@@ -80,7 +80,7 @@ export async function DELETE(request: Request) {
         if (!result) {
             return NextResponse.json(
                 { message: "Booking not found or already deleted" },
-                { status: 404 } // Not Found
+                { status: 400 } // Not Found
             );
         }
 

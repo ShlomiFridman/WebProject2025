@@ -35,7 +35,8 @@ const trEventSchema = new Schema({
     town: { type: String, required: true },
     address: { type: String, required: true },
     openDays: { type: [Boolean], required: true },
-    eventType: { type: String, required: true }
+    eventType: { type: String, required: true },
+    isActive: { type: Boolean, default: true }
 });
 trEventSchema.index({ creator_username: 1 });
 export const TR_EventModel = db.models.TR_Event || db.model('TR_Event', trEventSchema);
@@ -58,7 +59,8 @@ const bookingSchema = new Schema({
     creator_username: { type: String, required: true },
     event_id: { type: Number, required: true },
     date: { type: String, required: true }, // Date in 'YYYY-MM-DD' format
-    amount: { type: Number, required: true }
+    amount: { type: Number, required: true },
+    isActive: { type: Boolean, default: true }
 });
 bookingSchema.index({ creator_username: 1 });
 bookingSchema.index({ event_id: 1 });

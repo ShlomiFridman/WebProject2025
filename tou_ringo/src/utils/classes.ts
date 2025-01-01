@@ -45,6 +45,7 @@ export class TR_Event {
     public address: string;
     public openDays: boolean[]; // Array of booleans for each day of the week (7 days)
     public eventType: string; // Type of event
+    public isActive: boolean;
 
     constructor(
         event_id: number,
@@ -61,6 +62,7 @@ export class TR_Event {
         address: string,
         openDays: boolean[],
         eventType: string,
+        isActive: boolean = true
     ) {
         this.event_id = event_id;
         this.name = name;
@@ -76,6 +78,7 @@ export class TR_Event {
         this.address = address;
         this.openDays = openDays;
         this.eventType = eventType;
+        this.isActive = isActive
     }
 }
 
@@ -106,18 +109,21 @@ export class Booking {
     public event_id: number;
     public date: string; // Date of booking in 'YYYY-MM-DD' format
     public amount: number; // Amount of the booking
+    public isActive: boolean;
 
     constructor(
         booking_id: number,
         creator_username: string,
         event_id: number,
         date: string,
-        amount: number
+        amount: number,
+        isActive: boolean = true
     ) {
         this.booking_id = booking_id;
         this.creator_username = creator_username;
         this.event_id = event_id;
         this.date = date;
         this.amount = amount;
+        this.isActive = isActive;
     }
 }
