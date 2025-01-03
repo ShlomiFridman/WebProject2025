@@ -1,9 +1,7 @@
-// src/app/api/login/route.ts
-
 import { NextResponse } from 'next/server';
 import { getBookingsByUser, postNewBooking, deleteBookingById } from './bookings_module';
 
-// GET - Fetch bookings by username
+// get bookings by username - url-params: username
 export async function GET(request: Request) {
     try {
         const { searchParams } = new URL(request.url);
@@ -29,7 +27,7 @@ export async function GET(request: Request) {
     }
 }
 
-// POST - Create a new booking
+// create new booking - body-params: booking (type: Booking)
 export async function POST(request: Request) {
     try {
         const reqBody = await request.json();
@@ -62,7 +60,7 @@ export async function POST(request: Request) {
   }
 }
 
-// DELETE - Remove a booking by ID
+// remove booking by it's booking_id - url-params: booking_id
 export async function DELETE(request: Request) {
     try {
         const { searchParams } = new URL(request.url);

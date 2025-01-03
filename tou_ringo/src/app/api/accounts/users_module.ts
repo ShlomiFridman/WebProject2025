@@ -16,7 +16,7 @@ export async function verifyAccount(username: string, password: string){
 // TODO register
 export async function registerAccount(newAccount: Account){
     try{
-        const savedAccount = await AccountModel.create(newAccount);
+        const savedAccount = await AccountModel.create(newAccount) as Account;
         console.log(`Registered account: ${savedAccount}`)
         return savedAccount;
     } catch (err: any){

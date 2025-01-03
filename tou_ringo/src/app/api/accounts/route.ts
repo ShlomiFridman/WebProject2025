@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { verifyAccount, registerAccount } from './users_module';
 
+// check login - url-params: username, password
+// TODO solve password protection, currently it is through URL which is bad
 export async function GET(request: Request){
     try{
         const { searchParams } = new URL(request.url);
@@ -30,6 +32,7 @@ export async function GET(request: Request){
     }
 }
 
+// register user - body-params: account (type: Account)
 export async function POST(request: Request){
     try{
         const reqBody = await request.json();
