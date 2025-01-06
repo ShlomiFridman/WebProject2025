@@ -2,7 +2,8 @@ import { NextResponse } from 'next/server';
 import { verifyAccount, registerAccount } from './users_module';
 
 // check login - url-params: username, password
-// TODO solve password protection, currently it is through URL which is bad
+// TODO solve password protection, currently it is through URL which is bad 
+// TODO use HTTPS format to send information in client side, POST
 export async function GET(request: Request){
     try{
         const { searchParams } = new URL(request.url);
