@@ -127,3 +127,21 @@ export class Booking {
         this.isActive = isActive;
     }
 }
+
+export class TR_Alert{
+
+    public alert_id: number;
+    public username: string;
+    public msg: string;
+    public createdAt: Date;
+    public wasRead: boolean;
+    
+    constructor(alert_id: number, username: string, msg: string, createdAt:Date, wasRead: boolean = false) {
+        this.alert_id = alert_id;
+        this.username = username;
+        this.msg = msg;
+        this.createdAt = date;
+        this.wasRead = wasRead;
+    }
+
+}

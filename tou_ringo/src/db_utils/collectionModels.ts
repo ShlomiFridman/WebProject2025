@@ -66,3 +66,27 @@ bookingSchema.index({ creator_username: 1 });
 bookingSchema.index({ event_id: 1 });
 
 export const BookingModel = db.models.Booking || db.model('Booking', bookingSchema);
+
+const TRAlertSchema = new mongoose.Schema({
+    alert_id: {
+        type: Number,
+        required: true,
+        unique: true,
+    },
+    username: {
+        type: String,
+        required: true,
+    },
+    msg: {
+        type: String,
+        required: true,
+    },
+    wasRead: {
+        type: Boolean,
+        default: false,
+    },
+}, {
+    timestamps: true // Adds createdAt and updatedAt fields
+});
+
+const TR_AlertModel = db.models.TR_Alert || mongoose.model('TR_Alert', TRAlertSchema);
