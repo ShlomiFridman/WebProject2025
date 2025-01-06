@@ -89,4 +89,4 @@ const TRAlertSchema = new mongoose.Schema({
     timestamps: true // Adds createdAt and updatedAt fields
 });
 
-const TR_AlertModel = db.models.TR_Alert || mongoose.model('TR_Alert', TRAlertSchema);
+export const TR_AlertModel = db.models.TR_Alert || mongoose.model('TR_Alert', TRAlertSchema);

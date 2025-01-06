@@ -5,6 +5,8 @@ const Header: React.FC = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+  // TODO add link to alerts
+
   return (
     <div className="max-w-[1000px] w-full mx-auto relative">
       <div className="bg-blue-400 dark:bg-blue-500 p-4 flex justify-between">

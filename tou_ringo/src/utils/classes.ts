@@ -140,7 +140,7 @@ export class TR_Alert{
         this.alert_id = alert_id;
         this.username = username;
         this.msg = msg;
-        this.createdAt = date;
+        this.createdAt = createdAt;
         this.wasRead = wasRead;
     }
 
