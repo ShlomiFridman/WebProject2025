@@ -1,6 +1,6 @@
 import path from "path";
 import {Account, TR_Image, TR_Event, Review, Booking} from "./classes";
-const fs = require('fs');
+import fs from 'fs';
 // import {fetchImageAsBlob} from "@/utils/utils";
 
 
@@ -17,7 +17,7 @@ const imageNames = [
     "workshop.jpg"
 ];
 
-const imagesPromises = imageNames.map(async (name, index) => {
+const imagesPromises = imageNames.map(async name => {
     const [simpleName, extension] = name.split('.');
     const capitalized = simpleName.charAt(0).toUpperCase() + simpleName.slice(1);
     const imagePath = path.join(process.cwd(), 'public', 'event_images', `${simpleName}.${extension}`); // Assuming images are JPG files

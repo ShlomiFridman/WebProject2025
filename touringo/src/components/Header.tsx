@@ -1,5 +1,5 @@
 import React, { useState, useEffect  } from "react";
-import Head from "next/head";
+// import Head from "next/head";
 import Link from "next/link";
 
 export default function Header({ title }: { title: string }) {
@@ -10,7 +10,7 @@ export default function Header({ title }: { title: string }) {
     setIsClient(true); // Ensures this is run only on the client
   }, []);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  // const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   if (!isClient) {
     return null; // Prevents rendering client-specific content on the server

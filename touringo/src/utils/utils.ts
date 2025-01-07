@@ -4,8 +4,6 @@
 //       // Fetch the image from the public folder
 //       const response = await fetch(path);
 
-import path from "path";
-
   
 //       // Check if the response is ok
 //       if (!response.ok) {

@@ -27,6 +27,7 @@ export async function GET(request: Request){
             {},
             {status: 200})
     } catch (err){
+        console.error('Login GET - Other error:', err);
         return NextResponse.json({
             message: "Error occured during login process"
         }, {status: 500})
@@ -50,6 +51,7 @@ export async function POST(request: Request){
             result: loggedAccount
         }, {status: 200})
     } catch (err){
+        console.error('Register post - Other error:', err);
         return NextResponse.json({
             message: "Error occured during register process"
         }, {status: 500})

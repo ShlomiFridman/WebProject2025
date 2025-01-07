@@ -2,7 +2,7 @@ import { BookingModel} from "@/db_utils/collectionModels";
 import { Booking } from "@/utils/classes";
 
 // Get all bookings by a specific user
-export async function getBookingsByUser(creator_username: String) {
+export async function getBookingsByUser(creator_username: string) {
     try {
         const bookings = await BookingModel.find(
             { creator_username: creator_username, isActive: true }
