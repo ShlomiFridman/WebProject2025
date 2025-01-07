@@ -3,7 +3,7 @@ import React, { useState, useEffect  } from "react";
 import Link from "next/link";
 
 export default function Header({ title }: { title: string }) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
