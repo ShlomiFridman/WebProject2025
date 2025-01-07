@@ -1,78 +1,159 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
+import Head from "next/head";
+import Link from "next/link";
 
-const Header: React.FC = () => {
+export default function Header({ title }: { title: string }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true); // Ensures this is run only on the client
+  }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  if (!isClient) {
+    return null; // Prevents rendering client-specific content on the server
+  }
 
   // TODO add link to alerts
 
   return (
-    <div className="max-w-[1000px] w-full mx-auto relative">
-      <div className="bg-blue-400 dark:bg-blue-500 p-4 flex justify-between">
-        {/* Mobile Menu Button */}
-        <button className="block sm:hidden" id="menuButton" onClick={toggleMenu}>
-          <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 448 512">
-            <path
-              fill="currentColor"
-              d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"
-            />
-          </svg>
-        </button>
+    <nav className="w-full bg-blue-300 p-6 flex justify-between gap-2">
+          <div className="flex justify-start gap-3">
+            <Link
+              href="/"
+              className={
+                "text-blue-800 font-bold hover:underline px-2 py-1 rounded " +
+                (title === "Attractions" ? "bg-white" : "")
+              }
+            >
+              Attractions
+            </Link>
+            <Link
+              href="/bookings"
+              className={
+                "text-blue-800 font-bold hover:underline px-2 py-1 rounded " +
+                (title === "Bookings" ? "bg-white" : "")
+              }
+            >
+              Bookings
+            </Link>
+            <Link
+              href="/about"
+              className={
+                "text-blue-800 font-bold hover:underline px-2 py-1 rounded " +
+                (title === "About" ? "bg-white" : "")
+              }
+            >
+              About
+            </Link>
+          </div>
+          <div className="justify-end gap-4 hidden sm:flex">
 
-        {/* Dropdown Menu */}
-        <div
-          className={`absolute top-[56px] left-0 bg-blue-300 p-3 w-full z-10 ${
-            isMenuOpen ? "block" : "hidden"
-          }`}
-          id="ddMenu"
+
+      {/* Alert Icon */}
+<div
+  onClick={() => alert('Alert triggered!')}
+  style={{
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: "5px",
+    cursor: "pointer",
+    fontSize: "16px",
+    fontFamily: "Arial, sans-serif",
+    transition: "background-color 0.3s",
+  }}
+>
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+    style={{ marginRight: "8px", width: "20px", height: "20px" }}
+  >
+    <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm0 20.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM13 14h-2V6h2v8z"></path>
+  </svg>
+</div>      
+      
+      {/* Light Theme Button */}
+      <button className="dark:hidden block" id="themeToggleBtn" aria-label="Toggle Theme">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="w-6 h-6"
+          aria-hidden="true"
         >
-          <button className="block py-1 px-2" id="home2Btn">TouRingo</button>
-          <button className="block py-1 px-2" id="profile2Btn">Profile</button>
-          <button className="block py-1 px-2" id="logout2Btn">Log out</button>
-        </div>
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M17.715 15.15A6.5 6.5 0 0 1 9 6.035C6.106 6.922 4 9.645 4 12.867c0 3.94 3.153 7.136 7.042 7.136 3.101 0 5.734-2.032 6.673-4.853Z"
+            className="fill-transparent"
+          ></path>
+          <path
+            d="m17.715 15.15.95.316a1 1 0 0 0-1.445-1.185l.495.869ZM9 6.035l.846.534a1 1 0 0 0-1.14-1.49L9 6.035Zm8.221 8.246a5.47 5.47 0 0 1-2.72.718v2a7.47 7.47 0 0 0 3.71-.98l-.99-1.738Zm-2.72.718A5.5 5.5 0 0 1 9 9.5H7a7.5 7.5 0 0 0 7.5 7.5v-2ZM9 9.5c0-1.079.31-2.082.845-2.93L8.153 5.5A7.47 7.47 0 0 0 7 9.5h2Zm-4 3.368C5 10.089 6.815 7.75 9.292 6.99L8.706 5.08C5.397 6.094 3 9.201 3 12.867h2Zm6.042 6.136C7.718 19.003 5 16.268 5 12.867H3c0 4.48 3.588 8.136 8.042 8.136v-2Zm5.725-4.17c-.81 2.433-3.074 4.17-5.725 4.17v2c3.552 0 6.553-2.327 7.622-5.537l-1.897-.632Z"
+            className="fill-slate-800 dark:fill-slate-800"
+          ></path>
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M17 3a1 1 0 0 1 1 1 2 2 0 0 0 2 2 1 1 0 1 1 0 2 2 2 0 0 0-2 2 1 1 0 1 1-2 0 2 2 0 0 0-2-2 1 1 0 1 1 0-2 2 2 0 0 0 2-2 1 1 0 0 1 1-1Z"
+            className="fill-slate-800 dark:fill-slate-800"
+          ></path>
+        </svg>
+      </button>
 
-        {/* Desktop Menu */}
-        <div className="justify-start gap-4 hidden sm:flex">
-          <button id="homeBtn">TouRingo</button>
-          <button id="profileBtn">Profile</button>
-          <button id="logoutBtn">Log out</button>
-        </div>
+      {/* Dark Theme Button */}
+      <button className="hidden dark:block" id="themeToggleBtnDark" aria-label="Toggle Theme">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="w-6 h-6"
+          aria-hidden="true"
+        >
+          <path
+            d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+            className="stroke-slate-100 dark:stroke-slate-100"
+          ></path>
+          <path
+            d="M12 4v1M17.66 6.344l-.828.828M20.005 12.004h-1M17.66 17.664l-.828-.828M12 20.01V19M6.34 17.664l.835-.836M3.995 12.004h1.01M6 6l.835.836"
+            className="stroke-slate-100 dark:stroke-slate-100"
+          ></path>
+        </svg>
+      </button>
 
-        {/* Theme Toggle and GitHub Link */}
-        <div className="justify-end gap-4 hidden sm:flex">
-          <button className="dark:hidden block" id="themeToggleBtn">
-            <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-              {/* Add SVG path details here */}
-            </svg>
-          </button>
-          <button className="hidden dark:block" id="themeToggleBtnDark">
-            <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
-              {/* Add SVG path details here */}
-            </svg>
-          </button>
-          <a
-            href="https://github.com/ShlomiFridman/WebProject2025/tree/prototype"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              textDecoration: "none",
-              padding: "8px 12px",
-              borderRadius: "5px",
-              fontSize: "16px",
-              fontFamily: "Arial, sans-serif",
-              transition: "background-color 0.3s",
-            }}
-          >
-            <span className="sr-only">Repo</span>
-            <svg viewBox="0 0 16 16" className="w-5 h-5" fill="currentColor" aria-hidden="true" style={{ marginRight: "8px", width: "20px", height: "20px" }}>
-              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
-            </svg>
-          </a>
-        </div>
-      </div>
+      {/* GitHub Repo Link */}
+      <a
+        href="https://github.com/ShlomiFridman/WebProject2025/tree/dev"
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          textDecoration: "none",
+          padding: "8px 12px",
+          borderRadius: "5px",
+          fontSize: "16px",
+          fontFamily: "Arial, sans-serif",
+          transition: "background-color 0.3s",
+        }}
+      >
+        <span className="sr-only">Repo</span>
+        <svg
+          viewBox="0 0 16 16"
+          className="w-5 h-5"
+          fill="currentColor"
+          aria-hidden="true"
+          style={{ marginRight: "8px", width: "20px", height: "20px" }}
+        >
+          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+        </svg>
+      </a>
     </div>
-  );
-};
-
-export default Header;
+        </nav>
+  )
+}
