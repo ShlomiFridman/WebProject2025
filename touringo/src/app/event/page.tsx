@@ -1,12 +1,11 @@
-// src/app/login/page.tsx
 import React from 'react';
 
-const LoginPage = () => {
+const page = () => {
   return (
     <div>
-      <h1>Welcome to the Login Page!</h1>
+      <h1>Welcome to the event Page!</h1>
     </div>
   );
 };
 
-export default LoginPage;
+export default page;
