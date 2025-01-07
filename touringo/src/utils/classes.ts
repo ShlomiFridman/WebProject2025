@@ -145,3 +145,10 @@ export class TR_Alert{
     }
 
 }
+
+export interface MongooseError extends Error {
+    name: string;
+    message: string;
+    code: number;
+    errors?: Record<string, unknown>;
+}

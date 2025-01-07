@@ -28,7 +28,7 @@ export async function GET(request: Request){
       {result: eventsRes}, 
       { status: 200 }); // success
   } catch(err){
-    console.log("Events - Got error durring getEvents process")
+    console.log("Events - Got error durring getEvents process", err)
     return NextResponse.json(
       {message: "Error durring GET request"}, 
       { status: 500 }); // somehow got null array, it's a bug
@@ -134,7 +134,7 @@ export async function DELETE(request: Request){
       { status: 200 }); // success
 
   } catch(err){
-    console.log("Events - Got error durring deleteEvent process")
+    console.log("Events - Got error durring deleteEvent process", err)
     return NextResponse.json(
       {message: "Error durring event DELETE request"}, 
       { status: 500 }); // somehow got null array, it's a bug

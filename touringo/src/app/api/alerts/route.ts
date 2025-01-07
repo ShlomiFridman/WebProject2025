@@ -20,7 +20,7 @@ export async function GET(request: Request){
             {status: 200}
         );
     } catch (err){
-        console.log("Alerts GET - error during get process");
+        console.log("Alerts GET - error during get process", err);
         return NextResponse.json({},{status: 500});
     }
 }
