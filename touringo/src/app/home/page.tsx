@@ -1,5 +1,3 @@
-import { MainLayout } from "@/components/layout";
-import { ThemeProvider } from '@/context/ThemeProvider';
 import EventTable from "@/components/EventTable";
 
 
@@ -73,8 +71,6 @@ const events = [
 
 const page = () => {
   return (
-    <ThemeProvider>
-    <MainLayout title='Page'>
       <div className="max-w-[1000px] my-4 mx-auto">
         <div className="text-3xl text-green-600 font-bold pb-4">Welcome to TouRingo!</div>
         <h1>Attractions</h1>
@@ -83,8 +79,6 @@ const page = () => {
         </div>
 
       </div>
-    </MainLayout>
-  </ThemeProvider>
   );
 };
 
