@@ -1,7 +1,5 @@
 "use client"
 
-import { ThemeProvider } from '@/context/ThemeProvider';
-
 export default function Page() {
   return (
         <div className="max-w-[1000px] my-4 mx-auto">
