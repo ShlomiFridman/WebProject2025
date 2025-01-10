@@ -27,7 +27,7 @@ export default function Header({ title }: { title: string }) {
         <title>{`${title} - TouRingo App`}</title>
       </Head>
 
-      <nav className="w-full p-6 flex justify-between gap-2" style={{ backgroundColor: "var(--box-background)" }}>
+      <nav className="w-full p-6 flex flex-col sm:flex-row justify-between gap-2" style={{ backgroundColor: "var(--box-background)" }}>
         <HeaderLinks title={title} />
         <HeaderIcons />
       </nav>

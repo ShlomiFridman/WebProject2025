@@ -4,7 +4,7 @@ export default function HeaderIcons() {
   const { toggleTheme, theme } = useTheme(); // Grab current theme
 
   return (
-    <div className="justify-end gap-4 hidden sm:flex">
+    <div className="justify-end gap-4 flex">
       {/* Alert Icon */}
       <div
         onClick={() => alert('Alert triggered!')}
