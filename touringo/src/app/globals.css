@@ -43,6 +43,13 @@ body {
   box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.5); /* Slightly stronger shadow for dark mode */
 }
 
+.event-details h3 {
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--header-link);
+}
+
 .AttractionsTitle{
   background-color: var(--box-background) ;
   box-shadow: 1px 3px 5px  rgba(0,0,0,0.1);
