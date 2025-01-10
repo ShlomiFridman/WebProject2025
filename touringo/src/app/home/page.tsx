@@ -9,6 +9,7 @@ const events = [
     imageUrl: "/event_images/ocean-view.jpg",
     location: "123 Beachside Ave, Miami, FL",
     rating: 4.5,
+    link: "../event/"
   },
   {
     id: "2",
@@ -17,6 +18,7 @@ const events = [
     imageUrl: "/event_images/mountain-hiking.jpg",
     location: "456 High Trail Rd, Denver, CO",
     rating: 4.8,
+    link: "../event/"
   },
   {
     id: "3",
@@ -25,6 +27,7 @@ const events = [
     imageUrl: "/event_images/city-lights-bar.jpg",
     location: "789 Downtown Blvd, New York, NY",
     rating: 4.6,
+    link: "../event/"
   },
   {
     id: "4",
@@ -33,6 +36,7 @@ const events = [
     imageUrl: "/event_images/safari.jpg",
     location: "Safari Park Rd, Orlando, FL",
     rating: 4.9,
+    link: "../event/"
   },
   {
     id: "5",
@@ -41,6 +45,7 @@ const events = [
     imageUrl: "/event_images/museum.jpg",
     location: "456 Museum Lane, Chicago, IL",
     rating: 4.7,
+    link: "../event/"
   },
   {
     id: "6",
@@ -49,6 +54,7 @@ const events = [
     imageUrl: "/event_images/cozy-cabin.jpg",
     location: "123 Forest Drive, Asheville, NC",
     rating: 4.4,
+    link: "../event/"
   },
   {
     id: "7",
@@ -57,6 +63,7 @@ const events = [
     imageUrl: "/event_images/wine-tasting.jpg",
     location: "456 Vineyard Way, Napa Valley, CA",
     rating: 4.8,
+    link: "../event/"
   },
   {
     id: "8",
@@ -65,6 +72,7 @@ const events = [
     imageUrl: "/event_images/water-park.jpg",
     location: "789 Splash Ave, Las Vegas, NV",
     rating: 4.3,
+    link: "../event/"
   },
 ];
 

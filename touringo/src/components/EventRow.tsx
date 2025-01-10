@@ -7,6 +7,7 @@ type Event = {
   imageUrl: string;
   location: string;
   rating: number;
+  link: string;
 };
 
 type EventRowProps = {
@@ -17,20 +18,22 @@ type EventRowProps = {
 
 const EventRow: React.FC<EventRowProps> = ({ event }) => {
   return (
-    <div className="event-row">
-      {/* Inline style to control the image size */}
-      <img 
-        src={event.imageUrl} 
-        alt={event.name} 
-        style={{ width: '300px', height: 'auto' }}  // Adjust the width and height as needed
-      />
-      <div className="event-details">
-        <h3>{event.name}</h3>
-        <p>{event.description}</p>
-        <p><strong>Location:</strong> {event.location}</p>
-        <p><strong>Rating:</strong> {event.rating} / 5</p>
+    <a href={event.link}>
+      <div  className="event-row">
+        {/* Inline style to control the image size */}
+        <img 
+          src={event.imageUrl} 
+          alt={event.name} 
+          style={{ width: '300px', height: 'auto' }}  // Adjust the width and height as needed
+        />
+        <div className="event-details">
+          <h3>{event.name}</h3>
+          <p>{event.description}</p>
+          <p><strong>Location:</strong> {event.location}</p>
+          <p><strong>Rating:</strong> {event.rating} / 5</p>
+        </div>
       </div>
-    </div>
+    </a>
   );
 };
 
