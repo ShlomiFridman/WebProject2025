@@ -11,11 +11,11 @@
 }
 
 [data-theme="dark"] {
-  --background: #2f3136;
+  --background: #2f3b30;
   --foreground: #ededed;
 
   --box-background: #12522f;
-  --header-links: #c4ffbc;
+  --header-links: #ffffff;
 }
 
 body {
@@ -24,9 +24,36 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+
+.event-row {
+  padding: 2px;
+  margin-bottom: 2px
+}
+
 .event-row:hover {
-  background-color: rgb(247, 246, 253);
+  background-color: var(--box-background);
   padding: 5px;
   border-radius: 10px;
   box-shadow: 5px 10px 15px rgba(0,0,0,0.1);
+  margin-bottom: 2px
+}
+
+[data-theme="dark"] .event-row:hover {
+  background-color: var(--box-background); /* Dark mode background */
+  box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.5); /* Slightly stronger shadow for dark mode */
+}
+
+.AttractionsTitle{
+  background-color: var(--box-background) ;
+  box-shadow: 1px 3px 5px  rgba(0,0,0,0.1);
+  font-size: x-large;
+  text-indent: 10px;
+  margin-bottom: 20px
+
+}
+
+[data-theme="dark"] .AttractionsTitle {
+  background-color: var(--box-background); /* Dark mode background */
+  box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.5); /* Slightly stronger shadow for dark mode */
+  text-indent: 10px;
 }

@@ -71,9 +71,9 @@ const events = [
 
 const page = () => {
   return (
-      <div className="max-w-[1000px] my-4 mx-auto">
+      <div className="max-w-[1000px] my-4">
         <div className="text-3xl text-green-600 font-bold pb-4">Welcome to TouRingo!</div>
-        <h1>Attractions</h1>
+        <div className="AttractionsTitle">Attractions</div>
         <div>
         <EventTable events={events} />
         </div>

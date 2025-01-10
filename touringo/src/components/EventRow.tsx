@@ -13,6 +13,8 @@ type EventRowProps = {
   event: Event;
 };
 
+
+
 const EventRow: React.FC<EventRowProps> = ({ event }) => {
   return (
     <div className="event-row">
