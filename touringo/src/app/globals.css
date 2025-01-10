@@ -31,7 +31,7 @@ body {
 }
 
 .event-row:hover {
-  background-color: var(--box-background);
+  background-color: #e7ccb3;;
   padding: 5px;
   border-radius: 10px;
   box-shadow: 5px 10px 15px rgba(0,0,0,0.1);
@@ -51,7 +51,7 @@ body {
 }
 
 .AttractionsTitle{
-  background-color: var(--box-background) ;
+  background-color: #e7ccb3; ;
   box-shadow: 1px 3px 5px  rgba(0,0,0,0.1);
   font-size: x-large;
   text-indent: 10px;
