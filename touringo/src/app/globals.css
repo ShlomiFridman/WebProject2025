@@ -23,3 +23,10 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.event-row:hover {
+  background-color: rgb(247, 246, 253);
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 5px 10px 15px rgba(0,0,0,0.1);
+}
