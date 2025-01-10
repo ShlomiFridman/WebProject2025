@@ -1,8 +1,6 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { MainLayout } from "@/components/layout"
-import { ThemeProvider } from '@/context/ThemeProvider';
 
 const NotFoundPage = () => {
     const router = useRouter();
@@ -12,8 +10,6 @@ const NotFoundPage = () => {
     };
 
     return (
-        <ThemeProvider>
-        <MainLayout>
         <div className="flex flex-col items-center justify-center h-screen text-center">
             <h1 className="text-6xl font-bold text-red-800 mb-4">404</h1>
             <p className="text-xl mb-6">Oops! The page you&apos;re looking for doesn&apos;t exist.</p>
@@ -24,8 +20,6 @@ const NotFoundPage = () => {
                 Go Back Home
             </button>
         </div>
-        </MainLayout>
-        </ThemeProvider>
     );
 };
 
