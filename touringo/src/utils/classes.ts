@@ -86,6 +86,17 @@ export class TR_Event {
         this.eventType = eventType;
         this.isActive = isActive
     }
+
+    isOngoing(): boolean {
+        const currentDate = new Date();
+
+        // Combine the start date with the opening time to form a full DateTime
+        const eventStartDateTime = new Date(`${this.startDate}T${this.openingTime}`);
+        const eventEndDateTime = new Date(`${this.endDate}T${this.closingTime}`);
+
+        // Check if current date is between the event's start and end date/time
+        return currentDate >= eventStartDateTime && currentDate <= eventEndDateTime;
+    }
 }
 
 
@@ -131,6 +142,17 @@ export class Booking {
         this.date = date;
         this.amount = amount;
         this.isActive = isActive;
+    }
+
+    canCancel(): boolean{
+        const currentDate = new Date();
+        const bookingDate = new Date(this.date);
+        // Assuming booking is completed if the event date has passed and the booking is still active
+        return !(this.isActive && bookingDate < currentDate);
+    }
+
+    wasCancelled(): boolean{
+        return !this.isActive;
     }
 }
 
