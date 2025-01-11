@@ -13,10 +13,6 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-      },
-      width: {
-        // TODO make it work
-        screenWidthPercent: "40%"
       }
     },
   },
