@@ -180,3 +180,12 @@ export interface MongooseError extends Error {
     code: number;
     errors?: Record<string, unknown>;
 }
+
+export interface State { // for the reducer (might need some changes)
+    data: any;
+    selectedEvent: any;
+}
+export interface Action {
+    type: string;
+    payload: any; // Adjust this as needed based on the structure of the payload
+  }
