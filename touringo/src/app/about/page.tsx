@@ -7,12 +7,10 @@ export default function About() {
     return (
             <div className="max-w-[1000px] my-4 mx-auto">
                 <div className="max-w-[1000px] my-4 mx-auto text-3xl text-green-600 font-bold">About</div>
-                <button
-                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                    onClick={() => router.push("/")}
-                >
-                    Go Home
-                </button>
+                    TouRingo is a project for "Advanced Web Technologies" Course in Braude College Winter 2025.<br/>
+                    Made by Shlomi, Shahar, Omer, and Noam<br/>
+                <div className="max-w-[1000px] my-4 mx-auto text-2xl text-green-600 font-bold">Subject</div>
+                    <u>**Local Tourism Guide App**:</u> Develop an app that showcases local tourist attractions, restaurants, and cultural events.<br/>Include user reviews, navigation features, and event booking options.
             </div>
     )
 }

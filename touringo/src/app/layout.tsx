@@ -16,7 +16,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <html lang="en">
-      <body className="max-w-screenWidthPercent mx-auto py-2 flex flex-col min-h-[100vh]">
+      <body className="max-w-[1000px] mx-auto py-2 flex flex-col min-h-[100vh]">
         {/* Wrap everything with ThemeProvider */}
         <ThemeProvider>
           <Header title={title} />

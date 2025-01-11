@@ -14,7 +14,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
         <img 
           src={event.images[0].bufferToSrc()} 
           alt={event.images[0].title} 
-          style={{ width: '300px', height: 'auto' }}  // Adjust the width and height as needed
+          style={{ width: 'auto', height: 'auto' }}  // Adjust the width and height as needed
         />
         <div className="event-details">
           <h3>{event.name}</h3>
