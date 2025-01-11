@@ -3,10 +3,16 @@ export class Account{
 
     public username: string = "";
     public password: string = "";
+    public name: string = "";   // TODO add to schema
+    public bios: string = "";   // TODO add to schema
+    public about: string = "";   // TODO add to schema
 
-    constructor(username: string, password: string){
+    constructor(username: string, password: string, name: string, bios: string, about: string){
         this.username = username;
         this.password = password;
+        this.name = name;
+        this.bios = bios;
+        this.about = about;
     }
 }
 

@@ -1,5 +1,33 @@
 "use client"
 
+// fetch template example
+// const user = {
+//   name: "John Doe",
+//   email: "john@example.com",
+//   age: 30
+// };
+
+// fetch('https://example.com/P', {
+//   method: 'PUT', // Specify the PUT method
+//   headers: {
+//     'Content-Type': 'application/json', // Make sure the server understands JSON
+//   },
+//   body: JSON.stringify(user) // Convert the 'User' object to a JSON string
+// })
+//   .then(response => {
+//     if (!response.ok) {
+//       throw new Error('Request failed');
+//     }
+//     return response.json(); // Parse the JSON response if needed
+//   })
+//   .then(data => {
+//     console.log('Success:', data); // Handle the response data
+//   })
+//   .catch(error => {
+//     console.error('Error:', error); // Handle any errors
+//   });
+
+
 export default function Page() {
   return (
         <div className="max-w-[1000px] my-4 mx-auto">

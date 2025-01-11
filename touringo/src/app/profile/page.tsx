@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import React, { useState } from "react";
 
 interface Profile {
@@ -9,6 +10,8 @@ interface Profile {
 }
 
 const ProfilePage: React.FC = () => {
+  // TODO use reducer to get the username
+  // TODO use useEffect get the account info from server
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [profile, setProfile] = useState<Profile>({
     name: "John Doe",
@@ -43,11 +46,16 @@ const ProfilePage: React.FC = () => {
       <div className="text-3xl text-green-600 font-bold mb-4">Profile</div>
       <div>
         <div className="profile-header mb-6 text-center">
-          <img
+          <Image
             id="profile-pic"
             className="rounded-full w-36 h-36 object-cover border-4 border-blue-500 mx-auto"
             src="/event_images/profilePicture.jpg"
             alt="Profile Picture"
+            objectFit="cover" 
+            // TODO make it responsive with 4:9 ratio 
+            layout="responsive"
+            width={5} // Aspect ratio: 16:9
+            height={5}
           />
           <h1 id="name" className="mt-4 text-2xl text-blue-500">
             {activeField === "name" ? (
@@ -130,6 +138,7 @@ const ProfilePage: React.FC = () => {
           )}
         </div>
       </div>
+      
     </div>
   );
 };
