@@ -8,7 +8,10 @@ const Schema = mongoose.Schema;
 // Account Schema
 const accountSchema = new Schema({
     username: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    name: {type: String, required: true },
+    bio: {type: String, default: "" },
+    about: {type: String, default: "" },
 });
 export const AccountModel = db.models.Account || db.model('Account', accountSchema);
 

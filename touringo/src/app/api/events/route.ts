@@ -3,6 +3,7 @@
 import { TR_Event } from "@/utils/classes";
 import { createEvent, deleteEvent, getAllEvents, getEventsByCreator, updateEvent } from "./events_module";
 import { NextResponse } from "next/server";
+import { decryptData } from "@/utils/utils";
 
 // get events - url-params: username
 //		if the username is empty (or null) get all events
@@ -36,12 +37,16 @@ export async function GET(request: Request){
 }
 
 // create new event - body-params: newEvent (type: TR_Event)
+interface CreateBodyParam{
+  newEvent: TR_Event;
+}
 export async function POST(request: Request) {
     try {
         const reqBody = await request.json();
+        const data = decryptData(reqBody.data) as CreateBodyParam;
 
         // Normalize data
-        const newEvent = reqBody.newEvent as TR_Event;
+        const newEvent = (!data) ? null : reqBody.newEvent;
 
         // Validate the normalized event data
         if (!newEvent) {
@@ -69,16 +74,21 @@ export async function POST(request: Request) {
 }
 
 // PUT - update event - body-params: event_id (type: Number), updatedEvent (type: TR_Event)
+interface UpdateBodyParams{
+  event_id: number;
+  updatedEvent: TR_Event;
+}
 export async function PUT(request: Request) {
   try {
       const reqBody = await request.json();
+      const data = decryptData(reqBody.data) as UpdateBodyParams;
 
       // Normalize data
-      const event_id = Number(reqBody.event_id);
-      const updatedEvent = reqBody.updatedEvent;
+      const event_id = (!data) ? null : Number(reqBody.event_id);
+      const updatedEvent = (!data) ? null : reqBody.updatedEvent;
 
       // Validate the normalized event data
-      if (isNaN(event_id) || event_id<1) {
+      if (!event_id || isNaN(event_id) || event_id<1) {
         return NextResponse.json(
             { message: "Invalid event_id data" },
             { status: 400 } // Bad Request

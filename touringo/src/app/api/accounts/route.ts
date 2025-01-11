@@ -1,12 +1,24 @@
 import { NextResponse } from 'next/server';
 import { registerAccount } from './users_module';
+import { Account } from '@/utils/classes';
+import { decryptData } from '@/utils/utils';
 
 
-// register user - body-params: account (type: Account)
+// register user
+interface RegisterBodyParam{
+    account: Account
+}
 export async function POST(request: Request){
     try{
         const reqBody = await request.json();
-        const account = reqBody.account;
+        const data = decryptData(reqBody.data) as RegisterBodyParam;
+        const account = (!data) ? null : data.account;
+        if (!account)
+            return NextResponse.json({
+                message:"missing account data"
+            },
+                {status: 400 }
+            );
         const loggedAccount = await registerAccount(account);
         if (loggedAccount == 422){
             return NextResponse.json({

@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getBookingsByUser, postNewBooking, deleteBookingById } from './bookings_module';
+import { Booking } from '@/utils/classes';
+import { decryptData } from '@/utils/utils';
 
 // get bookings by username - url-params: username
 export async function GET(request: Request) {
@@ -28,12 +30,16 @@ export async function GET(request: Request) {
 }
 
 // create new booking - body-params: booking (type: Booking)
+interface CreateBodyParam{
+    booking: Booking;
+}
 export async function POST(request: Request) {
     try {
         const reqBody = await request.json();
-
+        const data = decryptData(reqBody.data) as CreateBodyParam;
+        
         // Normalize data
-        const booking = reqBody.booking;
+        const booking = (!data) ? null : data.booking;
 
         // Validate the normalized booking data
         if (!booking) {

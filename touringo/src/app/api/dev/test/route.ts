@@ -1,5 +1,6 @@
 
 import { accountExamples } from '@/utils/examplesData';
+import { encryptData } from '@/utils/utils';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
@@ -7,6 +8,7 @@ export async function GET() {
       console.log("GET test");
       return NextResponse.json({
         message: 'TEST',
+        data: encryptData({name:"Bob", age:18}),
         result: accountExamples
       });
     } catch (error) {

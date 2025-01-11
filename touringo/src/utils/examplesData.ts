@@ -28,22 +28,13 @@ const imagesPromises = imageNames.map(async name => {
 
 // Account examples
 export const accountExamples = [
-    new Account("user1", "pass123"),
-    new Account("admin", "adminPass"),
-    new Account("guest", "guestPass"),
-    new Account("johnDoe", "jdPass2024"),
-    new Account("alice", "alicePass99"),
+    new Account("user1", "pass123", "User One", "A passionate coder who loves learning new technologies.", "I enjoy building web applications and exploring different programming languages."),
+    new Account("admin", "adminPass", "Admin", "The go-to person for managing everything in the system.", "I ensure the smooth operation of the platform and oversee user management and security."),
+    new Account("guest", "guestPass", "Guest", "Temporary user with limited access.", "I have a basic understanding of how the system works and explore its features."),
+    new Account("johnDoe", "jdPass2024", "John Doe", "A software engineer with a love for open-source projects.", "I contribute to open-source projects and focus on building scalable systems for businesses."),
+    new Account("alice", "alicePass99", "Alice", "Designer by day, developer by night.", "I specialize in UI/UX design and also dabble in front-end development, ensuring the best user experience.")
 ];
 
-export const accountExamples1 = ()=> {
-    return [
-        new Account("user1", "pass123"),
-        new Account("admin", "adminPass"),
-        new Account("guest", "guestPass"),
-        new Account("johnDoe", "jdPass2024"),
-        new Account("alice", "alicePass99"),
-    ];
-}
 
 // TR_Image examples
 const imageExamples = await Promise.all(imagesPromises);

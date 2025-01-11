@@ -5,14 +5,20 @@
 import { NextResponse } from "next/server";
 import { verifyAccount } from "../users_module";
 import { Account } from "@/utils/classes";
+import { decryptData } from "@/utils/utils";
 
 // TODO use HTTPS format to send information in client side, POST
-// check login - url-params: username, password
-export async function GET(request: Request){
+// check login - body-params: username (type: String), password (type: String)
+interface LoginBodyParams{
+    username: string;
+    password: string;
+}
+export async function PUT(request: Request){
     try{
-        const { searchParams } = new URL(request.url);
-        const username = searchParams.get("username")
-        const pass = searchParams.get("password")
+        const reqBody = await request.json();
+        const data = decryptData(reqBody.data) as LoginBodyParams;
+        const username = (!data) ? null : data.username;
+        const pass = (!data) ? null : data.password;
         if (!username || !pass){
             return NextResponse.json(
                 {message: "Username or password are missing"},
@@ -22,13 +28,13 @@ export async function GET(request: Request){
         const loginRes = await verifyAccount(username, pass) as unknown;
         if (loginRes == null){
             return NextResponse.json({
-                message:"Username or password aren't correct"
+                message:"Username or password incorrect"
             },
                 {status: 401} // Unauthorized
             );
         }
         const loggedAccount = loginRes as Account
-        loggedAccount.password = "######"
+        loggedAccount.password = "##########"
         return NextResponse.json(
             {result: loggedAccount},
             {status: 200})

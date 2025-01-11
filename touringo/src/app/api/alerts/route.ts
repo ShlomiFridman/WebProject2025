@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { getByUsername as getAlertsByUsername, postNewAlert, updateAlertToRead } from "./alerts_module";
 import { TR_Alert } from "@/utils/classes";
+import { decryptData } from "@/utils/utils";
 
 // GET returns the alerts for the given username - url-params: username
 export async function GET(request: Request){
     const { searchParams } = new URL(request.url);
-    const username = searchParams.get("username");
+    const username = searchParams.get("username")
     if (!username){
         return NextResponse.json(
             {message: "Missing username"},
@@ -25,12 +26,16 @@ export async function GET(request: Request){
     }
 }
 
-// POST create alert - body-params: username (type: string), msg (type: string)
+// POST create alert
+interface createBodyParams{
+    username: string;
+    msg: string;
+}
 export async function POST(request: Request){
     const reqBody = await request.json();
-
-    const username = reqBody.username;
-    const msg = reqBody.msg;
+    const data = decryptData(reqBody.data) as createBodyParams;
+    const username = (!data) ? null : data.username;
+    const msg = (!data) ? null : data.msg;
     
     if (!username){
         return NextResponse.json(
@@ -59,13 +64,17 @@ export async function POST(request: Request){
     }
 }
 
-// PUT updateAlert - body-params: alert (type: number)
+// PUT updateAlert
+interface updateBodyParam{
+    alert_id: number;
+}
 export async function PUT(request: Request){
     const reqBody = await request.json();
+    const data = decryptData(reqBody.data) as updateBodyParam;
 
-    const id = Number(reqBody.alert_id);
+    const id = (!data) ? null : Number(data.alert_id);
     
-    if (isNaN(id) || id<100){
+    if (!id || isNaN(id) || id<100){
         return NextResponse.json(
             { message: "invalid alert id" },
             { status: 400 } // Bad Request

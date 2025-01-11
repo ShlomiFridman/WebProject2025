@@ -85,7 +85,7 @@ export default function HeaderIcons() {
       <a
         href="https://github.com/ShlomiFridman/WebProject2025/tree/dev"
         target="_blank" 
-        className='inline-flex items-center no-underline py-2 px-3 rounded-md text-base font-sans transition-colors duration-300'
+        className='inline-flex items-center no-underline py-2 px-3 rounded-md text-base font-sans'
         // TODO change to tailwind classes
         // style={{
         //   display: "inline-flex",
