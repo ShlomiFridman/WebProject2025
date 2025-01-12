@@ -8,44 +8,36 @@ export default function HeaderLinks({ title }: { title: string }) {
     <div className="flex justify-start gap-3">
   <Link
     href="/"
-    className="text-green-800 font-bold hover:underline px-2 py-1 rounded"
-    style={{
-      color: 'var(--header-links)', 
-      backgroundColor: title === "/" ? "var(--background)" : ""
-    }}
+    className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${
+      title === "/" ? "bg-gray-200 dark:bg-gray-700 " : ""
+    }`}
   >
     Attractions
   </Link>
 
   <Link
     href="/bookings"
-    className="text-green-800 font-bold hover:underline px-2 py-1 rounded"
-    style={{
-      color: 'var(--header-links)', 
-      backgroundColor: title === "/bookings" ? "var(--background)" : ""
-    }}
+    className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${
+      title === "/bookings" ? "bg-gray-200  dark:bg-gray-700 " : ""
+    }`}
   >
     Bookings
   </Link>
 
   <Link
     href="/profile"
-    className="text-green-800 font-bold hover:underline px-2 py-1 rounded"
-    style={{
-      color: 'var(--header-links)', 
-      backgroundColor: title === "/profile" ? "var(--background)" : ""
-    }}
+    className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${
+      title === "/profile" ? "bg-gray-200  dark:bg-gray-700 " : ""
+    }`}
   >
     Profile
   </Link>
 
   <Link
     href="/about"
-    className="text-green-800 font-bold hover:underline px-2 py-1 rounded"
-    style={{
-      color: 'var(--header-links)', 
-      backgroundColor: title === "/about" ? "var(--background)" : ""
-    }}
+    className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${
+      title === "/about" ? "bg-gray-200 dark:bg-gray-700 " : ""
+    }`}
   >
     About
   </Link>

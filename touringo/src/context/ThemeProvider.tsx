@@ -20,7 +20,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);  // Ensure the component is mounted
+    setMounted(true); // Ensure the component is mounted before reading from localStorage
     const storedTheme = localStorage.getItem('theme');
     if (storedTheme) {
       setTheme(storedTheme === 'dark' ? 'dark' : 'light');
@@ -29,8 +29,14 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 
   useEffect(() => {
     if (mounted) {
-      // Set the data-theme attribute on the root <html> element based on the theme
-      document.documentElement.setAttribute('data-theme', theme);
+      const root = document.documentElement;
+
+      if (theme === 'dark') {
+        root.classList.add('dark');
+      } else {
+        root.classList.remove('dark');
+      }
+
       localStorage.setItem('theme', theme);
     }
   }, [theme, mounted]);

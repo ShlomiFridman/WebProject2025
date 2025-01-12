@@ -1,43 +1,61 @@
+import { useState } from "react";
 import { useTheme } from '@/context/ThemeProvider';
 
 export default function HeaderIcons() {
-  const { toggleTheme, theme } = useTheme(); // Grab current theme
+  const { toggleTheme, theme } = useTheme(); // Use theme context
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Dropdown toggle state
+
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
+  const markAllAsRead = () => {
+    console.log("All alerts marked as read!");
+    setIsDropdownOpen(false); // Close the dropdown
+  };
 
   return (
-    <div className="justify-end gap-4 flex">
+    <div className="flex justify-end gap-4">
       {/* Alert Icon */}
-      <div
-        onClick={() => alert('Alert triggered!')}
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: "5px",
-          cursor: "pointer",
-          fontSize: "16px",
-          fontFamily: "Arial, sans-serif",
-          transition: "background-color 0.3s",
-        }}
-      >
-        <svg
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          aria-hidden="true"
-          style={{ marginRight: "8px", width: "20px", height: "20px" }}
+      <div className="relative">
+        <button
+          onClick={toggleDropdown}
+          className="p-2 rounded-full cursor-pointer focus:outline-none"
+          aria-label="Notifications"
         >
-          <path d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm0 20.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM13 14h-2V6h2v8z"></path>
-        </svg>
+          <svg
+            viewBox="0 0 24 24"
+            className="w-6 h-6"
+            fill="none"
+          >
+            <path
+              className="fill-gray-800 dark:fill-gray-100" // Dynamic class for light/dark mode
+              d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0zm0 20.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM13 14h-2V6h2v8z"
+            ></path>
+          </svg>
+        </button>
+
+        {/* Dropdown */}
+        {isDropdownOpen && (
+          <div className="absolute right-0 mt-2 w-48 border rounded-md shadow-md bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200">
+            <div className="p-4 text-sm">No new notifications.</div>
+            <button
+              onClick={markAllAsRead}
+              className="w-full px-4 py-2 text-left text-sm focus:outline-none"
+            >
+              Mark all as read
+            </button>
+          </div>
+        )}
       </div>
+
 
       {/* Theme Toggle Button */}
       <button
         onClick={toggleTheme}
-        className="block"
-        id="themeToggleBtn"
+        className="flex items-center justify-center w-10 h-10 rounded-full focus:outline-none"
         aria-label="Toggle Theme"
       >
         {theme === 'light' ? (
-          // Light Theme Icon
+          // Light Theme Icon (Original)
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -59,7 +77,7 @@ export default function HeaderIcons() {
             ></path>
           </svg>
         ) : (
-          // Dark Theme Icon
+          // Dark Theme Icon (Original)
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -84,25 +102,15 @@ export default function HeaderIcons() {
       {/* GitHub Repo Link */}
       <a
         href="https://github.com/ShlomiFridman/WebProject2025/tree/dev"
-        target="_blank" 
-        className='inline-flex items-center no-underline py-2 px-3 rounded-md text-base font-sans'
-        // TODO change to tailwind classes
-        // style={{
-        //   display: "inline-flex",
-        //   alignItems: "center",
-        //   textDecoration: "none",
-        //   padding: "8px 12px",
-        //   borderRadius: "5px",
-        //   fontSize: "16px",
-        //   fontFamily: "Arial, sans-serif",
-        //   transition: "background-color 0.3s",
-        // }}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="inline-flex items-center py-2 px-3 text-base font-medium text-gray-900 dark:text-gray-100 rounded-md"
       >
-        <span className="sr-only">Repo</span>
+        <span className="sr-only">GitHub Repository</span>
         <svg
           viewBox="0 0 16 16"
-          className="mr-2 w-5 h-5"
           fill="currentColor"
+          className="w-6 h-6"
           aria-hidden="true"
         >
           <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
