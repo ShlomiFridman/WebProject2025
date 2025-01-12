@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 
 
 const HomePage: React.FC = () => {
-
   const [events, setEvents] = useState<TR_Event[]|null>(null);
 
   useEffect(()=>{

@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 import "./globals.css";
+import { AppProvider } from "@/context/MainContext";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const title = usePathname();
@@ -16,9 +17,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         className="max-w-[1000px] mx-auto py-2 flex flex-col min-h-[100vh] bg-white dark:bg-[#292b2f] text-black dark:text-white"
       >
         <ThemeProvider>
-          <Header title={title} />
-          <main className="grow">{children}</main>
-          <Footer />
+          <AppProvider>
+            <Header title={title} />
+              <main className="grow">{children}</main>
+            <Footer />
+          </AppProvider>
         </ThemeProvider>
       </body>
     </html>
