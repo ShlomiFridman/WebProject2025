@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { registerAccount } from './users_module';
+import { registerAccount } from '../users_module';
 import { Account } from '@/utils/classes';
 import { decryptData } from '@/utils/utils';
 
@@ -37,6 +37,3 @@ export async function POST(request: Request){
         }, {status: 500})
     }
 }
-
-// TODO add PUT request to update Account data. body-param: username (type: string), updatedAccount (type: Account)
-

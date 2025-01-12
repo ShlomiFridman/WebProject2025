@@ -49,7 +49,7 @@ export async function updateEvent(event_id: number, updatedEvent: TR_Event): Pro
     }
 }
 
-export async function deleteEvent(event_id: number): Promise<TR_Event>{
+export async function cancelEvent(event_id: number): Promise<TR_Event>{
     try{
         const deleteRes = await TR_EventModel.findOneAndUpdate(
             {event_id: event_id, isActive: true},

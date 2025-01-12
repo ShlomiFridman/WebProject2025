@@ -1,39 +1,61 @@
-
-export class Account{
-
+export class Account {
     public username: string = "";
     public password: string = "";
     public name: string = "";
     public bio: string = "";
     public about: string = "";
 
-    constructor(username: string, password: string, name: string, bio: string, about: string){
+    constructor(username: string, password: string, name: string, bio: string, about: string) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.bio = bio;
         this.about = about;
     }
+
+    // Static method to create an Account instance from JSON
+    static fromJSON(json: { username: string, password: string, name: string, bio: string, about: string }): Account {
+        return new Account(json.username, json.password, json.name, json.bio, json.about);
+    }
+
+    // Static method to create an array of Account instances from an array of JSON objects
+    static fromJSON_array(jsonArray: { username: string, password: string, name: string, bio: string, about: string }[]): Account[] {
+        return jsonArray.map(json => Account.fromJSON(json));
+    }
 }
 
 export class TR_Image {
     public title: string;
-    public data: Buffer;
+    public img_buffer: Buffer|null;
+    public img_url: string;
     public img_type: string;
-    public img_src;
 
-    constructor(title: string, data: Buffer, img_type: string) {
+    constructor(title: string, img_buffer: Buffer|null, img_url: string, img_type: string) {
         this.title = title;
-        this.data = data;
+        this.img_buffer = img_buffer;
         this.img_type = img_type;
-        this.img_src = this.bufferToSrc();
+        this.img_url = img_url;
     }
 
-    bufferToSrc():string {
-        const base64Data = this.data.toString('base64');
-        return `data:image/${this.img_type};base64,${base64Data}`;
+    // Method to generate base64-encoded image source string
+    get src(): string {
+        if (!this.img_buffer){
+            return this.img_url;
+        }
+        const base64Data = this.img_buffer.toString('base64');
+        const src = `data:image/${this.img_type};base64,${base64Data}`;
+        return src;
     }
-    
+
+    // Static method to create a TR_Image instance from JSON
+    static fromJSON(json: { title: string, img_buffer: string|null, img_url: string, img_type: string }): TR_Image {
+        return new TR_Image(json.title, json.img_buffer? Buffer.from(json.img_buffer, 'base64') : null, json.img_url, json.img_type);
+    }
+
+    // Static method to create an array of TR_Image instances from an array of JSON objects
+    static fromJSON_array(jsonArray: { title: string, img_buffer: string|null, img_url: string, img_type: string }[]): TR_Image[] {
+        return jsonArray.map(json => TR_Image.fromJSON(json));
+    }
 }
 
 export class TR_Event {
@@ -84,21 +106,76 @@ export class TR_Event {
         this.address = address;
         this.openDays = openDays;
         this.eventType = eventType;
-        this.isActive = isActive
+        this.isActive = isActive;
     }
 
+    // Method to check if the event is ongoing
     isOngoing(): boolean {
         const currentDate = new Date();
-
-        // Combine the start date with the opening time to form a full DateTime
         const eventStartDateTime = new Date(`${this.startDate}T${this.openingTime}`);
         const eventEndDateTime = new Date(`${this.endDate}T${this.closingTime}`);
-
-        // Check if current date is between the event's start and end date/time
         return currentDate >= eventStartDateTime && currentDate <= eventEndDateTime;
     }
-}
 
+    // Static method to create a TR_Event instance from JSON
+    static fromJSON(json: {
+        event_id: number,
+        name: string,
+        description: string,
+        phone: string,
+        creator_username: string,
+        images: { title: string, img_buffer: string|null, img_url: string, img_type: string }[],
+        openingTime: string,
+        closingTime: string,
+        startDate: string,
+        endDate: string,
+        town: string,
+        address: string,
+        openDays: boolean[],
+        eventType: string,
+        isActive: boolean
+    }): TR_Event {
+        const images = TR_Image.fromJSON_array(json.images);
+        return new TR_Event(
+            json.event_id,
+            json.name,
+            json.description,
+            json.phone,
+            json.creator_username,
+            images,
+            json.openingTime,
+            json.closingTime,
+            json.startDate,
+            json.endDate,
+            json.town,
+            json.address,
+            json.openDays,
+            json.eventType,
+            json.isActive
+        );
+    }
+
+    // Static method to create an array of TR_Event instances from an array of JSON objects
+    static fromJSON_array(jsonArray: {
+        event_id: number,
+        name: string,
+        description: string,
+        phone: string,
+        creator_username: string,
+        images: { title: string, img_buffer: string|null, img_url: string, img_type: string }[],
+        openingTime: string,
+        closingTime: string,
+        startDate: string,
+        endDate: string,
+        town: string,
+        address: string,
+        openDays: boolean[],
+        eventType: string,
+        isActive: boolean
+    }[]): TR_Event[] {
+        return jsonArray.map(json => TR_Event.fromJSON(json));
+    }
+}
 
 export class Review {
     public username: string;
@@ -117,6 +194,16 @@ export class Review {
         this.score = score;
         this.description = description;
         this.date = date;
+    }
+
+    // Static method to create a Review instance from JSON
+    static fromJSON(json: { username: string, event_id: number, score: number, description: string, date: string }): Review {
+        return new Review(json.username, json.event_id, json.score, json.description, json.date);
+    }
+
+    // Static method to create an array of Review instances from an array of JSON objects
+    static fromJSON_array(jsonArray: { username: string, event_id: number, score: number, description: string, date: string }[]): Review[] {
+        return jsonArray.map(json => Review.fromJSON(json));
     }
 }
 
@@ -144,27 +231,37 @@ export class Booking {
         this.isActive = isActive;
     }
 
-    canCancel(): boolean{
+    // Method to check if the booking can be canceled
+    canCancel(): boolean {
         const currentDate = new Date();
         const bookingDate = new Date(this.date);
-        // Assuming booking is completed if the event date has passed and the booking is still active
         return !(this.isActive && bookingDate < currentDate);
     }
 
-    wasCancelled(): boolean{
+    // Method to check if the booking was canceled
+    wasCancelled(): boolean {
         return !this.isActive;
+    }
+
+    // Static method to create a Booking instance from JSON
+    static fromJSON(json: { booking_id: number, creator_username: string, event_id: number, date: string, amount: number, isActive: boolean }): Booking {
+        return new Booking(json.booking_id, json.creator_username, json.event_id, json.date, json.amount, json.isActive);
+    }
+
+    // Static method to create an array of Booking instances from an array of JSON objects
+    static fromJSON_array(jsonArray: { booking_id: number, creator_username: string, event_id: number, date: string, amount: number, isActive: boolean }[]): Booking[] {
+        return jsonArray.map(json => Booking.fromJSON(json));
     }
 }
 
-export class TR_Alert{
-
+export class TR_Alert {
     public alert_id: number;
     public username: string;
     public msg: string;
     public createdAt: Date;
     public wasRead: boolean;
-    
-    constructor(alert_id: number, username: string, msg: string, createdAt:Date, wasRead: boolean = false) {
+
+    constructor(alert_id: number, username: string, msg: string, createdAt: Date, wasRead: boolean = false) {
         this.alert_id = alert_id;
         this.username = username;
         this.msg = msg;
@@ -172,20 +269,13 @@ export class TR_Alert{
         this.wasRead = wasRead;
     }
 
-}
+    // Static method to create a TR_Alert instance from JSON
+    static fromJSON(json: { alert_id: number, username: string, msg: string, createdAt: string, wasRead: boolean }): TR_Alert {
+        return new TR_Alert(json.alert_id, json.username, json.msg, new Date(json.createdAt), json.wasRead);
+    }
 
-export interface MongooseError extends Error {
-    name: string;
-    message: string;
-    code: number;
-    errors?: Record<string, unknown>;
+    // Static method to create an array of TR_Alert instances from an array of JSON objects
+    static fromJSON_array(jsonArray: { alert_id: number, username: string, msg: string, createdAt: string, wasRead: boolean }[]): TR_Alert[] {
+        return jsonArray.map(json => TR_Alert.fromJSON(json));
+    }
 }
-
-export interface State { // for the reducer (might need some changes)
-    data: any;
-    selectedEvent: any;
-}
-export interface Action {
-    type: string;
-    payload: any; // Adjust this as needed based on the structure of the payload
-  }

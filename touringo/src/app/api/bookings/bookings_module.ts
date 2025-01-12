@@ -1,7 +1,7 @@
 import { BookingModel} from "@/db_utils/collectionModels";
 import { Booking } from "@/utils/classes";
 
-// Get all bookings by a specific user
+// get all bookings for a specific user
 export async function getBookingsByUser(creator_username: string) {
     try {
         const bookings = await BookingModel.find(
@@ -13,7 +13,7 @@ export async function getBookingsByUser(creator_username: string) {
         throw err;
     }
 }
-// TODO post new booking
+// post new booking
 export async function postNewBooking(newBooking: Booking) {
     try {
         const lastBooking = await BookingModel.findOne() // No filter, get all users
@@ -28,8 +28,8 @@ export async function postNewBooking(newBooking: Booking) {
         throw err;
     }
 }
-// TODO delete booking by id
-export async function deleteBookingById(booking_id: number) {
+// cancel booking by id
+export async function cancelBookingById(booking_id: number) {
     try {
         // using booking_id as the unique identifier (not objectId)
         const result = await BookingModel.findOneAndUpdate(

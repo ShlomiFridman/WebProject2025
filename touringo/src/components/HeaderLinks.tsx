@@ -3,7 +3,6 @@
 import Link from "next/link";
 
 export default function HeaderLinks({ title }: { title: string }) {
-  console.log(title)
   
   return (
     <div className="flex justify-start gap-3">

@@ -1,12 +1,29 @@
+"use client"
+
 import EventTable from "@/components/EventTable";
 import { TR_Event } from "@/utils/classes";
-import { eventExamples } from "@/utils/examplesData";
+import { useEffect, useState } from "react";
 
 
-const events = eventExamples as TR_Event[];
+const HomePage: React.FC = () => {
 
+  const [events, setEvents] = useState<TR_Event[]>([]);
 
-const page = () => {
+  useEffect(()=>{
+      const getEvents = async () =>{
+
+        const response = await fetch("/api/events/get")
+        const resData = await response.json();
+        if (!response.ok){
+          alert(resData.message);
+          return;
+        }
+        const eventsRes = TR_Event.fromJSON_array(resData.result);
+        setEvents(eventsRes);
+      };
+      getEvents();
+  }, []);
+
   return (
       <div className="max-w-[1000px] my-4">
         <div className="text-3xl text-green-600 font-bold pb-4">Welcome to TouRingo!</div>
@@ -19,5 +36,5 @@ const page = () => {
   );
 };
 
-export default page;
+export default HomePage;
 

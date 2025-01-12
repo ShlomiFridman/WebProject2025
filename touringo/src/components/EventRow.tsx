@@ -1,6 +1,8 @@
+"use client"
 import React from "react";
 import { TR_Event } from "@/utils/classes";
 import Link from "next/link";
+import Image from "next/image";
 
 type EventRowProps = {
   event: TR_Event;
@@ -11,11 +13,16 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
     <Link href={"/event/"+event.event_id}>
       <div  className="event-row">
         {/* Inline style to control the image size */}
-        <img 
-          src={event.images[0].bufferToSrc()} 
-          alt={event.images[0].title} 
-          style={{ width: 'auto', height: 'auto' }}  // Adjust the width and height as needed
-        />
+        <div className="max-h-[100px]">
+          <Image
+            priority
+            unoptimized
+            src={event.images[0].src} 
+            alt={event.images[0].title}
+            width={150}   // Image width in pixels
+            height={100}  // Image height in pixels
+            />
+        </div>
         <div className="event-details">
           <h3>{event.name}</h3>
           <p>{event.description}</p>
