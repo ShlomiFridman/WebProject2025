@@ -1,17 +1,17 @@
 "use client"
 
 import EventTable from "@/components/EventTable";
+import LoadingBox from "@/components/LoadingBox";
 import { TR_Event } from "@/utils/classes";
 import { useEffect, useState } from "react";
 
 
 const HomePage: React.FC = () => {
 
-  const [events, setEvents] = useState<TR_Event[]>([]);
+  const [events, setEvents] = useState<TR_Event[]|null>(null);
 
   useEffect(()=>{
       const getEvents = async () =>{
-
         const response = await fetch("/api/events/get")
         const resData = await response.json();
         if (!response.ok){
@@ -29,7 +29,7 @@ const HomePage: React.FC = () => {
         <div className="text-3xl text-green-600 font-bold pb-4">Welcome to TouRingo!</div>
         <div className="AttractionsTitle">Attractions</div>
         <div>
-        <EventTable events={events} />
+          {events != null ? <EventTable events={events} /> : <LoadingBox/>}
         </div>
 
       </div>
