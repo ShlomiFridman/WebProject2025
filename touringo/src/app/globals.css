@@ -72,3 +72,9 @@ body.dark {
 .dark .event-row:hover {
   background-color: var(--box-background);
 }
+
+
+.event-details h3 {
+  font-size: 1.5rem; /* Adjust heading size */
+  font-weight: bold; /* Make the text bold */
+}
