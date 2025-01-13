@@ -22,9 +22,9 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
   
   return (
     <Link href="#" onClick={selectEvent}>
-      <div  className="event-row">
+      <div className="event-row flex items-center">
         {/* Inline style to control the image size */}
-        <div className="max-h-[1000px]">
+        <div className="max-h-[1000px] mr-4">  {/* Added margin-right to create space between image and text */}
           <Image
             priority
             unoptimized
@@ -32,7 +32,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
             alt={event.images[0].title}
             width={150}   // Image width in pixels
             height={100}  // Image height in pixels
-            />
+          />
         </div>
         <div className="event-details">
           <h3>{event.name}</h3>
@@ -40,8 +40,6 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
           <p><strong>Location:</strong> {event.town}, {event.address}</p>
           <p><strong>Rating:</strong> 4/5</p> {/* TODO get reviews from server and calc average */}
         </div>
-        {/* Booking form */}
-        {/* TODO add booking form for the event */}
       </div>
     </Link>
   );
