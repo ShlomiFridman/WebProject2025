@@ -12,15 +12,17 @@ const HomePage: React.FC = () => {
   useEffect(()=>{
       const getEvents = async () =>{
         const response = await fetch("/api/events/get")
-        const resData = await response.json();
         if (!response.ok){
-          alert(resData.message);
+          alert(response.statusText);
+          setEvents([]);
           return;
         }
+        const resData = await response.json();
         const eventsRes = TR_Event.fromJSON_array(resData.result);
         setEvents(eventsRes);
       };
-      getEvents();
+      if (events == null)
+        getEvents();
   }, []);
 
   return (
@@ -28,7 +30,7 @@ const HomePage: React.FC = () => {
         <div className="text-3xl text-green-600 font-bold pb-4">Welcome to TouRingo!</div>
         <div className="AttractionsTitle">Attractions</div>
         <div>
-          {events != null ? <EventTable events={events} /> : <LoadingBox/>}
+          {events!=null? <EventTable events={events} /> : <LoadingBox/>}
         </div>
 
       </div>
