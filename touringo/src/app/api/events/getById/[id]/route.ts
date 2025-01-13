@@ -22,8 +22,8 @@ export async function GET(request: Request, { params }: { params:Params }) {
     try{
       eventRes = await getEventById(id);
       if (eventRes == null){
-        return NextResponse.json(
-          {},
+        return new NextResponse(
+          null,
           {status: 204} // no content
         );
       }

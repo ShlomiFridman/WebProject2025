@@ -23,7 +23,7 @@ export async function getEventsByCreator(creator_username: string): Promise<TR_E
     }
 }
 
-export async function getEventById(event_id: number): Promise<TR_Event>{
+export async function getEventById(event_id: Number): Promise<TR_Event>{
     try{
         const eventsRes = await TR_EventModel.findOne(
             {event_id: event_id}
