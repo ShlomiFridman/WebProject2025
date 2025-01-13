@@ -15,6 +15,10 @@ const EventPage = () => {
   const id_num = Number(id);
 
   useEffect(()=>{
+      if (isNaN(id_num)){
+        router.push(`${currentPath}/404`);
+        return;
+      }
       const getEventData = async () =>{
         if (state.selectedEvent && state.selectedEvent.event_id == id_num){
           setEventData(state.selectedEvent);
@@ -38,7 +42,7 @@ const EventPage = () => {
         
       };
       getEventData();
-  }, [state.selectedEvent]);
+  }, [id_num]);
 
   return (
     eventData != null? 
