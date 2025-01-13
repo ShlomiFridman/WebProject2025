@@ -8,6 +8,10 @@ import Footer from "@/components/Footer";
 import "./globals.css";
 import { AppProvider } from "@/context/MainContext";
 
+// TODO use reducer to get logged in user (state: username)
+// TODO if username is null, Link to login page
+
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const title = usePathname();
 
