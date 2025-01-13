@@ -27,8 +27,8 @@ const HomePage: React.FC = () => {
 
   return (
       <div className="max-w-[1000px] my-4">
-        <div className="text-3xl text-green-600 font-bold pb-4">Welcome to TouRingo!</div>
-        <div className="AttractionsTitle">Attractions</div>
+        <div className="text-3xl text-green-600 font-bold">Events</div>
+        <div className="pb-4">Local tourist attractions, restaurants, and cultural events</div>
         <div>
           {events!=null? <EventTable events={events} /> : <LoadingBox/>}
         </div>

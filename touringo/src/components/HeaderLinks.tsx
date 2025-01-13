@@ -1,15 +1,17 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export default function HeaderLinks({ title }: { title: string }) {
+export default function HeaderLinks() {
+  const path = usePathname();
   
   return (
     <div className="flex justify-start gap-3">
   <Link
     href="/"
     className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${
-      title === "/" ? "bg-gray-200 dark:bg-gray-700 " : ""
+      path === "/" ? "bg-gray-200 dark:bg-gray-700 " : ""
     }`}
   >
     Attractions
@@ -18,7 +20,7 @@ export default function HeaderLinks({ title }: { title: string }) {
   <Link
     href="/bookings"
     className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${
-      title === "/bookings" ? "bg-gray-200  dark:bg-gray-700 " : ""
+      path === "/bookings" ? "bg-gray-200  dark:bg-gray-700 " : ""
     }`}
   >
     Bookings
@@ -27,7 +29,7 @@ export default function HeaderLinks({ title }: { title: string }) {
   <Link
     href="/profile"
     className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${
-      title === "/profile" ? "bg-gray-200  dark:bg-gray-700 " : ""
+      path === "/profile" ? "bg-gray-200  dark:bg-gray-700 " : ""
     }`}
   >
     Profile
@@ -36,10 +38,19 @@ export default function HeaderLinks({ title }: { title: string }) {
   <Link
     href="/about"
     className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${
-      title === "/about" ? "bg-gray-200 dark:bg-gray-700 " : ""
+      path === "/about" ? "bg-gray-200 dark:bg-gray-700 " : ""
     }`}
   >
     About
+  </Link>
+
+  <Link
+    href="/login"
+    className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-red-400 ${
+      path === "/login" ? "bg-gray-200 dark:bg-gray-700 " : ""
+    }`}
+  >
+    Log Out
   </Link>
 </div>
   );

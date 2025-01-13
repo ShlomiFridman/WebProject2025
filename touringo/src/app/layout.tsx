@@ -13,16 +13,19 @@ import { AppProvider } from "@/context/MainContext";
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const title = usePathname();
+  const path = usePathname();
 
   return (
     <html lang="en">
+      <head>
+        <title>TouRingo</title>
+      </head>
       <body
         className="max-w-[1000px] mx-auto py-2 flex flex-col min-h-[100vh] bg-white dark:bg-[#292b2f] text-black dark:text-white"
       >
         <ThemeProvider>
           <AppProvider>
-            <Header title={title} />
+            {path != "/login" && path != "/register" ? <Header /> : <></>}
               <main className="grow">{children}</main>
             <Footer />
           </AppProvider>

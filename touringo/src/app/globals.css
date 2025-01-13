@@ -43,17 +43,6 @@ body {
   box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.5);
 }
 
-/* Title Styles */
-.AttractionsTitle {
-  background-color: #e7ccb3;
-  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="dark"] .AttractionsTitle {
-  background-color: var(--box-background);
-  box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.5);
-}
-
 /* Input/textarea adjustments */
 [data-theme="dark"] input,
 [data-theme="dark"] textarea {

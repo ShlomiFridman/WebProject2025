@@ -1,5 +1,8 @@
+"use client"
+
 // src/app/login/page.tsx
 import React from 'react';
+
 
 const LoginPage = () => {
   return (
