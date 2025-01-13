@@ -46,17 +46,24 @@ const ProfilePage: React.FC = () => {
       <div className="text-3xl text-green-600 font-bold mb-4">Profile</div>
       <div>
         <div className="profile-header mb-6 text-center">
-          <Image
-            id="profile-pic"
-            className="rounded-full w-36 h-36 object-cover border-4 border-blue-500 mx-auto"
-            src="/event_images/profilePicture.jpg"
-            alt="Profile Picture"
-            objectFit="cover" 
-            // TODO make it responsive with 4:9 ratio 
-            layout="responsive"
-            width={5} // Aspect ratio: 16:9
-            height={5}
-          />
+          <div
+            className="relative mx-auto"
+            style={{
+              aspectRatio: '2.75 / 3', // Define the desired aspect ratio
+              width: '100%', // Makes it responsive
+              maxWidth: '150px', //  Limit maximum width
+            }}
+          >
+            <Image
+              id="profile-pic"
+              className="rounded-full object-cover border-4 border-blue-500"
+              src="/event_images/profilePicture.jpg"
+              alt="Profile Picture"
+              layout="fill" // Uses the container's dimensions
+              // objectFit="cover"
+            />
+          </div>
+          
           <h1 id="name" className="mt-4 text-2xl text-blue-500">
             {activeField === "name" ? (
               <input
