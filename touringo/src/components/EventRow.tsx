@@ -24,7 +24,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
     <Link href="#" onClick={selectEvent}>
       <div  className="event-row">
         {/* Inline style to control the image size */}
-        <div className="max-h-[100px]">
+        <div className="max-h-[1000px]">
           <Image
             priority
             unoptimized
