@@ -279,3 +279,8 @@ export class TR_Alert {
         return jsonArray.map(json => TR_Alert.fromJSON(json));
     }
 }
+
+export interface MongooseError {
+    code: number;
+    message: string;
+}
