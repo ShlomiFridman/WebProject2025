@@ -145,7 +145,7 @@ const ProfilePage: React.FC = () => {
           )}
         </div>
       </div>
-      
+      <div className="max-w-[1000px] my-4 mx-auto text-3xl text-green-600 font-bold">Bookings</div>
     </div>
   );
 };

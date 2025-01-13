@@ -9,21 +9,12 @@ export default function HeaderLinks() {
   return (
     <div className="flex justify-start gap-3">
   <Link
-    href="/"
+    href="/home"
     className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${
-      path === "/" ? "bg-gray-200 dark:bg-gray-700 " : ""
+      path === "/home" ? "bg-gray-200 dark:bg-gray-700 " : ""
     }`}
   >
-    Attractions
-  </Link>
-
-  <Link
-    href="/bookings"
-    className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${
-      path === "/bookings" ? "bg-gray-200  dark:bg-gray-700 " : ""
-    }`}
-  >
-    Bookings
+    🏙 TouRingo
   </Link>
 
   <Link
@@ -32,7 +23,7 @@ export default function HeaderLinks() {
       path === "/profile" ? "bg-gray-200  dark:bg-gray-700 " : ""
     }`}
   >
-    Profile
+    [Profile]
   </Link>
 
   <Link
@@ -42,15 +33,6 @@ export default function HeaderLinks() {
     }`}
   >
     About
-  </Link>
-
-  <Link
-    href="/login"
-    className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-red-400 ${
-      path === "/login" ? "bg-gray-200 dark:bg-gray-700 " : ""
-    }`}
-  >
-    Log Out
   </Link>
 </div>
   );

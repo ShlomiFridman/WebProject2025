@@ -45,13 +45,17 @@ const EventPage = () => {
   }, [id_num]);
 
   return (
-    eventData != null? 
-      <div>
-        <h1>Welcome to the event Page of {eventData.name}! ID={id}</h1>
-        <EventRow event={eventData} />
-      </div>
-      :
-      <LoadingBox />
+    <div>
+      {eventData != null ? (
+        <div>
+          <h1>Welcome to the event Page of {eventData.name}! ID={id}</h1>
+          <EventRow event={eventData} />
+        </div>
+      ) : (
+        <LoadingBox />
+      )}
+      <div className="max-w-[1000px] my-4 mx-auto text-3xl text-green-600 font-bold">Nav</div>
+    </div>
   );
 };
 

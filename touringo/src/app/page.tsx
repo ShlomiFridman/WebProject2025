@@ -1,6 +1,7 @@
 "use client"
 
-import { decryptData, encryptData } from "@/utils/utils";
+//import { decryptData, encryptData } from "@/utils/utils";
+import { redirect } from 'next/navigation';
 
 // fetch template example
 // const user = {
@@ -31,7 +32,9 @@ import { decryptData, encryptData } from "@/utils/utils";
 
 
 export default function Page() {
-  const txt = encryptData({test:"TEST"});
+  redirect('/home');
+
+  /*const txt = encryptData({test:"TEST"});
   const data = decryptData(txt)
   return (
         <div className="max-w-[1000px] my-4 mx-auto">
@@ -44,5 +47,5 @@ export default function Page() {
           </div>
 
         </div>
-  );
+  );*/
 }
