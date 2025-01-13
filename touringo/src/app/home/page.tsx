@@ -11,7 +11,7 @@ const HomePage: React.FC = () => {
 
   useEffect(()=>{
       const getEvents = async () =>{
-        const response = await fetch("/api/events/get")
+        const response = await fetch("/api/events/getAll")
         if (!response.ok){
           alert(response.statusText);
           setEvents([]);

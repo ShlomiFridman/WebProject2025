@@ -18,7 +18,7 @@ const EventPage = () => {
           setEventData(state.selectedEvent);
         }
         else {
-          const response = await fetch(`/api/events/getEventById/${idStr}`)
+          const response = await fetch(`/api/events/getById/${idStr}`)
           if (!response.ok){
             alert(response.statusText);
             return;
