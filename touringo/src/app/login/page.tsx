@@ -12,7 +12,7 @@ const LoginPage = () => {
 
   const onBtnClick: React.MouseEventHandler<HTMLButtonElement> = (e)=>{
     e.preventDefault();
-    loginRequest("admin","adminPass");
+    loginRequest("bob","bobby");
   }
   const loginRequest = (username: string, password: string) => {
     fetch('/api/accounts/login', {
