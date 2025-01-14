@@ -1,5 +1,7 @@
 "use client";
 import EventRow from '@/components/EventRow';
+import GoogleMap from '@/components/GoogleMap';
+import StaticGoogleMap from '@/components/GoogleMap';
 import LoadingBox from '@/components/LoadingBox';
 import { useAppContext } from '@/context/MainContext';
 import { TR_Event } from '@/utils/classes';
@@ -50,12 +52,14 @@ const EventPage = () => {
         <div>
           <h1>Welcome to the event Page of {eventData.name}! ID={id}</h1>
           <EventRow event={eventData} />
-        </div>
-      ) : (
+        
+        <div className="max-w-[1000px] my-4 mx-auto text-3xl text-green-600 font-bold">Map</div>
+        <GoogleMap address = { `${eventData.town}, ${eventData.address}` }/>
+    </div>
+    ) : (
         <LoadingBox />
       )}
-      <div className="max-w-[1000px] my-4 mx-auto text-3xl text-green-600 font-bold">Nav</div>
-    </div>
+       </div>
   );
 };
 
