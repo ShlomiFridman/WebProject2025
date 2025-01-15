@@ -1,7 +1,6 @@
 "use client";
 import EventRow from '@/components/EventRow';
 import GoogleMap from '@/components/GoogleMap';
-import StaticGoogleMap from '@/components/GoogleMap';
 import LoadingBox from '@/components/LoadingBox';
 import { useAppContext } from '@/context/MainContext';
 import { TR_Event } from '@/utils/classes';
@@ -44,7 +43,7 @@ const EventPage = () => {
         
       };
       getEventData();
-  }, [id_num]);
+  }, [currentPath, dispatch, id, id_num, router, state.selectedEvent]);
 
   return (
     <div>
