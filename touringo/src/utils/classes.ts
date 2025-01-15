@@ -22,6 +22,17 @@ export class Account {
     static fromJSON_array(jsonArray: { username: string, password: string, name: string, bio: string, about: string }[]): Account[] {
         return jsonArray.map(json => Account.fromJSON(json));
     }
+
+    static parseJSON(json: string): Account {
+        const obj = JSON.parse(json);
+        return new Account(
+          obj.username || "",
+          obj.password || "",
+          obj.name || "",
+          obj.bio || "",
+          obj.about || ""
+        );
+      }
 }
 
 export class TR_Image {

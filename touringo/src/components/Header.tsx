@@ -1,20 +1,27 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import HeaderLinks from "./HeaderLinks";
 import HeaderIcons from "./HeaderIcons";
 import { useAppContext } from "@/context/MainContext";
 import { redirect } from "next/navigation";
+import { isLoggedIn } from "@/utils/util_client";
 
 export default function Header() {
-  const {state} = useAppContext();
+  const [isClient, setIsClient] = useState(false);
+  useAppContext();
 
   useEffect(() => {
-    if (state.loggedAccount == null){
-      alert("You must login first");
+    setIsClient(true); // Ensures this is run only on the client
+    if (!isLoggedIn()){
+      alert("You must login");
       redirect("/login");
     }
-  }, [state]);
+  }, []);
+
+  if (!isClient) {
+    return null; // Prevents rendering client-specific content on the server
+  }
 
   return (
     <>

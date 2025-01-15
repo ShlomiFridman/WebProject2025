@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useAppContext } from '@/context/MainContext';
 import { Account } from '@/utils/classes';
 import { encryptData } from '@/utils/utils';
+import {logAccount} from "@/utils/util_client";
 import React from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -19,6 +20,7 @@ const LoginPage = () => {
 
   useEffect(()=>{
     dispatch({type:'SET_LOGGED_ACCOUNT', payload:null});
+    logAccount(null);
   },[dispatch]);
 
   // Handle form input changes
@@ -75,6 +77,7 @@ const LoginPage = () => {
           const account = resBody.result as Account;
           console.log(`Logged account set: ${username}`);
           dispatch({ type: 'SET_LOGGED_ACCOUNT', payload: account });
+          logAccount(account);
           router.push("/home");
         }
       })
