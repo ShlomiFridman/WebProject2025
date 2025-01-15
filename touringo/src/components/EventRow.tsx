@@ -55,7 +55,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
           <button
             className="bg-green-500 px-4 py-2 rounded hover:bg-green-700 transition w-full"
           >
-            Booking
+            Book
           </button>
         </Link >
         <br />

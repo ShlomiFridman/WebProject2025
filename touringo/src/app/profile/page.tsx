@@ -5,6 +5,7 @@ import { Account } from "@/utils/classes";
 import { encryptData } from "@/utils/utils";
 import Image from "next/image";
 import React, { useState } from "react";
+import { getLoggedAccount } from "@/utils/util_client";
 
 interface Profile {
   name: string;
@@ -15,15 +16,15 @@ interface Profile {
 const ProfilePage: React.FC = () => {
   // TODO use reducer to get the username
   // TODO use useEffect get the account info from server
+  const loggedAccount = getLoggedAccount();
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [profile, setProfile] = useState<Profile>({
-    name: "John Doe",
-    bio: "Web Developer | Tech Enthusiast | Lifelong Learner",
-    about:
-      "I am a passionate web developer with experience in building responsive and dynamic web applications. I love exploring new technologies and sharing knowledge with others.",
+    name: loggedAccount?.username || "null",
+    bio: loggedAccount?.bio || "null",
+    about: loggedAccount?.about || "null",
   });
   const [activeField, setActiveField] = useState<string | null>(null);
-  const {dispatch} = useAppContext();
+  const { dispatch } = useAppContext();
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -48,35 +49,36 @@ const ProfilePage: React.FC = () => {
   // TODO call the function on save click
   const updateRequest = (username: string, updatedAccount: Account) => {
     fetch('/api/accounts/update', {
-            method: 'PUT',
-            body: JSON.stringify(
-              {data:encryptData(
-                {
-                  username: username, 
-                  updatedAccount: updatedAccount
-                })
-              }
-            )
-          }).then((response)=>{
-            const badRequestError = (400 <= response.status && response.status < 500);
-            if (!response.ok && !badRequestError) {
-              alert(response.statusText);
-              throw new Error("Unknown Error");
-            }
-            return response.json();
-          }).then((resBody)=>{
-            if (resBody.message){
-              alert(resBody.message);
-            } else{
-              const account = resBody.result as Account;
-              console.log(`updated account`);
-              dispatch({type:'SET_LOGGED_ACCOUNT', payload:account})
-            }
-          }).catch((err)=>{
-            console.log(err);
-          })
+      method: 'PUT',
+      body: JSON.stringify(
+        {
+          data: encryptData(
+            {
+              username: username,
+              updatedAccount: updatedAccount
+            })
+        }
+      )
+    }).then((response) => {
+      const badRequestError = (400 <= response.status && response.status < 500);
+      if (!response.ok && !badRequestError) {
+        alert(response.statusText);
+        throw new Error("Unknown Error");
+      }
+      return response.json();
+    }).then((resBody) => {
+      if (resBody.message) {
+        alert(resBody.message);
+      } else {
+        const account = resBody.result as Account;
+        console.log(`updated account`);
+        dispatch({ type: 'SET_LOGGED_ACCOUNT', payload: account })
+      }
+    }).catch((err) => {
+      console.log(err);
+    })
   }
-  updateRequest("bob", new Account("","","","",""));
+  updateRequest("bob", new Account("", "", "", "", ""));
 
   return (
     <div className="max-w-[1000px] my-4 mx-auto">
@@ -97,10 +99,10 @@ const ProfilePage: React.FC = () => {
               src="/event_images/profilePicture.jpg"
               alt="Profile Picture"
               layout="fill" // Uses the container's dimensions
-              // objectFit="cover"
+            // objectFit="cover"
             />
           </div>
-          
+
           <h1 id="name" className="mt-4 text-2xl text-blue-500">
             {activeField === "name" ? (
               <input
@@ -182,7 +184,6 @@ const ProfilePage: React.FC = () => {
           )}
         </div>
       </div>
-      <div className="max-w-[1000px] my-4 mx-auto text-3xl text-green-600 font-bold">Bookings</div>
     </div>
   );
 };

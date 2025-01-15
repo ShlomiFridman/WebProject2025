@@ -35,7 +35,7 @@ export default function HeaderLinks() {
         className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${path === "/profile" ? "bg-gray-200  dark:bg-gray-700 " : ""
           }`}
       >
-        [Profile]
+        Profile
       </Link>
 
       <Link
