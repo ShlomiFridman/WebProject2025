@@ -5,7 +5,7 @@ interface StaticMapProps {
 }
 
 const StaticGoogleMap: React.FC<StaticMapProps> = ({ address}) => {
-  const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(address)}&z=${15}&output=embed`;
+  const mapSrc = `https://www.google.com/maps?q=${encodeURIComponent(address)}&z=15&output=embed`;
 
   return (
     <div className="w-full h-64">
