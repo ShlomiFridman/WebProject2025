@@ -12,7 +12,7 @@ interface AppState{
 }
 type Action =
     | {type: "SET_SELECTED_EVENT"; payload: TR_Event}
-    | {type: "SET_LOGGED_ACCOUNT"; payload: Account};
+    | {type: "SET_LOGGED_ACCOUNT"; payload: Account|null};
 
 const tr_reducer = (state: AppState, action: Action): AppState => {
         switch (action.type) {            
