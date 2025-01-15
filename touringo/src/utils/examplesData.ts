@@ -1,59 +1,46 @@
-import path from "path";
+// import path from "path";
 import {Account, TR_Image, TR_Event, Review, Booking} from "./classes";
-import fs from 'fs';
+// import fs from 'fs';
 // import {fetchImageAsBlob} from "@/utils/utils";
 
 
-const imageNames = [
-    "booth.jpg",
-    "cityTour.jpg",
-    "concertPoster.jpg",
-    "gala.jpg",
-    "holidayFair.jpg",
-    "mainEvent.jpeg",
-    "sideEvent.jpeg",
-    "speaker.png",
-    "vip.jpg",
-    "workshop.jpg"
-];
+const imagesUrls: [string, string][] = [
+    ["Booth", "https://imgcdn.stablediffusionweb.com/2024/9/6/51df4600-410c-471c-92ef-66420eb15aa6.jpg"],
+    ["City Tour", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY3cX3Px9YgVJK3tVYJmNsUZD_lN5xs6vgwg&s"],
+    ["Concert Poster", "https://recordmecca.com/wp-content/uploads/2019/02/Screen-Shot-2019-02-27-at-9.25.09-AM.jpeg"],
+    ["Gala", "https://design-assets.adobeprojectm.com/content/download/express/public/urn:aaid:sc:VA6C2:a994d11f-5f53-5373-a631-a2fd00cde8bd/component?assetType=TEMPLATE&etag=be61436dfd274fcfa1582226f1802b0d&revision=1cf5b797-2c76-4753-beb7-a51317bda9f4&component_id=7897f3a3-e13c-4d54-9202-49b58a1af81b"],
+    ["Holiday Fair", "https://images.squarespace-cdn.com/content/v1/65032eded54a724936bfa8f1/3f6fce05-09f8-42fd-9861-157b0ffc1a53/1-203.jpg"],
+    ["F1 Race", "https://cdn.wynnresorts.com/q_auto,f_auto/Wynn%20Las%20Vegas/Experiences/F1/F1%202024/f1-race-week-wynn-las-vegas-driver-with-car-828x466?h=466&iar=0&w=828"],
+    ["Music Festival", "https://marketplace.canva.com/EAF2v5ucX74/1/0/1131w/canva-blue-and-yellow-gradient-cute-playful-summer-music-festival-flyer-fYVv97vxRds.jpg"],
+    ["Speaker", "https://i.pinimg.com/originals/ac/3b/d1/ac3bd12c52c04fe1d8591c525360e6f0.jpg"],
+    ["Vip", "https://assets.imcas.com/congresses/imcas2021/rooms/702/2.jpg"],
+    ["Workshop", "https://c8.alamy.com/comp/2EKYCRC/woodwork-joiner-or-carpenter-workshop-metal-plate-rusty-or-vector-retro-poster-wood-carpentry-and-timber-works-tools-joiner-plane-or-jointer-woodw-2EKYCRC.jpg"]
+  ];
 
-const imagesPromises = imageNames.map(async name => {
-    const [simpleName, extension] = name.split('.');
-    const capitalized = simpleName.charAt(0).toUpperCase() + simpleName.slice(1);
-    const imagePath = path.join(process.cwd(), 'public', 'event_images', `${simpleName}.${extension}`); // Assuming images are JPG files
-    const imageData = await fs.promises.readFile(imagePath);
-    // const blob = new Blob([imageData], {type: `image/${extension}`});
-    return new TR_Image(capitalized, imageData, extension);
-  });
+// const imagesPromises = imageNames.map(async name => {
+//     const [simpleName, extension] = name.split('.');
+//     const capitalized = simpleName.charAt(0).toUpperCase() + simpleName.slice(1);
+//     const imagePath = path.join(process.cwd(), 'public', 'event_images', `${simpleName}.${extension}`); // Assuming images are JPG files
+//     const imageData = await fs.promises.readFile(imagePath);
+//     // const blob = new Blob([imageData], {type: `image/${extension}`});
+//     return new TR_Image(capitalized, imageData, extension);
+//   });
 
 // Account examples
 export const accountExamples = [
-    new Account("user1", "pass123"),
-    new Account("admin", "adminPass"),
-    new Account("guest", "guestPass"),
-    new Account("johnDoe", "jdPass2024"),
-    new Account("alice", "alicePass99"),
+    new Account("user1", "pass123", "User One", "A passionate coder who loves learning new technologies.", "I enjoy building web applications and exploring different programming languages."),
+    new Account("admin", "adminPass", "Admin", "The go-to person for managing everything in the system.", "I ensure the smooth operation of the platform and oversee user management and security."),
+    new Account("guest", "guestPass", "Guest", "Temporary user with limited access.", "I have a basic understanding of how the system works and explore its features."),
+    new Account("johnDoe", "jdPass2024", "John Doe", "A software engineer with a love for open-source projects.", "I contribute to open-source projects and focus on building scalable systems for businesses."),
+    new Account("alice", "alicePass99", "Alice", "Designer by day, developer by night.", "I specialize in UI/UX design and also dabble in front-end development, ensuring the best user experience.")
 ];
 
-export const accountExamples1 = ()=> {
-    return [
-        new Account("user1", "pass123"),
-        new Account("admin", "adminPass"),
-        new Account("guest", "guestPass"),
-        new Account("johnDoe", "jdPass2024"),
-        new Account("alice", "alicePass99"),
-    ];
-}
 
 // TR_Image examples
-const imageExamples = await Promise.all(imagesPromises);
-// export const imageExamples = [
-//     new TR_Image(1, 101, "Image1", new Blob(["data1"]), "jpeg"),
-//     new TR_Image(2, 102, "Image2", new Blob(["data2"]), "png"),
-//     new TR_Image(3, 103, "EventImage", new Blob(["data3"]), "gif"),
-//     new TR_Image(4, 104, "PromoImage", new Blob(["data4"]), "bmp"),
-//     new TR_Image(5, 105, "GalleryPic", new Blob(["data5"]), "webp"),
-// ];
+// const imageExamples = await Promise.all(imagesPromises);
+export const imageExamples = imagesUrls.map(([title, imageUrl]) => 
+    new TR_Image(title, null, imageUrl, 'url') 
+  );
 
 // TR_Event examples
 export const eventExamples = [

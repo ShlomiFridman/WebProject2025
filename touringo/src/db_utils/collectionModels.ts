@@ -8,14 +8,18 @@ const Schema = mongoose.Schema;
 // Account Schema
 const accountSchema = new Schema({
     username: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    name: {type: String, required: true },
+    bio: {type: String, default: "" },
+    about: {type: String, default: "" },
 });
 export const AccountModel = db.models.Account || db.model('Account', accountSchema);
 
 // TR_Image Schemay
 const trImageSchema = new Schema({
     title: { type: String, required: true },
-    data: { type: Buffer, required: true }, // Blob data is stored as Buffer
+    img_buffer: { type: Buffer, default: "" }, // Blob data is stored as Buffer
+    img_url: { type: String, default: "" }, // Blob data is stored as Buffer
     img_type: { type: String, required: true },
 });
 // export const TR_ImageModel = db.models.TR_Image || db.model('TR_Image', trImageSchema);

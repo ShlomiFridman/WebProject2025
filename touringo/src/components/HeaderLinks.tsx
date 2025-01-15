@@ -1,49 +1,39 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-export default function HeaderLinks({ title }: { title: string }) {
-    return(
+export default function HeaderLinks() {
+  const path = usePathname();
+  
+  return (
+    <div className="flex justify-start gap-3">
+  <Link
+    href="/home"
+    className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${
+      path === "/home" ? "bg-gray-200 dark:bg-gray-700 " : ""
+    }`}
+  >
+    🏙 TouRingo
+  </Link>
 
-        <div className="flex justify-start gap-3">
-                <Link
-                  href="/"
-                  className={
-                    "text-green-800 font-bold hover:underline px-2 py-1 rounded " +
-                    (title === "Attractions" ? "bg-white" : "")
-                  }
-                  style = {{ color: 'var(--header-links)' }}
-                >
-                  Attractions
-                </Link>
-                <Link
-                  href="/bookings"
-                  className={
-                    "text-green-800 font-bold hover:underline px-2 py-1 rounded " +
-                    (title === "Bookings" ? "bg-white" : "")
-                  }
-                  style = {{ color: 'var(--header-links)' }}
-                >
-                  Bookings
-                </Link>
-                <Link
-                  href="/profile"
-                  className={
-                    "text-green-800 font-bold hover:underline px-2 py-1 rounded " +
-                    (title === "Profile" ? "bg-white" : "")
-                  }
-                  style = {{ color: 'var(--header-links)' }}
-                >
-                  Profile
-                </Link>
-                <Link
-                  href="/about"
-                  className={
-                    "text-green-800 font-bold hover:underline px-2 py-1 rounded " +
-                    (title === "About" ? "bg-white" : "")
-                  }
-                  style = {{ color: 'var(--header-links)' }}
-                >
-                  About
-                </Link>
-              </div>
-    )
+  <Link
+    href="/profile"
+    className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${
+      path === "/profile" ? "bg-gray-200  dark:bg-gray-700 " : ""
+    }`}
+  >
+    [Profile]
+  </Link>
+
+  <Link
+    href="/about"
+    className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${
+      path === "/about" ? "bg-gray-200 dark:bg-gray-700 " : ""
+    }`}
+  >
+    About
+  </Link>
+</div>
+  );
 }

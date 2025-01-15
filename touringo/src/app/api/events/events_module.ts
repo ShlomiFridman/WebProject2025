@@ -23,6 +23,17 @@ export async function getEventsByCreator(creator_username: string): Promise<TR_E
     }
 }
 
+export async function getEventById(event_id: number): Promise<TR_Event>{
+    try{
+        const eventsRes = await TR_EventModel.findOne(
+            {event_id: event_id, isActive: true}
+        );
+        return eventsRes;
+    } catch(err){
+        throw err;
+    }
+}
+
 export async function createEvent(newEvent: TR_Event): Promise<TR_Event>{
     try{
         const lastEvent = await TR_EventModel.findOne() // No filter, get all users
@@ -49,7 +60,7 @@ export async function updateEvent(event_id: number, updatedEvent: TR_Event): Pro
     }
 }
 
-export async function deleteEvent(event_id: number): Promise<TR_Event>{
+export async function cancelEvent(event_id: number): Promise<TR_Event>{
     try{
         const deleteRes = await TR_EventModel.findOneAndUpdate(
             {event_id: event_id, isActive: true},
