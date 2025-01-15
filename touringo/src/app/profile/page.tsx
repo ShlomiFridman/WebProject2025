@@ -78,7 +78,7 @@ const ProfilePage: React.FC = () => {
       console.log(err);
     })
   }
-  updateRequest("bob", new Account("", "", "", "", ""));
+  //updateRequest("bob", new Account("", "", "", "", ""));
 
   return (
     <div className="max-w-[1000px] my-4 mx-auto">
