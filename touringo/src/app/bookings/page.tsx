@@ -25,7 +25,7 @@ const BookingsPage = () => {
         };
         if (bookings == null)
           getEvents();
-    }, []);
+    }, [state, bookings]);
     
   return (
     bookings!=null?

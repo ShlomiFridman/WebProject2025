@@ -5,7 +5,7 @@ import { updateAlertToRead } from "../../alerts_module";
 type Params = {
     alert_id: number;
 }
-export async function PATCH(request: Request, {params}: {params:Params}){
+export async function PATCH(request: Request, {params}: {params:Promise<Params>}){
     const { alert_id } = await params;
     
     if (!alert_id || isNaN(alert_id) || alert_id<100){

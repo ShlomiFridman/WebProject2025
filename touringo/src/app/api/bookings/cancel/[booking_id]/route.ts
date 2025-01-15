@@ -5,7 +5,7 @@ import { cancelBookingById } from '../../bookings_module';
 type Params = {
     booking_id: number;
 }
-export async function PATCH(request: Request, { params }: { params:Params }) {
+export async function PATCH(request: Request, { params }: { params:Promise<Params> }) {
     try {
         const {booking_id} = await params;
 

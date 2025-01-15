@@ -6,8 +6,8 @@ import { TR_Alert } from "@/utils/classes";
 type Params = {
     username: string;
 }
-export async function GET(request: Request, {params}: {params:Params}){
-    const {username} = params;
+export async function GET(request: Request, {params}: {params:Promise<Params>}){
+    const {username} = await params;
     if (!username){
         return NextResponse.json(
             {message: "Missing username"},

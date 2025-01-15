@@ -7,7 +7,7 @@ import { NextResponse } from "next/server";
 type Params = {
   event_id: number;
 } 
-export async function PATCH(request: Request, { params }: { params:Params }){
+export async function PATCH(request: Request, { params }: { params:Promise<Params> }){
   const {event_id} = await params;
 
   if (!event_id || isNaN(event_id) || event_id<100) {

@@ -10,7 +10,7 @@ import { NextResponse } from "next/server";
 type Params = {
   id: number;
 }
-export async function GET(request: Request, { params }: { params:Params }) {
+export async function GET(request: Request, { params }: { params:Promise<Params> }) {
     const {id} = await params;
     if (!id && isNaN(id)) {
         return NextResponse.json(

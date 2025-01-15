@@ -10,7 +10,7 @@ import { NextResponse } from "next/server";
 type Params = {
   username: string;
 }
-export async function GET(request: Request, { params }: { params:Params }) {
+export async function GET(request: Request, { params }: { params:Promise<Params> }) {
     const {username} = await params;
     if (!username) {
         return NextResponse.json(

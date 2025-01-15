@@ -1,15 +1,13 @@
 "use client";
-
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function CreateForm() {
-  const router = useRouter();
 
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [priority, setPriority] = useState("low");
   const [isLoading, setIsLoading] = useState(false);
+  setIsLoading(false);
 
   return (
     <form className="w-1/2 bg-blue-50 dark:bg-gray-800 p-6 rounded-lg shadow-md mx-auto space-y-4">

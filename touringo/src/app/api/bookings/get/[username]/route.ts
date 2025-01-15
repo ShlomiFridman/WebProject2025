@@ -5,7 +5,7 @@ import { getBookingsByUser } from '../../bookings_module';
 type Params = {
     username: string;
 }
-export async function GET(request: Request, { params }: { params:Params }) {
+export async function GET(request: Request, { params }: { params:Promise<Params> }) {
     try {
         const {username} = await params;
 

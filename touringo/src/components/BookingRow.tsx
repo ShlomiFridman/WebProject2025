@@ -29,6 +29,7 @@ const EventRow: React.FC<BookingRowProps> = ({ booking }) => {
             console.log(err);
           })
     }
+  cancelRequest(404);
   
   return (
     booking ? 

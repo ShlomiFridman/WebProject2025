@@ -23,7 +23,7 @@ const HomePage: React.FC = () => {
       };
       if (events == null)
         getEvents();
-  }, []);
+  }, [events]);
 
   return (
       <div className="max-w-[1000px] my-4">
