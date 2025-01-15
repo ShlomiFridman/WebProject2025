@@ -40,20 +40,22 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
           />
         </div>
         <div className="event-details">
-          <h3 className="text-xl font-bold">{event.name}</h3>
-          <p>{event.description}</p>
-          <p>
-            <strong>Location:</strong> {event.town}, {event.address}
-          </p>
-          <p>
-            <strong>Rating:</strong> 4/5
-          </p>
+          <h3 className="text-xl font-bold ">{event.name}</h3>
+          <div className="test grid grid-flow-col-dense grid-cols-1 gap-3 content-center">
+            <p>{event.description}</p>
+            <p>
+              <strong>Location:</strong> {event.town}, {event.address}
+            </p>
+            <p>
+              <strong>Rating:</strong> 4/5
+            </p>
+          </div>
         </div>
       </div>
       <div>
         <Link href="#" onClick={selectEvent}>
           <button
-            className="bg-green-500 px-4 py-2 rounded hover:bg-green-700 transition w-full"
+            className="bg-green-500 px-4 py-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500"
           >
             Book
           </button>
@@ -62,7 +64,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
         <br />
         <button
           onClick={openMap}
-          className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-700 transition w-full"
+          className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-700 transition w-full dark:bg-blue-700 dark:hover:bg-blue-500"
         >
           Open Map
         </button>
