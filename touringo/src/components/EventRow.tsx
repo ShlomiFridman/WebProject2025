@@ -26,7 +26,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
   };
   
   return (
-    <Link href="#" onClick={selectEvent}>
+    <Link href="#" onClick={selectEvent}>      
       <div className="event-row flex items-center justify-between">
         {/* Inline style to control the image size */}
         <div className="max-h-[1000px] mr-4">  {/* Added margin-right to create space between image and text */}
