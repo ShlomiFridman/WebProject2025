@@ -109,7 +109,6 @@ const ProfilePage: React.FC = () => {
                 id="name"
                 className="border rounded-lg p-2 w-full max-w-md mx-auto"
                 value={profile.name}
-                onChange={handleChange}
               />
             ) : (
               profile.name
@@ -146,13 +145,6 @@ const ProfilePage: React.FC = () => {
         <div className="flex justify-center gap-4 mt-6">
           {isEditing ? (
             <>
-              <button
-                className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
-                onClick={() => setActiveField("name")}
-                disabled={activeField === "name"}
-              >
-                Edit Name
-              </button>
               <button
                 className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
                 onClick={() => setActiveField("bio")}
