@@ -1,3 +1,5 @@
+"use client"
+
 import LoadingBox from '@/components/LoadingBox';
 import { useAppContext } from '@/context/MainContext';
 import { Booking } from '@/utils/classes';
