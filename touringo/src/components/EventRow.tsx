@@ -1,152 +1,68 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
+import { TR_Event } from "@/utils/classes";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useAppContext } from "@/context/MainContext";
+import BookingButton from "./BookButton";
 
-type BookingButtonProps = {
-  onBook?: (details: { date: string; time: string; tickets: number }) => void;
+type EventRowProps = {
+  event: TR_Event;
 };
 
-function BookingButton({ onBook }: BookingButtonProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
-  const [selectedTickets, setSelectedTickets] = useState(1);
-  const [isBookEnabled, setIsBookEnabled] = useState(false);
+const EventRow: React.FC<EventRowProps> = ({ event }) => {
+  const router = useRouter();
+  const { dispatch } = useAppContext();
 
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const today = new Date();
-  const maxDate = new Date(today);
-  maxDate.setMonth(today.getMonth() + 1);
-  const maxDateString = maxDate.toISOString().split("T")[0];
-  const todayString = today.toISOString().split("T")[0];
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isOpen]);
-
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const date = e.target.value;
-    setSelectedDate(date);
-    validateBooking(date, selectedTime, selectedTickets);
+  const selectEvent = ({ date, time, tickets }: { date: string; time: string; tickets: number }) => {
+    dispatch({ type: "SET_SELECTED_EVENT", payload: event });
+    router.push(`/event/${event.event_id}?date=${date}&time=${time}&tickets=${tickets}`);
   };
 
-  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const time = e.target.value;
-    setSelectedTime(time);
-    validateBooking(selectedDate, time, selectedTickets);
-  };
-
-  const handleTicketsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const tickets = parseInt(e.target.value, 10);
-    setSelectedTickets(tickets);
-    validateBooking(selectedDate, selectedTime, tickets);
-  };
-
-  const validateBooking = (date: string, time: string, tickets: number) => {
-    if (date && time && tickets > 0) {
-      const selectedDateTime = new Date(`${date}T${time}`);
-      if (selectedDateTime > new Date()) {
-        setIsBookEnabled(true);
-        return;
-      }
-    }
-    setIsBookEnabled(false);
+  const openMap = () => {
+    const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent(`${event.town}, ${event.address}`)}&z=15&output=embed`;
+    window.open(mapUrl, "_blank");
   };
 
   return (
-    <div>
-      <button
-        className="bg-green-500 px-4 py-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        Book
-      </button>
-
-      {isOpen && (
-        <div
-          ref={dropdownRef}
-          className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 z-10"
-        >
-          <div className="mb-4">
-            <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Choose a date
-            </label>
-            <input
-              type="date"
-              id="date"
-              className="mt-1 block w-full border rounded px-2 py-1 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-300"
-              value={selectedDate}
-              min={todayString}
-              max={maxDateString}
-              onChange={handleDateChange}
-            />
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="time" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Choose a time
-            </label>
-            <input
-              type="time"
-              id="time"
-              className="mt-1 block w-full border rounded px-2 py-1 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-300"
-              value={selectedTime}
-              onChange={handleTimeChange}
-            />
-          </div>
-
-          <div className="mb-4">
-            <label htmlFor="tickets" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Number of tickets
-            </label>
-            <select
-              id="tickets"
-              className="mt-1 block w-full border rounded px-2 py-1 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-300"
-              value={selectedTickets}
-              onChange={handleTicketsChange}
-            >
-              {Array.from({ length: 9 }, (_, i) => i + 1).map((num) => (
-                <option key={num} value={num}>
-                  {num}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <button
-            className={`w-full px-4 py-2 rounded ${
-              isBookEnabled
-                ? "bg-green-500 hover:bg-green-600 text-white"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500"
-            }`}
-            disabled={!isBookEnabled}
-            onClick={() =>
-              onBook &&
-              onBook({
-                date: selectedDate,
-                time: selectedTime,
-                tickets: selectedTickets,
-              })
-            }
-          >
-            Confirm Booking
-          </button>
+    <div className="event-row flex items-center justify-between p-1 mb-1 transition hover:bg-[#e7ccb3] hover:p-2 hover:rounded-lg hover:shadow-md dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
+      <div className="flex items-center">
+        <div className="max-h-[1000px] mr-4">
+          <Image
+            priority
+            unoptimized
+            src={event.images[0].src}
+            alt={event.images[0].title}
+            width={150}
+            height={100}
+          />
         </div>
-      )}
+        <div className="event-details">
+          <h3 className="text-xl font-bold ">{event.name}</h3>
+          <div className="test grid grid-flow-col-dense grid-cols-1 gap-3 content-center">
+            <p>{event.description}</p>
+            <p>
+              <strong>Location:</strong> {event.town}, {event.address}
+            </p>
+            <p>
+              <strong>Rating:</strong> 4/5
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <BookingButton onBook={selectEvent} />
+        <br />
+        <br />
+        <button
+          onClick={openMap}
+          className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-700 transition w-full dark:bg-blue-700 dark:hover:bg-blue-500"
+        >
+          Open Map
+        </button>
+      </div>
     </div>
   );
-}
+};
 
-export default BookingButton;
+export default EventRow;

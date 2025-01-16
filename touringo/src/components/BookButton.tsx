@@ -11,6 +11,7 @@ function BookingButton({ onBook }: BookingButtonProps) {
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedTickets, setSelectedTickets] = useState(1);
   const [isBookEnabled, setIsBookEnabled] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -35,6 +36,12 @@ function BookingButton({ onBook }: BookingButtonProps) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
+
+  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setDropdownPosition({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX });
+    setIsOpen(!isOpen);
+  };
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const date = e.target.value;
@@ -69,7 +76,7 @@ function BookingButton({ onBook }: BookingButtonProps) {
     <div>
       <button
         className="bg-green-500 px-4 py-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleButtonClick}
       >
         Book
       </button>
@@ -77,7 +84,8 @@ function BookingButton({ onBook }: BookingButtonProps) {
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 z-10"
+          style={{ position: "absolute", top: dropdownPosition.top, left: dropdownPosition.left }}
+          className="w-64 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 z-10"
         >
           <div className="mb-4">
             <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
