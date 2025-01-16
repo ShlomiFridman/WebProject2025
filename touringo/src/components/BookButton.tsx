@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 function BookingButton({ onBook }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,11 +8,31 @@ function BookingButton({ onBook }) {
   const [selectedTickets, setSelectedTickets] = useState(1);
   const [isBookEnabled, setIsBookEnabled] = useState(false);
 
+  const dropdownRef = useRef(null);
+
   const today = new Date();
   const maxDate = new Date(today);
   maxDate.setMonth(today.getMonth() + 1);
   const maxDateString = maxDate.toISOString().split("T")[0];
   const todayString = today.toISOString().split("T")[0];
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    // Attach the event listener when the dropdown is open
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      // Cleanup the event listener
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
 
   const handleDateChange = (e) => {
     const date = e.target.value;
@@ -53,7 +73,10 @@ function BookingButton({ onBook }) {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 z-10">
+        <div
+          ref={dropdownRef}
+          className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 z-10"
+        >
           <div className="mb-4">
             <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Choose a date
