@@ -3,16 +3,19 @@ import { Account, TR_Event } from "@/utils/classes";
 
 const initialState: AppState = {
     selectedEvent: null,
-    loggedAccount: null
+    loggedAccount: null,
+    themeMode: "light"
 }
 
 interface AppState{
     selectedEvent: TR_Event|null;
     loggedAccount: Account|null;
+    themeMode: string;
 }
 type Action =
     | {type: "SET_SELECTED_EVENT"; payload: TR_Event}
-    | {type: "SET_LOGGED_ACCOUNT"; payload: Account};
+    | {type: "SET_LOGGED_ACCOUNT"; payload: Account|null}
+    | {type: "SET_THEME_MODE"; payload: string};
 
 const tr_reducer = (state: AppState, action: Action): AppState => {
         switch (action.type) {            
@@ -21,6 +24,9 @@ const tr_reducer = (state: AppState, action: Action): AppState => {
             
             case "SET_LOGGED_ACCOUNT":
                 return {...state, loggedAccount: action.payload};
+                
+            case "SET_THEME_MODE":
+              return {...state, themeMode: action.payload};
             
             default:
                 return state;

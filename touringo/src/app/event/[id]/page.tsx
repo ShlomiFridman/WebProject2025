@@ -4,6 +4,7 @@ import GoogleMap from '@/components/GoogleMap';
 import LoadingBox from '@/components/LoadingBox';
 import { useAppContext } from '@/context/MainContext';
 import { TR_Event } from '@/utils/classes';
+import Link from 'next/link';
 import { useParams, usePathname ,useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
@@ -49,12 +50,16 @@ const EventPage = () => {
     <div>
       {eventData != null ? (
         <div>
+                    <div className="pt-3">
+                    <Link href="/home" className="text-green-500 font-bold hover:underline">← Back to All Events</Link>
+          </div>
           <h1>Welcome to the event Page of {eventData.name}! ID={id}</h1>
+
           <EventRow event={eventData} />
         
         <div className="max-w-[1000px] my-4 mx-auto text-3xl text-green-600 font-bold">Map</div>
         <GoogleMap address = { `${eventData.town}, ${eventData.address}` }/>
-    </div>
+        </div>
     ) : (
         <LoadingBox />
       )}

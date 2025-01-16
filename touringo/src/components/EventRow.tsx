@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import { TR_Event } from "@/utils/classes";
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/context/MainContext";
+import BookingButton from "./BookButton";
 
 type EventRowProps = {
   event: TR_Event;
@@ -13,49 +13,59 @@ type EventRowProps = {
 const EventRow: React.FC<EventRowProps> = ({ event }) => {
   const router = useRouter();
   const { dispatch } = useAppContext();
-  
-  const selectEvent: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
-    e.preventDefault();
-    dispatch({type:"SET_SELECTED_EVENT", payload: event});
-    router.push(`/event/${event.event_id}`);
-  }
+
+  const selectEvent = ({ date, time, tickets }: { date: string; time: string; tickets: number }) => {
+    dispatch({ type: "SET_SELECTED_EVENT", payload: event });
+    router.push(`/event/${event.event_id}?date=${date}&time=${time}&tickets=${tickets}`);
+  };
 
   const openMap = () => {
     const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent(`${event.town}, ${event.address}`)}&z=15&output=embed`;
     window.open(mapUrl, "_blank");
   };
-  
+
   return (
-    <Link href="#" onClick={selectEvent}>      
-      <div className="event-row flex items-center justify-between">
-        {/* Inline style to control the image size */}
-        <div className="max-h-[1000px] mr-4">  {/* Added margin-right to create space between image and text */}
+    <div className="event-row flex flex-col sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#e7ccb3] dark:bg-[var(--box-background)]  sm:bg-white hover:bg-[#e7ccb3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-transparent sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
+
+
+      <div className="flex flex-col sm:flex-row sm:items-center w-full">
+        <div className="max-h-[1000px] mb-4 sm:mb-0 sm:mr-4 sm:w-1/5">
           <Image
             priority
             unoptimized
-            src={event.images[0].src} 
+            src={event.images[0].src}
             alt={event.images[0].title}
-            width={150}   // Image width in pixels
-            height={100}  // Image height in pixels
+            width={150}
+            height={100}
           />
         </div>
-        <div className="event-details">
-          <h3>{event.name}</h3>
-          <p>{event.description}</p>
-          <p><strong>Location:</strong> {event.town}, {event.address}</p>
-          <p><strong>Rating:</strong> 4/5</p> {/* TODO get reviews from server and calc average */}
+        <div className="event-details w-full sm:w-4/5">
+          <h3 className="text-xl font-bold">{event.name}</h3>
+          <div className="grid grid-cols-1 gap-3 mt-2 sm:mt-0 sm:grid-cols-2">
+            <p>{event.description}</p>
+            <div>
+              <p>
+                <strong>Location:</strong> {event.town}, {event.address}
+              </p>
+              <p>
+                <strong>Rating:</strong> 4/5
+              </p>
+            </div>
+          </div>
         </div>
-        <div>
-        <button
-        className="bg-green-500 px-4 py-2 rounded  hover:bg-green-700 transition w-full"
-      >Booking</button><br/><br/>
-        <button
-        onClick={openMap}
-        className="bg-blue-500 px-4 py-2 rounded  hover:bg-blue-700 transition w-full"
-      >Open Map</button>
       </div>
+      <div className="mt-4 sm:mt-0 sm:ml-4">
+        <BookingButton onBook={selectEvent} />
+        <br />
+        <br />
+        <button
+          onClick={openMap}
+          className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-700 transition w-full dark:bg-blue-700 dark:hover:bg-blue-500"
+        >
+          Open in maps 
+        </button>
       </div>
-    </Link>
+    </div>
   );
 };
 

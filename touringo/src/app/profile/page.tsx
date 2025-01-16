@@ -5,6 +5,7 @@ import { Account } from "@/utils/classes";
 import { encryptData } from "@/utils/utils";
 import Image from "next/image";
 import React, { useState } from "react";
+import { getLoggedAccount, logAccount } from "@/utils/util_client";
 
 interface Profile {
   name: string;
@@ -15,15 +16,15 @@ interface Profile {
 const ProfilePage: React.FC = () => {
   // TODO use reducer to get the username
   // TODO use useEffect get the account info from server
+  const loggedAccount = getLoggedAccount();
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [profile, setProfile] = useState<Profile>({
-    name: "John Doe",
-    bio: "Web Developer | Tech Enthusiast | Lifelong Learner",
-    about:
-      "I am a passionate web developer with experience in building responsive and dynamic web applications. I love exploring new technologies and sharing knowledge with others.",
+    name: loggedAccount?.username || "",
+    bio: loggedAccount?.bio || "",
+    about: loggedAccount?.about || "",
   });
   const [activeField, setActiveField] = useState<string | null>(null);
-  const {dispatch} = useAppContext();
+  const { dispatch } = useAppContext();
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -32,7 +33,13 @@ const ProfilePage: React.FC = () => {
   const handleSave = () => {
     setIsEditing(false);
     setActiveField(null);
+    let updateAccount:Account;
+
+    if(loggedAccount != null) {
+      updateAccount = new Account(loggedAccount.username, loggedAccount.password, loggedAccount.name, profile.bio, profile.about)
+      updateRequest(loggedAccount.username, updateAccount);  
     // Additional save logic (e.g., API call) can be implemented here
+    }
   };
 
   const handleChange = (
@@ -48,35 +55,36 @@ const ProfilePage: React.FC = () => {
   // TODO call the function on save click
   const updateRequest = (username: string, updatedAccount: Account) => {
     fetch('/api/accounts/update', {
-            method: 'PUT',
-            body: JSON.stringify(
-              {data:encryptData(
-                {
-                  username: username, 
-                  updatedAccount: updatedAccount
-                })
-              }
-            )
-          }).then((response)=>{
-            const badRequestError = (400 <= response.status && response.status < 500);
-            if (!response.ok && !badRequestError) {
-              alert(response.statusText);
-              throw new Error("Unknown Error");
-            }
-            return response.json();
-          }).then((resBody)=>{
-            if (resBody.message){
-              alert(resBody.message);
-            } else{
-              const account = resBody.result as Account;
-              console.log(`updated account`);
-              dispatch({type:'SET_LOGGED_ACCOUNT', payload:account})
-            }
-          }).catch((err)=>{
-            console.log(err);
-          })
+      method: 'PUT',
+      body: JSON.stringify(
+        {
+          data: encryptData(
+            {
+              username: username,
+              updatedAccount: updatedAccount
+            })
+        }
+      )
+    }).then((response) => {
+      const badRequestError = (400 <= response.status && response.status < 500);
+      if (!response.ok && !badRequestError) {
+        alert(response.statusText);
+        throw new Error("Unknown Error");
+      }
+      return response.json();
+    }).then((resBody) => {
+      if (resBody.message) {
+        alert(resBody.message);
+      } else {
+        const account = resBody.result as Account;
+        console.log(`updated account`);
+        dispatch({ type: 'SET_LOGGED_ACCOUNT', payload: account })
+        logAccount(account);
+      }
+    }).catch((err) => {
+      console.log(err);
+    })
   }
-  updateRequest("bob", new Account("","","","",""));
 
   return (
     <div className="max-w-[1000px] my-4 mx-auto">
@@ -93,21 +101,20 @@ const ProfilePage: React.FC = () => {
           >
             <Image
               id="profile-pic"
-              className="rounded-full object-cover border-4 border-blue-500"
+              className="rounded-full object-cover border-4 border-green-500"
               src="/event_images/profilePicture.jpg"
               alt="Profile Picture"
               layout="fill" // Uses the container's dimensions
-              // objectFit="cover"
+            // objectFit="cover"
             />
           </div>
-          
-          <h1 id="name" className="mt-4 text-2xl text-blue-500">
+
+          <h1 id="name" className="mt-4 text-2xl text-green-500">
             {activeField === "name" ? (
               <input
                 id="name"
                 className="border rounded-lg p-2 w-full max-w-md mx-auto"
                 value={profile.name}
-                onChange={handleChange}
               />
             ) : (
               profile.name
@@ -127,7 +134,7 @@ const ProfilePage: React.FC = () => {
           </p>
         </div>
         <div className="profile-content mb-6 text-center">
-          <h2 className="text-xl text-blue-500">About Me</h2>
+          <h2 className="text-xl text-green-500">About Me</h2>
           <p id="about" className="mt-2 ">
             {activeField === "about" ? (
               <textarea
@@ -145,28 +152,21 @@ const ProfilePage: React.FC = () => {
           {isEditing ? (
             <>
               <button
-                className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
-                onClick={() => setActiveField("name")}
-                disabled={activeField === "name"}
-              >
-                Edit Name
-              </button>
-              <button
-                className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
+               className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
                 onClick={() => setActiveField("bio")}
                 disabled={activeField === "bio"}
               >
                 Edit Bio
               </button>
               <button
-                className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
+                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
                 onClick={() => setActiveField("about")}
                 disabled={activeField === "about"}
               >
                 Edit About
               </button>
               <button
-                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700"
+                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
                 onClick={handleSave}
               >
                 Save Changes
@@ -174,7 +174,8 @@ const ProfilePage: React.FC = () => {
             </>
           ) : (
             <button
-              className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
+            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
+
               onClick={handleEdit}
             >
               Edit Profile
@@ -182,7 +183,6 @@ const ProfilePage: React.FC = () => {
           )}
         </div>
       </div>
-      <div className="max-w-[1000px] my-4 mx-auto text-3xl text-green-600 font-bold">Bookings</div>
     </div>
   );
 };

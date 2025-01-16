@@ -1,19 +1,27 @@
 "use client"
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppContext } from '@/context/MainContext';
 import { Account } from '@/utils/classes';
 import { encryptData } from '@/utils/utils';
+import {logAccount} from "@/utils/util_client";
 import React from 'react';
+import { useRouter } from 'next/navigation';
 
 const LoginPage = () => {
-  const { dispatch } = useAppContext();
 
   // Local state for managing form input
+  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const {dispatch} = useAppContext();
+
+  useEffect(()=>{
+    dispatch({type:'SET_LOGGED_ACCOUNT', payload:null});
+    logAccount(null);
+  },[dispatch]);
 
   // Handle form input changes
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,16 +33,16 @@ const LoginPage = () => {
   };
 
   // Function to log user details
-  const logUserDetails = (username: string, password: string) => {
+  const logAttempt = (username: string, password: string) => {
     console.log('User Details:');
     console.log(`Username: ${username}`);
     console.log(`Password: ${password}`);
   };
 
   // Handle login button click
-  const onBtnClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  const onBtnClick: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    logUserDetails(username, password); // Log user details to console
+    logAttempt(username, password); // Log user details to console
     loginRequest(username, password);
   };
 
@@ -69,6 +77,8 @@ const LoginPage = () => {
           const account = resBody.result as Account;
           console.log(`Logged account set: ${username}`);
           dispatch({ type: 'SET_LOGGED_ACCOUNT', payload: account });
+          logAccount(account);
+          router.push("/home");
         }
       })
       .catch((err) => {
@@ -93,7 +103,7 @@ const LoginPage = () => {
         )}
 
         {/* Login Form */}
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form onSubmit={onBtnClick}>
           <div className="mb-4">
             <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
             <input
@@ -120,7 +130,7 @@ const LoginPage = () => {
 
           {/* Login button */}
           <button
-            onClick={onBtnClick}
+            type='submit'
             disabled={isLoading}
             className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-400"
           >

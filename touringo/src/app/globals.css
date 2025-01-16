@@ -25,24 +25,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Event Row Styles */
-.event-row {
-  padding: 2px;
-  margin-bottom: 2px;
-}
-
-.event-row:hover {
-  background-color: #e7ccb3;
-  padding: 5px;
-  border-radius: 10px;
-  box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="dark"] .event-row:hover {
-  background-color: var(--box-background); /* Dark mode background */
-  box-shadow: 5px 10px 15px rgba(0, 0, 0, 0.5);
-}
-
 /* Input/textarea adjustments */
 [data-theme="dark"] input,
 [data-theme="dark"] textarea {
@@ -56,14 +38,4 @@ body.dark {
 
   --box-background: #12522f;
   --header-links: #49c039;
-}
-
-.dark .event-row:hover {
-  background-color: var(--box-background);
-}
-
-
-.event-details h3 {
-  font-size: 1.5rem; /* Adjust heading size */
-  font-weight: bold; /* Make the text bold */
 }

@@ -1,9 +1,10 @@
+"use client";
 import { useState } from "react";
 import { useTheme } from '@/context/ThemeProvider';
 import Link from "next/link";
 
 export default function HeaderIcons() {
-  const { toggleTheme, theme } = useTheme(); // Use theme context
+  const { theme, toggleTheme } = useTheme(); // Use theme context
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Dropdown toggle state
 
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
