@@ -1,19 +1,14 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 
-type BookingButtonProps = {
-  onBook?: (details: { date: string; time: string; tickets: number }) => void;
-};
-
-function BookingButton({ onBook }: BookingButtonProps) {
+function BookingButton({ onBook }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedTickets, setSelectedTickets] = useState(1);
   const [isBookEnabled, setIsBookEnabled] = useState(false);
-  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
 
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef(null);
 
   const today = new Date();
   const maxDate = new Date(today);
@@ -22,46 +17,42 @@ function BookingButton({ onBook }: BookingButtonProps) {
   const todayString = today.toISOString().split("T")[0];
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
 
+    // Attach the event listener when the dropdown is open
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
+      // Cleanup the event listener
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
 
-  const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const rect = event.currentTarget.getBoundingClientRect();
-    setDropdownPosition({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX });
-    setIsOpen(!isOpen);
-  };
-
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDateChange = (e) => {
     const date = e.target.value;
     setSelectedDate(date);
     validateBooking(date, selectedTime, selectedTickets);
   };
 
-  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTimeChange = (e) => {
     const time = e.target.value;
     setSelectedTime(time);
     validateBooking(selectedDate, time, selectedTickets);
   };
 
-  const handleTicketsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleTicketsChange = (e) => {
     const tickets = parseInt(e.target.value, 10);
     setSelectedTickets(tickets);
     validateBooking(selectedDate, selectedTime, tickets);
   };
 
-  const validateBooking = (date: string, time: string, tickets: number) => {
+  const validateBooking = (date, time, tickets) => {
     if (date && time && tickets > 0) {
       const selectedDateTime = new Date(`${date}T${time}`);
       if (selectedDateTime > new Date()) {
@@ -76,7 +67,7 @@ function BookingButton({ onBook }: BookingButtonProps) {
     <div>
       <button
         className="bg-green-500 px-4 py-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500"
-        onClick={handleButtonClick}
+        onClick={() => setIsOpen(!isOpen)}
       >
         Book
       </button>
@@ -84,8 +75,7 @@ function BookingButton({ onBook }: BookingButtonProps) {
       {isOpen && (
         <div
           ref={dropdownRef}
-          style={{ position: "absolute", top: dropdownPosition.top, left: dropdownPosition.left }}
-          className="w-64 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 z-10"
+          className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 z-10"
         >
           <div className="mb-4">
             <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
