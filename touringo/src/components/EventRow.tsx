@@ -25,9 +25,9 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
   };
 
   return (
-    <div className="event-row flex items-center justify-between p-1 mb-1 transition hover:bg-[#e7ccb3] hover:p-2 hover:rounded-lg hover:shadow-md dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
-      <div className="flex items-center">
-        <div className="max-h-[1000px] mr-4">
+    <div className="event-row flex flex-col sm:flex-row items-center justify-between p-4 mb-4 transition hover:bg-[#e7ccb3] hover:rounded-lg hover:shadow-md dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
+      <div className="flex flex-col sm:flex-row sm:items-center w-full">
+        <div className="max-h-[1000px] mb-4 sm:mb-0 sm:mr-4 sm:w-1/5">
           <Image
             priority
             unoptimized
@@ -37,20 +37,22 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
             height={100}
           />
         </div>
-        <div className="event-details">
-          <h3 className="text-xl font-bold ">{event.name}</h3>
-          <div className="test grid grid-flow-col-dense grid-cols-1 gap-3 content-center">
+        <div className="event-details w-full sm:w-4/5">
+          <h3 className="text-xl font-bold">{event.name}</h3>
+          <div className="grid grid-cols-1 gap-3 mt-2 sm:mt-0 sm:grid-cols-2">
             <p>{event.description}</p>
-            <p>
-              <strong>Location:</strong> {event.town}, {event.address}
-            </p>
-            <p>
-              <strong>Rating:</strong> 4/5
-            </p>
+            <div>
+              <p>
+                <strong>Location:</strong> {event.town}, {event.address}
+              </p>
+              <p>
+                <strong>Rating:</strong> 4/5
+              </p>
+            </div>
           </div>
         </div>
       </div>
-      <div>
+      <div className="mt-4 sm:mt-0 sm:ml-4">
         <BookingButton onBook={selectEvent} />
         <br />
         <br />
@@ -58,7 +60,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
           onClick={openMap}
           className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-700 transition w-full dark:bg-blue-700 dark:hover:bg-blue-500"
         >
-          Open Map
+          Open in maps 
         </button>
       </div>
     </div>

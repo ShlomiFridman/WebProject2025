@@ -1,4 +1,3 @@
-"use client";
 import React, { useState, useEffect, useRef } from "react";
 
 interface BookingDetails {
@@ -19,6 +18,7 @@ function BookingButton({ onBook }: BookingButtonProps) {
   const [isBookEnabled, setIsBookEnabled] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null); // Ref for the button
 
   const today = new Date();
   const maxDate = new Date(today);
@@ -28,7 +28,12 @@ function BookingButton({ onBook }: BookingButtonProps) {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -74,8 +79,9 @@ function BookingButton({ onBook }: BookingButtonProps) {
   return (
     <div className="relative">
       <button
+        ref={buttonRef} // Attach the button ref
         className="bg-green-500 px-4 py-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setIsOpen((prev) => !prev)} // Toggle dropdown state
       >
         Book
       </button>
@@ -134,7 +140,7 @@ function BookingButton({ onBook }: BookingButtonProps) {
           <button
             className={`w-full px-4 py-2 rounded ${
               isBookEnabled
-                ? "bg-green-500 hover:bg-green-600 text-white"
+                ? "bg-green-500 hover:bg-green-700 text-white dark:bg-green-700 dark:hover:bg-green-500"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500"
             }`}
             disabled={!isBookEnabled}
