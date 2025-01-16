@@ -72,7 +72,7 @@ function BookingButton({ onBook }: BookingButtonProps) {
   };
 
   return (
-    <div>
+    <div className="relative">
       <button
         className="bg-green-500 px-4 py-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500"
         onClick={() => setIsOpen(!isOpen)}
@@ -83,7 +83,7 @@ function BookingButton({ onBook }: BookingButtonProps) {
       {isOpen && (
         <div
           ref={dropdownRef}
-          className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 z-10"
+          className="absolute right-[-4px] mt-3 w-64 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 z-10"
         >
           <div className="mb-4">
             <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
