@@ -41,13 +41,6 @@ export default function HeaderLinks() {
       >
         🏙 TouRingo
       </Link>
-      <Link
-        href="/about"
-        className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${path === "/about" ? "bg-gray-200 dark:bg-gray-700 " : ""
-          }`}
-      >
-        About
-      </Link>
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={toggleDropdown}
@@ -84,6 +77,13 @@ export default function HeaderLinks() {
           </div>
         )}
       </div>
+      <Link
+        href="/about"
+        className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${path === "/about" ? "bg-gray-200 dark:bg-gray-700 " : ""
+          }`}
+      >
+        About
+      </Link>
     </div>
   );
 }

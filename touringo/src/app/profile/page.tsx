@@ -5,7 +5,7 @@ import { Account } from "@/utils/classes";
 import { encryptData } from "@/utils/utils";
 import Image from "next/image";
 import React, { useState } from "react";
-import { getLoggedAccount } from "@/utils/util_client";
+import { getLoggedAccount, logAccount } from "@/utils/util_client";
 
 interface Profile {
   name: string;
@@ -19,9 +19,9 @@ const ProfilePage: React.FC = () => {
   const loggedAccount = getLoggedAccount();
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [profile, setProfile] = useState<Profile>({
-    name: loggedAccount?.username || "null",
-    bio: loggedAccount?.bio || "null",
-    about: loggedAccount?.about || "null",
+    name: loggedAccount?.username || "",
+    bio: loggedAccount?.bio || "",
+    about: loggedAccount?.about || "",
   });
   const [activeField, setActiveField] = useState<string | null>(null);
   const { dispatch } = useAppContext();
@@ -33,7 +33,13 @@ const ProfilePage: React.FC = () => {
   const handleSave = () => {
     setIsEditing(false);
     setActiveField(null);
+    let updateAccount:Account;
+
+    if(loggedAccount != null) {
+      updateAccount = new Account(loggedAccount.username, loggedAccount.password, loggedAccount.name, profile.bio, profile.about)
+      updateRequest(loggedAccount.username, updateAccount);  
     // Additional save logic (e.g., API call) can be implemented here
+    }
   };
 
   const handleChange = (
@@ -73,12 +79,12 @@ const ProfilePage: React.FC = () => {
         const account = resBody.result as Account;
         console.log(`updated account`);
         dispatch({ type: 'SET_LOGGED_ACCOUNT', payload: account })
+        logAccount(account);
       }
     }).catch((err) => {
       console.log(err);
     })
   }
-  //updateRequest("bob", new Account("", "", "", "", ""));
 
   return (
     <div className="max-w-[1000px] my-4 mx-auto">
@@ -95,7 +101,7 @@ const ProfilePage: React.FC = () => {
           >
             <Image
               id="profile-pic"
-              className="rounded-full object-cover border-4 border-blue-500"
+              className="rounded-full object-cover border-4 border-green-500"
               src="/event_images/profilePicture.jpg"
               alt="Profile Picture"
               layout="fill" // Uses the container's dimensions
@@ -103,7 +109,7 @@ const ProfilePage: React.FC = () => {
             />
           </div>
 
-          <h1 id="name" className="mt-4 text-2xl text-blue-500">
+          <h1 id="name" className="mt-4 text-2xl text-green-500">
             {activeField === "name" ? (
               <input
                 id="name"
@@ -128,7 +134,7 @@ const ProfilePage: React.FC = () => {
           </p>
         </div>
         <div className="profile-content mb-6 text-center">
-          <h2 className="text-xl text-blue-500">About Me</h2>
+          <h2 className="text-xl text-green-500">About Me</h2>
           <p id="about" className="mt-2 ">
             {activeField === "about" ? (
               <textarea
@@ -146,14 +152,14 @@ const ProfilePage: React.FC = () => {
           {isEditing ? (
             <>
               <button
-                className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
+                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700"
                 onClick={() => setActiveField("bio")}
                 disabled={activeField === "bio"}
               >
                 Edit Bio
               </button>
               <button
-                className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
+                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700"
                 onClick={() => setActiveField("about")}
                 disabled={activeField === "about"}
               >
@@ -168,7 +174,7 @@ const ProfilePage: React.FC = () => {
             </>
           ) : (
             <button
-              className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700"
+              className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700"
               onClick={handleEdit}
             >
               Edit Profile
