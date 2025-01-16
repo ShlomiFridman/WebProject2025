@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/context/MainContext";
+import BookingButton from "./BookButton";
 
 type EventRowProps = {
   event: TR_Event;
@@ -14,10 +15,9 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
   const router = useRouter();
   const { dispatch } = useAppContext();
 
-  const selectEvent: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
-    e.preventDefault();
+  const selectEvent = ({ date, time, tickets }) => {
     dispatch({ type: "SET_SELECTED_EVENT", payload: event });
-    router.push(`/event/${event.event_id}`);
+    router.push(`/event/${event.event_id}?date=${date}&time=${time}&tickets=${tickets}`);
   };
 
   const openMap = () => {
@@ -27,7 +27,6 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
 
   return (
     <div className="event-row flex items-center justify-between p-1 mb-1 transition hover:bg-[#e7ccb3] hover:p-2 hover:rounded-lg hover:shadow-md dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
-
       <div className="flex items-center">
         <div className="max-h-[1000px] mr-4">
           <Image
@@ -53,13 +52,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
         </div>
       </div>
       <div>
-        <Link href="#" onClick={selectEvent}>
-          <button
-            className="bg-green-500 px-4 py-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500"
-          >
-            Book
-          </button>
-        </Link >
+        <BookingButton onBook={selectEvent} />
         <br />
         <br />
         <button
