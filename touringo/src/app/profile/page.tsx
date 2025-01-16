@@ -152,21 +152,21 @@ const ProfilePage: React.FC = () => {
           {isEditing ? (
             <>
               <button
-                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700"
+               className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
                 onClick={() => setActiveField("bio")}
                 disabled={activeField === "bio"}
               >
                 Edit Bio
               </button>
               <button
-                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700"
+                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
                 onClick={() => setActiveField("about")}
                 disabled={activeField === "about"}
               >
                 Edit About
               </button>
               <button
-                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700"
+                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
                 onClick={handleSave}
               >
                 Save Changes
@@ -174,7 +174,8 @@ const ProfilePage: React.FC = () => {
             </>
           ) : (
             <button
-              className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700"
+            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
+
               onClick={handleEdit}
             >
               Edit Profile
