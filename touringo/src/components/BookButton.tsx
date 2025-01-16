@@ -1,14 +1,18 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 
-function BookingButton({ onBook }) {
+type BookingButtonProps = {
+  onBook?: (details: { date: string; time: string; tickets: number }) => void;
+};
+
+function BookingButton({ onBook }: BookingButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedTickets, setSelectedTickets] = useState(1);
   const [isBookEnabled, setIsBookEnabled] = useState(false);
 
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const today = new Date();
   const maxDate = new Date(today);
@@ -17,42 +21,40 @@ function BookingButton({ onBook }) {
   const todayString = today.toISOString().split("T")[0];
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     };
 
-    // Attach the event listener when the dropdown is open
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
-      // Cleanup the event listener
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
 
-  const handleDateChange = (e) => {
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const date = e.target.value;
     setSelectedDate(date);
     validateBooking(date, selectedTime, selectedTickets);
   };
 
-  const handleTimeChange = (e) => {
+  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const time = e.target.value;
     setSelectedTime(time);
     validateBooking(selectedDate, time, selectedTickets);
   };
 
-  const handleTicketsChange = (e) => {
+  const handleTicketsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const tickets = parseInt(e.target.value, 10);
     setSelectedTickets(tickets);
     validateBooking(selectedDate, selectedTime, tickets);
   };
 
-  const validateBooking = (date, time, tickets) => {
+  const validateBooking = (date: string, time: string, tickets: number) => {
     if (date && time && tickets > 0) {
       const selectedDateTime = new Date(`${date}T${time}`);
       if (selectedDateTime > new Date()) {

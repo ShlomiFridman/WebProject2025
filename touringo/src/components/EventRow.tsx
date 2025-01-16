@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
 import { TR_Event } from "@/utils/classes";
-import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAppContext } from "@/context/MainContext";
