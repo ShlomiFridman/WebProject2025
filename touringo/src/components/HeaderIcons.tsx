@@ -21,9 +21,8 @@ const HeaderIcons: React.FC<HeaderIconsParams> = ({loginFlag}) => {
   return (
     <div className="flex justify-end gap-4">
       {/* Alert Icon */}
-      <div className="relative">
+      <div className={`relative ${!loginFlag? 'hidden':''}`}>
         <button
-          disabled={!loginFlag}
           onClick={toggleDropdown}
           className="p-2 rounded-full cursor-pointer focus:outline-none"
           aria-label="Notifications"
