@@ -7,12 +7,6 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { getLoggedAccount, logAccount } from "@/utils/util_client";
 
-interface Profile {
-  name: string;
-  bio: string;
-  about: string;
-}
-
 const ProfilePage: React.FC = () => {
   const [loggedAccount, setLoggedAccount] = useState<Account | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
