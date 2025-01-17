@@ -44,7 +44,8 @@ export default function HeaderLinks() {
       <div className="relative" ref={dropdownRef}>
         <button
           onClick={toggleDropdown}
-          className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400`}
+          className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${path === "/profile" || path === "/events" || path === "/bookings" ? "bg-gray-200 dark:bg-gray-700 " : ""
+          }`}
         >
           {username}
         </button>

@@ -22,13 +22,11 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
     router.push(`/event/${event.event_id}?date=${date}&tickets=${tickets}`);
   };
 
-  const selectEvent = () =>{
-    if (path == `/event/${event.event_id}`)
-      return;
+  const selectEvent = () => {
+    if (path == `/event/${event.event_id}`) return;
     dispatch({ type: "SET_SELECTED_EVENT", payload: event });
     router.push(`/event/${event.event_id}`);
-
-  } 
+  };
 
   const openMap = () => {
     const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent(`${event.town}, ${event.address}`)}&z=15&output=embed`;
@@ -36,8 +34,8 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
   };
 
   return (
-    <div className="event-row flex flex-col sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#e7ccb3] dark:bg-[var(--box-background)]  sm:bg-white hover:bg-[#e7ccb3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-[#292b2f] sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
-      <div onClick={()=>selectEvent()} className="flex flex-col sm:flex-row sm:items-center w-full">
+    <div className="event-row flex flex-col sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#e7ccb3] dark:bg-[var(--box-background)] sm:bg-white hover:bg-[#e7ccb3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-[#292b2f] sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
+      <div onClick={() => selectEvent()} className="flex flex-col sm:flex-row sm:items-center w-full">
         <div className="max-h-[1000px] mb-4 sm:mb-0 sm:mr-4 sm:w-1/5">
           <Image
             priority
@@ -63,12 +61,12 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
                 <strong>From:</strong> {formatDate(event.startDate)}
               </p>
               <p>
-                <strong>to:</strong> {formatDate(event.endDate)}
+                <strong>Until:</strong> {formatDate(event.endDate)}
               </p>
               <p>
                 <strong>Opening Days:</strong> {activeDays.length > 0
-                                                ? activeDays.join(", ")
-                                                : "No open days"}
+                  ? activeDays.join(", ")
+                  : "No open days"}
               </p>
               <p>
                 <strong>Time:</strong> {event.openingTime.slice(0, 5)}-{event.closingTime.slice(0, 5)}
@@ -83,9 +81,21 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
         <br />
         <button
           onClick={openMap}
-          className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-700 transition w-full dark:bg-blue-700 dark:hover:bg-blue-500"
+          className="inline-flex items-center bg-blue-500 px-4 py-2 rounded hover:bg-blue-700 transition whitespace-nowrap dark:bg-blue-700 dark:hover:bg-blue-500"
         >
-          Open in maps
+          <span>Open Map</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            className="w-5 h-5 ml-2"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M10.0002 5H8.2002C7.08009 5 6.51962 5 6.0918 5.21799C5.71547 5.40973 5.40973 5.71547 5.21799 6.0918C5 6.51962 5 7.08009 5 8.2002V15.8002C5 16.9203 5 17.4801 5.21799 17.9079C5.40973 18.2842 5.71547 18.5905 6.0918 18.7822C6.5192 19 7.07899 19 8.19691 19H15.8031C16.921 19 17.48 19 17.9074 18.7822C18.2837 18.5905 18.5905 18.2839 18.7822 17.9076C19 17.4802 19 16.921 19 15.8031V14M20 9V4M20 4H15M20 4L13 11" />
+          </svg>
         </button>
       </div>
     </div>

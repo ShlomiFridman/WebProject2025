@@ -124,7 +124,7 @@ function BookingButton({ onBook }: BookingButtonProps) {
         className="bg-green-500 px-4 py-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500"
         onClick={toggleForm}
       >
-        Book
+        Booking
       </button>
 
       {isOpen && (
@@ -170,7 +170,7 @@ function BookingButton({ onBook }: BookingButtonProps) {
             type="submit"
             className={`w-full px-4 py-2 rounded ${
               isBookEnabled
-                ? "bg-green-500 hover:bg-green-700 text-white dark:bg-green-700 dark:hover:bg-green-500"
+                ? "bg-green-500 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500"
             }`}
             disabled={!isBookEnabled}

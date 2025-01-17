@@ -103,7 +103,7 @@ const ProfilePage: React.FC = () => {
         <div className="text-3xl text-green-600 font-bold mb-4">Profile</div>
         <button
           onClick={isEditing ? handleSave : handleEditToggle}
-          className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
+          className="px-6 py-2 bg-green-500 rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
         >
           {isEditing ? "Save Changes" : "Edit Profile"}
         </button>
