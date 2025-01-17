@@ -1,11 +1,6 @@
 import React from "react";
 import { Review } from "@/utils/classes";
-
-// Helper function to format the date
-const formatDate = (date: string) => {
-  const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-  return new Date(date).toLocaleDateString(undefined, options);
-};
+import {formatDate} from "@/utils/utils"
 
 type ReviewsTableProps = {
   reviews: Review[];
