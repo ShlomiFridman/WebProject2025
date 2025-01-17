@@ -26,6 +26,7 @@ const EventPage = () => {
     const getEventData = async () => {
       if (state.selectedEvent && state.selectedEvent.event_id == id_num) {
         setEventData(state.selectedEvent);
+        getReviews(state.selectedEvent.event_id);
       }
       else {
         const response = await fetch(`/api/events/getById/${id}`)
