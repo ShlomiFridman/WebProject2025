@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useAppContext } from "@/context/MainContext";
 import BookingButton from "./BookButton";
+import { formatDate } from "@/utils/utils";
 
 type EventRowProps = {
   event: TR_Event;
@@ -14,6 +15,8 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
   const path = usePathname();
   const router = useRouter();
   const { dispatch } = useAppContext();
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const activeDays = daysOfWeek.filter((_, index) => event.openDays[index]);
 
   const createBooking = ({ date, tickets }: { date: string; tickets: number }) => {
     router.push(`/event/${event.event_id}?date=${date}&tickets=${tickets}`);
@@ -57,7 +60,18 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
                 <strong>Phone Number:</strong> {event.phone}
               </p>
               <p>
-                <strong>Opening Days:</strong> {event.phone}
+                <strong>From:</strong> {formatDate(event.startDate)}
+              </p>
+              <p>
+                <strong>to:</strong> {formatDate(event.endDate)}
+              </p>
+              <p>
+                <strong>Opening Days:</strong> {activeDays.length > 0
+                                                ? activeDays.join(", ")
+                                                : "No open days"}
+              </p>
+              <p>
+                <strong>Time:</strong> {event.openingTime.slice(0, 5)}-{event.closingTime.slice(0, 5)}
               </p>
             </div>
           </div>
