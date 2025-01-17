@@ -122,7 +122,7 @@ const ProfilePage: React.FC = () => {
             <Image
               id="profile-pic"
               className="rounded-full object-cover border-4 border-green-500"
-              src="/event_images/profilePicture.jpg"
+              src="/event_images/profilePicture.png"
               alt="Profile Picture"
               layout="fill"
             />
