@@ -121,12 +121,11 @@ function BookingButton({ onBook }: BookingButtonProps) {
     <div className="relative">
       <button
         ref={buttonRef}
-        className="bg-green-500 px-4 py-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500"
+        className="bg-green-500 px-4 py-2 m-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500"
         onClick={toggleForm}
       >
         Booking
       </button>
-
       {isOpen && (
         <form
           ref={formRef}
@@ -147,7 +146,6 @@ function BookingButton({ onBook }: BookingButtonProps) {
               onChange={handleDateChange}
             />
           </div>
-
           <div className="mb-4">
             <label htmlFor="tickets" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Number of tickets
@@ -165,7 +163,6 @@ function BookingButton({ onBook }: BookingButtonProps) {
               ))}
             </select>
           </div>
-
           <button
             type="submit"
             className={`w-full px-4 py-2 rounded ${
