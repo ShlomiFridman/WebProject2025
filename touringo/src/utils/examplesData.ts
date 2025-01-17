@@ -58,11 +58,11 @@ export const eventExamples = [
 
 // Review examples
 export const reviewExamples = [
-    new Review(accountExamples[0].username, eventExamples[0].event_id, 5, "Amazing event!", "2024-01-16"),
-    new Review(accountExamples[1].username, eventExamples[1].event_id, 4, "Great experience.", "2024-02-11"),
-    new Review(accountExamples[2].username, eventExamples[2].event_id, 3, "It was okay.", "2024-03-06"),
-    new Review(accountExamples[3].username, eventExamples[3].event_id, 2, "Not as expected.", "2024-04-02"),
-    new Review(accountExamples[4].username, eventExamples[4].event_id, 1, "Disappointed.", "2024-05-13"),
+    new Review(301, accountExamples[0].username, eventExamples[0].event_id, 5, "Amazing event!", "2024-01-16"),
+    new Review(302, accountExamples[1].username, eventExamples[1].event_id, 4, "Great experience.", "2024-02-11"),
+    new Review(303, accountExamples[2].username, eventExamples[2].event_id, 3, "It was okay.", "2024-03-06"),
+    new Review(304, accountExamples[3].username, eventExamples[3].event_id, 2, "Not as expected.", "2024-04-02"),
+    new Review(305, accountExamples[4].username, eventExamples[4].event_id, 1, "Disappointed.", "2024-05-13"),
 ];
 
 // Booking examples

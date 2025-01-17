@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { updateAccount } from '../users_module';
+import { updateAccount } from '../accounts_module';
 import { Account } from '@/utils/classes';
 import { decryptData } from '@/utils/utils';
 

@@ -47,6 +47,7 @@ export const TR_EventModel = db.models.TR_Event || db.model('TR_Event', trEventS
 
 // Review Schema
 const reviewSchema = new Schema({
+    booking_id: { type: Number, required: true, unique: true},
     username: { type: String, required: true },
     event_id: { type: Number, required: true },
     score: { type: Number, required: true, min: 1, max: 5 }, // Between 1 and 5

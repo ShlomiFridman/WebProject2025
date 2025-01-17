@@ -189,17 +189,18 @@ export class TR_Event {
 }
 
 export class Review {
+    public booking_id: number;
     public username: string;
     public event_id: number;
     public score: number; // Score should be an integer between 1 and 5
     public description: string;
     public date: string; // Date of the review in 'YYYY-MM-DD' format
 
-    constructor(username: string, event_id: number, score: number, description: string, date: string) {
+    constructor(booking_id: number, username: string, event_id: number, score: number, description: string, date: string) {
         if (score < 1 || score > 5) {
             throw new Error("Score must be between 1 and 5.");
         }
-
+        this.booking_id = booking_id;
         this.username = username;
         this.event_id = event_id;
         this.score = score;
@@ -208,12 +209,12 @@ export class Review {
     }
 
     // Static method to create a Review instance from JSON
-    static fromJSON(json: { username: string, event_id: number, score: number, description: string, date: string }): Review {
-        return new Review(json.username, json.event_id, json.score, json.description, json.date);
+    static fromJSON(json: { booking_id: number, username: string, event_id: number, score: number, description: string, date: string }): Review {
+        return new Review(json.booking_id, json.username, json.event_id, json.score, json.description, json.date);
     }
 
     // Static method to create an array of Review instances from an array of JSON objects
-    static fromJSON_array(jsonArray: { username: string, event_id: number, score: number, description: string, date: string }[]): Review[] {
+    static fromJSON_array(jsonArray: { booking_id: number, username: string, event_id: number, score: number, description: string, date: string }[]): Review[] {
         return jsonArray.map(json => Review.fromJSON(json));
     }
 }

@@ -3,7 +3,7 @@
 // TODO solve password protection, currently it is through URL which is bad 
 
 import { NextResponse } from "next/server";
-import { verifyAccount } from "../users_module";
+import { verifyAccount } from "../accounts_module";
 import { Account } from "@/utils/classes";
 import { decryptData } from "@/utils/utils";
 

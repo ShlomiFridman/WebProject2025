@@ -2,7 +2,7 @@
 import EventRow from '@/components/EventRow';
 import GoogleMap from '@/components/GoogleMap';
 import LoadingBox from '@/components/LoadingBox';
-import ReviewsTable from '@/components/reviewsTable';
+import ReviewsTable from '@/components/ReviewTable';
 import { useAppContext } from '@/context/MainContext';
 import { Review, TR_Event } from '@/utils/classes';
 import Link from 'next/link';

@@ -21,7 +21,8 @@ const HeaderIcons: React.FC<HeaderIconsParams> = ({loginFlag}) => {
   return (
     <div className="flex justify-end gap-4">
       {/* Alert Icon */}
-      <div className={`relative ${!loginFlag? 'hidden':''}`}>
+      {/* hidden until the feature is added */}
+      <div className={`relative hidden ${!loginFlag? 'hidden':''}`}>
         <button
           onClick={toggleDropdown}
           className="p-2 rounded-full cursor-pointer focus:outline-none"
