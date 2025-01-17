@@ -2,13 +2,17 @@
 
 import EventTable from "@/components/EventTable";
 import LoadingBox from "@/components/LoadingBox";
-import { TR_Event } from "@/utils/classes";
+import { Booking, TR_Event } from "@/utils/classes";
+import { getLoggedAccount } from "@/utils/util_client";
 import { useEffect, useState } from "react";
 
 const HomePage: React.FC = () => {
   const [events, setEvents] = useState<TR_Event[] | null>(null);
 
   useEffect(() => {
+    const loggedAccount = getLoggedAccount();
+    if (!loggedAccount)
+      return;
     const getEvents = async () => {
       const response = await fetch("/api/events/getAll");
       if (!response.ok) {
@@ -20,7 +24,9 @@ const HomePage: React.FC = () => {
       const eventsRes = TR_Event.fromJSON_array(resData.result);
       setEvents(eventsRes);
     };
-    if (events == null) getEvents();
+    if (events == null){
+      getEvents();
+    }
   }, [events]);
 
   return (

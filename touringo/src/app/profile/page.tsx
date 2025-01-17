@@ -87,6 +87,7 @@ const ProfilePage: React.FC = () => {
   }
 
   return (
+    // TODO change to form, change name to username (can not be edited)
     <div className="max-w-[1000px] my-4 mx-auto">
       <div className="text-3xl text-green-600 font-bold mb-4">Profile</div>
       <div>

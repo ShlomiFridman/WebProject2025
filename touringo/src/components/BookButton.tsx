@@ -87,10 +87,12 @@ function BookingButton({ onBook }: BookingButtonProps) {
       </button>
 
       {isOpen && (
+        // TODO change to form with onSubmit function
         <div
           ref={dropdownRef}
           className="absolute right-[-4px] mt-3 w-64 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 z-10"
         >
+          {/* TODO add default date as today, show only valid dates */}
           <div className="mb-4">
             <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Choose a date
@@ -106,6 +108,7 @@ function BookingButton({ onBook }: BookingButtonProps) {
             />
           </div>
 
+          {/* TODO remove */}
           <div className="mb-4">
             <label htmlFor="time" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Choose a time
