@@ -1,3 +1,4 @@
+import { Booking } from "@/utils/classes";
 import React, { useState, useEffect, useRef } from "react";
 
 interface BookingDetails {
@@ -84,6 +85,10 @@ function BookingButton({ onBook }: BookingButtonProps) {
     e.stopPropagation(); // Prevent triggering the outside click handler
     setIsOpen((prev) => !prev);
   };
+
+  const createBooking = (booking: Booking) => {
+    
+  }
 
   return (
     <div className="relative">
