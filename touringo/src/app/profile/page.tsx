@@ -134,13 +134,13 @@ const ProfilePage: React.FC = () => {
         </div>
         <div className="profile-content mb-6 text-center">
           <div className="mb-4">
-            <label className="block text-lg font-medium text-green-700" htmlFor="bio">
+            <label className="block text-lg font-medium text-green-800 dark:text-green-300" htmlFor="bio">
               Bio
             </label>
             {isEditing ? (
               <textarea
                 id="bio"
-                className="border rounded-lg p-2 w-full max-w-md mx-auto"
+                className="border rounded-lg p-2 w-full max-w-md mx-auto resize-none"
                 value={profile.bio}
                 onChange={handleChange}
               />
@@ -150,13 +150,13 @@ const ProfilePage: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-lg font-medium text-green-700" htmlFor="about">
+            <label className="block text-lg font-medium text-green-800 dark:text-green-300" htmlFor="about">
               About Me
             </label>
             {isEditing ? (
               <textarea
                 id="about"
-                className="border rounded-lg p-2 w-full max-w-md mx-auto"
+                className="border rounded-lg p-2 w-full max-w-md mx-auto resize-none"
                 value={profile.about}
                 onChange={handleChange}
               />
