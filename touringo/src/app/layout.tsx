@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -13,7 +12,6 @@ import { ThemeProvider } from "@/context/ThemeProvider";
 
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const path = usePathname();
 
   return (
     <html lang="en">
@@ -25,7 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       >
         <AppProvider>
           <ThemeProvider>
-            {path != "/login" && path != "/register" ? <Header /> : <></>}
+            <Header />
             <main className="grow">{children}</main>
             <Footer />
           </ThemeProvider>

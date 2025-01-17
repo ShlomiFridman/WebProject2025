@@ -2,17 +2,13 @@
 
 import EventTable from "@/components/EventTable";
 import LoadingBox from "@/components/LoadingBox";
-import { Booking, TR_Event } from "@/utils/classes";
-import { getLoggedAccount } from "@/utils/util_client";
+import { TR_Event } from "@/utils/classes";
 import { useEffect, useState } from "react";
 
 const HomePage: React.FC = () => {
   const [events, setEvents] = useState<TR_Event[] | null>(null);
 
   useEffect(() => {
-    const loggedAccount = getLoggedAccount();
-    if (!loggedAccount)
-      return;
     const getEvents = async () => {
       const response = await fetch("/api/events/getAll");
       if (!response.ok) {

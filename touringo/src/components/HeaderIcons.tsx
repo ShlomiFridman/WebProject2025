@@ -3,7 +3,11 @@ import { useState } from "react";
 import { useTheme } from '@/context/ThemeProvider';
 import Link from "next/link";
 
-export default function HeaderIcons() {
+type HeaderIconsParams = {
+  loginFlag: boolean;
+};
+
+const HeaderIcons: React.FC<HeaderIconsParams> = ({loginFlag}) => {
   const { theme, toggleTheme } = useTheme(); // Use theme context
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // Dropdown toggle state
 
@@ -19,6 +23,7 @@ export default function HeaderIcons() {
       {/* Alert Icon */}
       <div className="relative">
         <button
+          disabled={!loginFlag}
           onClick={toggleDropdown}
           className="p-2 rounded-full cursor-pointer focus:outline-none"
           aria-label="Notifications"
@@ -106,7 +111,7 @@ export default function HeaderIcons() {
         href="https://github.com/ShlomiFridman/WebProject2025/tree/dev"
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center py-2 px-3 text-base font-medium text-gray-900 dark:text-gray-100 rounded-md"
+        className={`inline-flex items-center py-2 px-3 text-base font-medium text-gray-900 dark:text-gray-100 rounded-md`}
       >
         <span className="sr-only">GitHub Repository</span>
         <svg
@@ -120,7 +125,7 @@ export default function HeaderIcons() {
       </a>
       <Link
       href="/login"
-      className="inline-flex items-center py-2 px-3 text-base font-medium text-gray-900 dark:text-gray-100 rounded-md"   >
+      className={`inline-flex items-center py-2 px-3 text-base font-medium text-gray-900 dark:text-gray-100 rounded-md ${!loginFlag? 'hidden':''}`}>
         <span className="sr-only">Login</span>
         <svg
           viewBox="0 0 16 16"
@@ -133,4 +138,6 @@ export default function HeaderIcons() {
   </Link>
     </div>
   );
-}
+};
+
+export default HeaderIcons;
