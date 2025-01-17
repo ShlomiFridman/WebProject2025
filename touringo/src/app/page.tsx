@@ -32,7 +32,7 @@ import { redirect } from 'next/navigation';
 
 
 export default function Page() {
-  redirect('/login');
+  redirect('/home');
 
   /*const txt = encryptData({test:"TEST"});
   const data = decryptData(txt)
