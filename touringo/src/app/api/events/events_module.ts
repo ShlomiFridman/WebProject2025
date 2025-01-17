@@ -4,7 +4,7 @@ import { TR_Event } from "@/utils/classes";
 export async function getAllEvents(): Promise<TR_Event[]>{
     try{
         const eventsRes = await TR_EventModel.find(
-            {isActive: true}
+            {}
         );
         return eventsRes;
     } catch(err){
@@ -15,7 +15,7 @@ export async function getAllEvents(): Promise<TR_Event[]>{
 export async function getEventsByCreator(creator_username: string): Promise<TR_Event[]>{
     try{
         const eventsRes = await TR_EventModel.find(
-            {creator_username: creator_username, isActive: true}
+            {creator_username: creator_username}
         );
         return eventsRes;
     } catch(err){
@@ -26,7 +26,7 @@ export async function getEventsByCreator(creator_username: string): Promise<TR_E
 export async function getEventById(event_id: number): Promise<TR_Event>{
     try{
         const eventsRes = await TR_EventModel.findOne(
-            {event_id: event_id, isActive: true}
+            {event_id: event_id}
         );
         return eventsRes;
     } catch(err){
