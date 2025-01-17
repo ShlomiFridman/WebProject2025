@@ -1,5 +1,6 @@
 "use client"
 
+import EventRow from '@/components/EventRow';
 import LoadingBox from '@/components/LoadingBox';
 import { TR_Event } from '@/utils/classes';
 import { getLoggedAccount } from '@/utils/util_client';
@@ -86,15 +87,22 @@ const MyEventsPage = () => {
   }
 
   return (
-    (events != null != null) ?
+    (events != null) ?
       // TODO create event form
       // TODO fetch user's events from server
       // TODO createNewEvent request
       <div className="max-w-[1000px] my-4 mx-auto">
         <div className="text-3xl text-green-600 font-bold pb-4">My Events</div>
-        <div>
-          lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        </div>
+        <div className="event-table">
+      <div className="event-row flex items-center justify-between">
+        <b></b>
+        <h1 className="hidden sm:block pr-4"><b>Details</b></h1> {/* Hidden on small screens */}
+        <h1 className="hidden sm:block pr-8"><b>Options</b></h1> {/* Hidden on small screens */}
+      </div>
+      {events.map((event) => (
+        <EventRow key={event.event_id} event={event} />
+      ))}
+    </div>
       </div>
       : <LoadingBox />
   );
