@@ -22,14 +22,14 @@ function BookingButton({ onBook }: BookingButtonProps) {
   const [selectedTickets, setSelectedTickets] = useState(1);
   const [isBookEnabled, setIsBookEnabled] = useState(true); // Default is enabled for today's date and 1 ticket
 
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node) &&
+        formRef.current &&
+        !formRef.current.contains(event.target as Node) &&
         buttonRef.current &&
         !buttonRef.current.contains(event.target as Node)
       ) {
@@ -80,18 +80,24 @@ function BookingButton({ onBook }: BookingButtonProps) {
     }
   };
 
+  const toggleForm = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering the outside click handler
+    setIsOpen((prev) => !prev);
+  };
+
   return (
     <div className="relative">
       <button
         ref={buttonRef}
         className="bg-green-500 px-4 py-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500"
-        onClick={() => setIsOpen((prev) => !prev)}
+        onClick={toggleForm}
       >
         Book
       </button>
 
       {isOpen && (
         <form
+          ref={formRef}
           className="absolute right-[-4px] mt-3 w-64 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 z-10"
           onSubmit={handleSubmit}
         >
