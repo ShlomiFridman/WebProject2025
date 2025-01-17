@@ -4,7 +4,7 @@ import { useAppContext } from "@/context/MainContext";
 import { Account } from "@/utils/classes";
 import { encryptData } from "@/utils/utils";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getLoggedAccount, logAccount } from "@/utils/util_client";
 
 interface Profile {
@@ -16,15 +16,21 @@ interface Profile {
 const ProfilePage: React.FC = () => {
   // TODO use reducer to get the username
   // TODO use useEffect get the account info from server
-  const loggedAccount = getLoggedAccount();
+  const [loggedAccount, setLoggedAccount] = useState<Account | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [profile, setProfile] = useState<Profile>({
-    name: loggedAccount?.username || "",
-    bio: loggedAccount?.bio || "",
-    about: loggedAccount?.about || "",
-  });
+  const [profile, setProfile] = useState({ name: "", bio: "", about: "" });
   const [activeField, setActiveField] = useState<string | null>(null);
   const { dispatch } = useAppContext();
+
+  useEffect(() => {
+    const account = getLoggedAccount();
+    setLoggedAccount(account);
+    setProfile({
+      name: account?.username || "",
+      bio: account?.bio || "",
+      about: account?.about || "",
+    });
+  }, []);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -33,12 +39,12 @@ const ProfilePage: React.FC = () => {
   const handleSave = () => {
     setIsEditing(false);
     setActiveField(null);
-    let updateAccount:Account;
+    let updateAccount: Account;
 
-    if(loggedAccount != null) {
+    if (loggedAccount != null) {
       updateAccount = new Account(loggedAccount.username, loggedAccount.password, loggedAccount.name, profile.bio, profile.about)
-      updateRequest(loggedAccount.username, updateAccount);  
-    // Additional save logic (e.g., API call) can be implemented here
+      updateRequest(loggedAccount.username, updateAccount);
+      // Additional save logic (e.g., API call) can be implemented here
     }
   };
 
@@ -153,7 +159,7 @@ const ProfilePage: React.FC = () => {
           {isEditing ? (
             <>
               <button
-               className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
+                className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
                 onClick={() => setActiveField("bio")}
                 disabled={activeField === "bio"}
               >
@@ -175,7 +181,7 @@ const ProfilePage: React.FC = () => {
             </>
           ) : (
             <button
-            className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
+              className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
 
               onClick={handleEdit}
             >
