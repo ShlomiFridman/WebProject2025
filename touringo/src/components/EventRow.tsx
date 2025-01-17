@@ -33,8 +33,8 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
   };
 
   return (
-    <div onClick={()=>selectEvent()} className="event-row flex flex-col sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#e7ccb3] dark:bg-[var(--box-background)]  sm:bg-white hover:bg-[#e7ccb3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-[#292b2f] sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
-      <div className="flex flex-col sm:flex-row sm:items-center w-full">
+    <div className="event-row flex flex-col sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#e7ccb3] dark:bg-[var(--box-background)]  sm:bg-white hover:bg-[#e7ccb3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-[#292b2f] sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
+      <div onClick={()=>selectEvent()} className="flex flex-col sm:flex-row sm:items-center w-full">
         <div className="max-h-[1000px] mb-4 sm:mb-0 sm:mr-4 sm:w-1/5">
           <Image
             priority
@@ -54,7 +54,10 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
                 <strong>Location:</strong> {event.town}, {event.address}
               </p>
               <p>
-                <strong>Rating:</strong> 4/5
+                <strong>Phone Number:</strong> {event.phone}
+              </p>
+              <p>
+                <strong>Opening Days:</strong> {event.phone}
               </p>
             </div>
           </div>
