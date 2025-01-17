@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 
 interface BookingDetails {
   date: string;
-  time: string;
   tickets: number;
 }
 
@@ -12,25 +11,25 @@ interface BookingButtonProps {
 
 function BookingButton({ onBook }: BookingButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("");
-  const [selectedTickets, setSelectedTickets] = useState(1);
-  const [isBookEnabled, setIsBookEnabled] = useState(false);
-
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
-  const buttonRef = useRef<HTMLButtonElement | null>(null); // Ref for the button
-
   const today = new Date();
   const maxDate = new Date(today);
   maxDate.setMonth(today.getMonth() + 1);
+
   const maxDateString = maxDate.toISOString().split("T")[0];
   const todayString = today.toISOString().split("T")[0];
+
+  const [selectedDate, setSelectedDate] = useState(todayString); // Default to today's date
+  const [selectedTickets, setSelectedTickets] = useState(1);
+  const [isBookEnabled, setIsBookEnabled] = useState(true); // Default is enabled for today's date and 1 ticket
+
+  const formRef = useRef<HTMLFormElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node) &&
+        formRef.current &&
+        !formRef.current.contains(event.target as Node) &&
         buttonRef.current &&
         !buttonRef.current.contains(event.target as Node)
       ) {
@@ -50,25 +49,19 @@ function BookingButton({ onBook }: BookingButtonProps) {
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const date = e.target.value;
     setSelectedDate(date);
-    validateBooking(date, selectedTime, selectedTickets);
-  };
-
-  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const time = e.target.value;
-    setSelectedTime(time);
-    validateBooking(selectedDate, time, selectedTickets);
+    validateBooking(date, selectedTickets);
   };
 
   const handleTicketsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const tickets = parseInt(e.target.value, 10);
     setSelectedTickets(tickets);
-    validateBooking(selectedDate, selectedTime, tickets);
+    validateBooking(selectedDate, tickets);
   };
 
-  const validateBooking = (date: string, time: string, tickets: number) => {
-    if (date && time && tickets > 0) {
-      const selectedDateTime = new Date(`${date}T${time}`);
-      if (selectedDateTime > new Date()) {
+  const validateBooking = (date: string, tickets: number) => {
+    if (date && tickets > 0) {
+      const selectedDateTime = new Date(date);
+      if (selectedDateTime >= new Date(todayString)) {
         setIsBookEnabled(true);
         return;
       }
@@ -76,23 +69,38 @@ function BookingButton({ onBook }: BookingButtonProps) {
     setIsBookEnabled(false);
   };
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isBookEnabled) {
+      onBook({
+        date: selectedDate,
+        tickets: selectedTickets,
+      });
+      setIsOpen(false);
+    }
+  };
+
+  const toggleForm = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering the outside click handler
+    setIsOpen((prev) => !prev);
+  };
+
   return (
     <div className="relative">
       <button
-        ref={buttonRef} // Attach the button ref
+        ref={buttonRef}
         className="bg-green-500 px-4 py-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500"
-        onClick={() => setIsOpen((prev) => !prev)} // Toggle dropdown state
+        onClick={toggleForm}
       >
         Book
       </button>
 
       {isOpen && (
-        // TODO change to form with onSubmit function
-        <div
-          ref={dropdownRef}
+        <form
+          ref={formRef}
           className="absolute right-[-4px] mt-3 w-64 bg-white dark:bg-gray-800 border dark:border-gray-700 rounded shadow-lg p-4 z-10"
+          onSubmit={handleSubmit}
         >
-          {/* TODO add default date as today, show only valid dates */}
           <div className="mb-4">
             <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Choose a date
@@ -105,20 +113,6 @@ function BookingButton({ onBook }: BookingButtonProps) {
               min={todayString}
               max={maxDateString}
               onChange={handleDateChange}
-            />
-          </div>
-
-          {/* TODO remove */}
-          <div className="mb-4">
-            <label htmlFor="time" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-              Choose a time
-            </label>
-            <input
-              type="time"
-              id="time"
-              className="mt-1 block w-full border rounded px-2 py-1 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-300"
-              value={selectedTime}
-              onChange={handleTimeChange}
             />
           </div>
 
@@ -141,23 +135,17 @@ function BookingButton({ onBook }: BookingButtonProps) {
           </div>
 
           <button
+            type="submit"
             className={`w-full px-4 py-2 rounded ${
               isBookEnabled
                 ? "bg-green-500 hover:bg-green-700 text-white dark:bg-green-700 dark:hover:bg-green-500"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500"
             }`}
             disabled={!isBookEnabled}
-            onClick={() =>
-              onBook({
-                date: selectedDate,
-                time: selectedTime,
-                tickets: selectedTickets,
-              })
-            }
           >
             Confirm Booking
           </button>
-        </div>
+        </form>
       )}
     </div>
   );

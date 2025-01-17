@@ -14,9 +14,9 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
   const router = useRouter();
   const { dispatch } = useAppContext();
 
-  const selectEvent = ({ date, time, tickets }: { date: string; time: string; tickets: number }) => {
+  const selectEvent = ({ date, tickets }: { date: string; tickets: number }) => {
     dispatch({ type: "SET_SELECTED_EVENT", payload: event });
-    router.push(`/event/${event.event_id}?date=${date}&time=${time}&tickets=${tickets}`);
+    router.push(`/event/${event.event_id}?date=${date}&tickets=${tickets}`);
   };
 
   const openMap = () => {
@@ -26,8 +26,6 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
 
   return (
     <div className="event-row flex flex-col sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#e7ccb3] dark:bg-[var(--box-background)]  sm:bg-white hover:bg-[#e7ccb3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-transparent sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
-
-
       <div className="flex flex-col sm:flex-row sm:items-center w-full">
         <div className="max-h-[1000px] mb-4 sm:mb-0 sm:mr-4 sm:w-1/5">
           <Image
@@ -62,7 +60,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
           onClick={openMap}
           className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-700 transition w-full dark:bg-blue-700 dark:hover:bg-blue-500"
         >
-          Open in maps 
+          Open in maps
         </button>
       </div>
     </div>
