@@ -1,75 +1,50 @@
-"use client";
-import React from "react";
-import { Booking, Review } from "@/utils/classes";
+"use client"
+
+import React, { useEffect, useState } from "react";
+import { Booking, TR_Event } from "@/utils/classes";
+import { formatDate } from "@/utils/utils";
 import LoadingBox from "./LoadingBox";
-import { encryptData } from "@/utils/utils";
+
 
 type BookingRowProps = {
   booking: Booking;
 };
 
-const EventRow: React.FC<BookingRowProps> = ({ booking }) => {
+const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
+  const [event, setEvent] = useState<TR_Event | null>(null);
 
-    const cancelRequest = (booking_id: number) => {
-        fetch(`/api/bookings/cancel/${booking_id}`, {
-            method: 'PATCH'
-          }).then((response)=>{
-            const badRequestError = (400 <= response.status && response.status < 500);
-            if (!response.ok && !badRequestError) {
-              alert(response.statusText);
-              throw new Error("Unknown Error");
-            }
-            return response.json();
-          }).then((resBody)=>{
-            if (resBody.message){
-              alert(resBody.message);
-            } else{
-              console.log(`Booking cancelled: ${booking_id}`);
-            }
-          }).catch((err)=>{
-            console.log(err);
-          })
+  useEffect(() => {
+    const getEventDetails = async () => {
+      const response = await fetch(`/api/events/getById/${booking.event_id}`);
+      if (response.ok) {
+        const resData = await response.json();
+        const eventRes = TR_Event.fromJSON(resData.result);
+        setEvent(eventRes);
+      }
+    };
+
+    if (booking && booking.event_id) {
+      getEventDetails();
     }
-  cancelRequest(404);
+  }, [booking]);
 
-  const createReview = (review: Review) => {
-      const requestData = { 
-        data: encryptData({ newReview:review })
-      };
-    fetch("/api/reviews/create",{
-      method: "POST",
-      body: JSON.stringify(requestData),
-      headers: {
-        'Content-Type': 'application/json', // Ensure the backend understands the JSON body
-      },
-    }).then((response)=>{
-      const badRequestError = (400 <= response.status && response.status < 500);
-      if (!response.ok && !badRequestError) {
-        alert(response.statusText);
-        throw new Error("Unknown Error");
-      }
-      return response.json();
-    }).then((resBody)=>{
-      if (resBody.message){
-        alert(resBody.message);
-      } else{
-        const review = resBody.result as Review;
-        console.log(`review created for event_id=${review.event_id}`);
-        // TODO handle on success
-      }
-    }).catch((err)=>{
-      console.log(err);
-    })
-  }
-  createReview(new Review("admin1",201, 3, "HI", "2023-01-01"));
-  
   return (
-    booking ? 
-      <div className="event-row flex items-center">
-        Booking Row Id={booking.booking_id}
-      </div>
-      : <LoadingBox/>
+    <div className="booking-row flex flex-col sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#e7ccb3] dark:bg-[var(--box-background)] sm:bg-white hover:bg-[#e7ccb3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-[#292b2f] sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
+      {event ? (
+        <div className="flex flex-col sm:flex-row sm:items-center w-full">
+          <div className="event-details w-full sm:w-4/5">
+            <h3 className="text-xl font-bold">{event.name}</h3>
+            <p><strong>Booking ID:</strong> {booking.booking_id}</p>
+            <p><strong>Event Date:</strong> {formatDate(booking.date)}</p>
+            <p><strong>Location:</strong> {event.town}, {event.address}</p>
+            <p><strong>Time:</strong> {event.openingTime.slice(0, 5)} - {event.closingTime.slice(0, 5)}</p>
+          </div>
+        </div>
+      ) : (
+        <LoadingBox />
+      )}
+    </div>
   );
 };
 
-export default EventRow;
+export default BookingRow;

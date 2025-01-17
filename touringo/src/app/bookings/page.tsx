@@ -1,57 +1,45 @@
 "use client"
 
+import BookingTable from '@/components/BookingTable';
 import LoadingBox from '@/components/LoadingBox';
-import { Booking, TR_Event } from '@/utils/classes';
-import { getLoggedAccount } from '@/utils/util_client';
+import { Booking } from '@/utils/classes';
+import { getLoggedAccount } from '@/utils/util_client';  // Assuming this gets the logged-in user
 import React, { useEffect, useState } from 'react';
 
 const BookingsPage = () => {
   const [bookings, setBookings] = useState<Booking[] | null>(null);
-  const [events, setEvents] = useState<TR_Event[] | null>(null);
 
   useEffect(() => {
-    const loggedAccount = getLoggedAccount();
-    const getBookings = async () => {
-      if (!loggedAccount)
-        return;
-      const response = await fetch(`/api/bookings/get/${loggedAccount.username}`)
-      if (!response.ok) {
-        alert(response.statusText);
-        setBookings([]);
-        return;
+    const loggedAccount = getLoggedAccount();  // Get the logged-in account
+    if (loggedAccount) {
+      const getBookings = async () => {
+        const response = await fetch(`/api/bookings/get/${loggedAccount.username}`);
+        if (!response.ok) {
+          alert(response.statusText);
+          setBookings([]);
+          return;
+        }
+        const resData = await response.json();
+        const bookingsRes = Booking.fromJSON_array(resData.result);
+        setBookings(bookingsRes);
+      };
+
+      if (bookings == null) {
+        getBookings();
       }
-      const resData = await response.json();
-      const bookingsRes = Booking.fromJSON_array(resData.result);
-      setBookings(bookingsRes);
-    };
-    const getEvents = async () => {
-      const response = await fetch("/api/events/getAll");
-      if (!response.ok) {
-        alert(response.statusText);
-        setEvents([]);
-        return;
-      }
-      const resData = await response.json();
-      const eventsRes = TR_Event.fromJSON_array(resData.result);
-      setEvents(eventsRes);
-    };
-    if (events == null) {
-      getEvents();
     }
-    if (bookings == null){
-      getBookings();
-      getEvents();
-    }
-  }, [bookings, events]);
+  }, [bookings]);
 
   return (
-    (events != null && bookings != null) ?
-      // TODO display all events with bookings, if an event have multiple bookings to it, display it as many times
-      // TODO each row will have 'cancel booking' button
+    (bookings != null) ?
       <div className="max-w-[1000px] my-4 mx-auto">
-        <div className="text-3xl text-green-600 font-bold pb-4">Booking</div>
+        <div className="text-3xl text-green-600 font-bold pb-4">Your Bookings</div>
         <div>
-          lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          {bookings.length === 0 ? (
+            <p>No bookings found.</p>
+          ) : (
+            <BookingTable bookings={bookings} />
+          )}
         </div>
       </div>
       : <LoadingBox />
