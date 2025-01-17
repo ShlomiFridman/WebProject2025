@@ -1,3 +1,5 @@
+import { Booking } from "@/utils/classes";
+import { encryptData } from "@/utils/utils";
 import React, { useState, useEffect, useRef } from "react";
 
 interface BookingDetails {
@@ -84,6 +86,36 @@ function BookingButton({ onBook }: BookingButtonProps) {
     e.stopPropagation(); // Prevent triggering the outside click handler
     setIsOpen((prev) => !prev);
   };
+
+  const createBooking = (booking: Booking) => {
+    fetch('/api/bookings/create', {
+          method: 'POST', // Assuming it's a POST request for registration
+          body: JSON.stringify({data: encryptData({ booking:booking })}),
+          headers: {
+            'Content-Type': 'application/json', // Ensure the backend understands the JSON body
+          },
+        })
+          .then((response) => {
+            const badRequestError = response.status >= 400 && response.status < 500;
+            if (!response.ok && !badRequestError) {
+              alert(response.statusText);
+              throw new Error('Unknown Error');
+            }
+            return response.json();
+          })
+          .then((resBody) => {
+            if (resBody.message) {
+              alert(resBody.message);
+            } else {
+              const booking = resBody.result as Booking;
+              console.log(booking);
+              // TODO handle success
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+  }
 
   return (
     <div className="relative">
