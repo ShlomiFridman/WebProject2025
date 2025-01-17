@@ -91,7 +91,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center dark:bg-gray-700">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-700">
       <div className="bg-gray-200 dark:bg-gray-500 p-6 rounded-lg shadow-lg w-full max-w-sm">
         <h1 className="text-2xl font-semibold text-center mb-4 text-black">Login</h1>
 
