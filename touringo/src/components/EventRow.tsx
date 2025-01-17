@@ -18,12 +18,16 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const activeDays = daysOfWeek.filter((_, index) => event.openDays[index]);
 
+  const inEventPaga = (): boolean =>{
+    return path == `/event/${event.event_id}`;
+  }
+
   const createBooking = ({ date, tickets }: { date: string; tickets: number }) => {
     router.push(`/event/${event.event_id}?date=${date}&tickets=${tickets}`);
   };
 
   const selectEvent = () => {
-    if (path == `/event/${event.event_id}`) return;
+    if (inEventPaga()) return;
     dispatch({ type: "SET_SELECTED_EVENT", payload: event });
     router.push(`/event/${event.event_id}`);
   };
@@ -35,7 +39,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
 
   return (
     <div className="event-row flex flex-col sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#e7ccb3] dark:bg-[var(--box-background)] sm:bg-white hover:bg-[#e7ccb3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-[#292b2f] sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
-      <div onClick={() => selectEvent()} className="flex flex-col sm:flex-row sm:items-center w-full">
+      <div onClick={() => selectEvent()} className={`flex flex-col sm:flex-row sm:items-center w-full ${ !inEventPaga()?'cursor-pointer':''}`}>
         <div className="max-h-[1000px] mb-4 sm:mb-0 sm:mr-4 sm:w-1/5">
           <Image
             priority
@@ -64,12 +68,12 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
                 <strong>Until:</strong> {formatDate(event.endDate)}
               </p>
               <p>
-                <strong>Opening Days:</strong> {activeDays.length > 0
-                  ? activeDays.join(", ")
-                  : "No open days"}
+                <strong>Time:</strong> {event.openingTime.slice(0, 5)}-{event.closingTime.slice(0, 5)}
               </p>
               <p>
-                <strong>Time:</strong> {event.openingTime.slice(0, 5)}-{event.closingTime.slice(0, 5)}
+                <strong>Opening Days:</strong><br/>{activeDays.length > 0
+                  ? activeDays.join(", ")
+                  : "No open days"}
               </p>
             </div>
           </div>

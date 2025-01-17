@@ -5,7 +5,7 @@ import { Booking } from "@/utils/classes";
 export async function getBookingsByUser(creator_username: string) {
     try {
         const bookings = await BookingModel.find(
-            { creator_username: creator_username, isActive: true }
+            { creator_username: creator_username }
         );
         return bookings;
     } catch (err) {

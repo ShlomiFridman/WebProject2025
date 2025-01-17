@@ -18,7 +18,7 @@ const HomePage: React.FC = () => {
       }
       const resData = await response.json();
       const eventsRes = TR_Event.fromJSON_array(resData.result);
-      setEvents(eventsRes);
+      setEvents(eventsRes.filter(ev => (ev.isActive)));
     };
     if (events == null){
       getEvents();
@@ -32,7 +32,11 @@ const HomePage: React.FC = () => {
       <div className="flex justify-center">
         {/* Center content on smaller screens */}
         {events != null ? (
-          <EventTable events={events} />
+          <>
+            {
+              events.length>0? <EventTable events={events} /> : <strong>There aren&apos;t any events</strong>
+            }
+          </>
         ) : (
           <LoadingBox />
         )}
