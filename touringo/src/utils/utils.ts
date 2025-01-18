@@ -38,3 +38,14 @@ export const decryptData = (encryptedData: string | null, secretKey: string = "T
     return `${month} ${dayWithOrdinal}, ${year}`;
   };
   
+  export const getMaxDate = (dateStr1: string, dateStr2: string): string => {
+    const date1 = new Date(dateStr1);
+    const date2 = new Date(dateStr2);
+  
+    // Compare the two dates and return the maximum as a string
+    return date1 > date2 ? dateStr1 : dateStr2;
+  }
+
+  export const dateToFormat = (date: Date): string =>{
+    return date.toISOString().slice(0, 10);
+  }

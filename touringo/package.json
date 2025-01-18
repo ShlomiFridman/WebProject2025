@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/react-datepicker": "^6.2.0",
     "crypto-js": "^4.2.0",
     "fetch-blob": "^4.0.0",
     "gridfs-stream": "^1.1.1",
@@ -16,6 +17,7 @@
     "mongoose": "^8.9.2",
     "next": "15.1.2",
     "react": "^19.0.0",
+    "react-datepicker": "^7.6.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {

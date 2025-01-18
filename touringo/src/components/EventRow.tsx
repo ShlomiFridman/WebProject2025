@@ -94,7 +94,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
           <span>Cancel Event</span>
           
         </button></> : <></>}
-        <BookingButton onBook={createBooking} />
+        <BookingButton onBook={createBooking} event={event}/>
         <button
           onClick={openMap}
           className="inline-flex items-center justify-center bg-blue-500 px-4 py-2 m-2 rounded w-full hover:bg-blue-700 transition whitespace-nowrap dark:bg-blue-700 dark:hover:bg-blue-500"

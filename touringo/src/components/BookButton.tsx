@@ -1,6 +1,8 @@
-import { Booking } from "@/utils/classes";
-import { encryptData } from "@/utils/utils";
+import { TR_Event } from "@/utils/classes";
+import { dateToFormat, getMaxDate } from "@/utils/utils";
 import React, { useState, useEffect, useRef } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface BookingDetails {
   date: string;
@@ -8,19 +10,23 @@ interface BookingDetails {
 }
 
 interface BookingButtonProps {
+  event: TR_Event;
   onBook: (details: BookingDetails) => void;
 }
 
-function BookingButton({ onBook }: BookingButtonProps) {
+function BookingButton({ event, onBook }: BookingButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const validDates = event.getValidDates();
+  const lastValidDate = validDates[validDates.length-1];
   const today = new Date();
-  const maxDate = new Date(today);
-  maxDate.setMonth(today.getMonth() + 1);
+  const minValidDate = getMaxDate(dateToFormat(today), validDates[0]);
+  // const maxDate = new Date(today);
+  // maxDate.setMonth(today.getMonth() + 1);
 
-  const maxDateString = maxDate.toISOString().split("T")[0];
+  // const maxDateString = maxDate.toISOString().split("T")[0];
   const todayString = today.toISOString().split("T")[0];
 
-  const [selectedDate, setSelectedDate] = useState(todayString); // Default to today's date
+  const [selectedDate, setSelectedDate] = useState(minValidDate); // Default to today's date
   const [selectedTickets, setSelectedTickets] = useState(1);
   const [isBookEnabled, setIsBookEnabled] = useState(true); // Default is enabled for today's date and 1 ticket
 
@@ -48,10 +54,13 @@ function BookingButton({ onBook }: BookingButtonProps) {
     };
   }, [isOpen]);
 
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const date = e.target.value;
-    setSelectedDate(date);
-    validateBooking(date, selectedTickets);
+  const handleDateChange = (date: Date|null) => {
+    console.log(date)
+    if (date)
+      setSelectedDate(dateToFormat(date));
+    // const date = e.target.value;
+    // setSelectedDate(date);
+    // validateBooking(date, selectedTickets);
   };
 
   const handleTicketsChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -87,35 +96,35 @@ function BookingButton({ onBook }: BookingButtonProps) {
     setIsOpen((prev) => !prev);
   };
 
-  const createBooking = (booking: Booking) => {
-    fetch('/api/bookings/create', {
-          method: 'POST', // Assuming it's a POST request for registration
-          body: JSON.stringify({data: encryptData({ booking:booking })}),
-          headers: {
-            'Content-Type': 'application/json', // Ensure the backend understands the JSON body
-          },
-        })
-          .then((response) => {
-            const badRequestError = response.status >= 400 && response.status < 500;
-            if (!response.ok && !badRequestError) {
-              alert(response.statusText);
-              throw new Error('Unknown Error');
-            }
-            return response.json();
-          })
-          .then((resBody) => {
-            if (resBody.message) {
-              alert(resBody.message);
-            } else {
-              const booking = resBody.result as Booking;
-              console.log(booking);
-              // TODO handle success
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-  }
+  // const createBooking = (booking: Booking) => {
+  //   fetch('/api/bookings/create', {
+  //         method: 'POST', // Assuming it's a POST request for registration
+  //         body: JSON.stringify({data: encryptData({ booking:booking })}),
+  //         headers: {
+  //           'Content-Type': 'application/json', // Ensure the backend understands the JSON body
+  //         },
+  //       })
+  //         .then((response) => {
+  //           const badRequestError = response.status >= 400 && response.status < 500;
+  //           if (!response.ok && !badRequestError) {
+  //             alert(response.statusText);
+  //             throw new Error('Unknown Error');
+  //           }
+  //           return response.json();
+  //         })
+  //         .then((resBody) => {
+  //           if (resBody.message) {
+  //             alert(resBody.message);
+  //           } else {
+  //             const booking = resBody.result as Booking;
+  //             console.log(booking);
+  //             // TODO handle success
+  //           }
+  //         })
+  //         .catch((err) => {
+  //           console.log(err);
+  //         })
+  // }
 
   return (
     <div className="relative">
@@ -136,13 +145,13 @@ function BookingButton({ onBook }: BookingButtonProps) {
             <label htmlFor="date" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Choose a date
             </label>
-            <input
-              type="date"
+            <DatePicker
               id="date"
               className="mt-1 block w-full border rounded px-2 py-1 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-300"
-              value={selectedDate}
-              min={todayString}
-              max={maxDateString}
+              selected={selectedDate? new Date(selectedDate):null}
+              filterDate={(date:Date) => event.openDays[date.getDay()]}
+              minDate={new Date(minValidDate)}
+              maxDate={new Date(lastValidDate)}
               onChange={handleDateChange}
             />
           </div>

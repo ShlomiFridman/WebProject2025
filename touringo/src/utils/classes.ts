@@ -26,22 +26,22 @@ export class Account {
     static parseJSON(json: string): Account {
         const obj = JSON.parse(json);
         return new Account(
-          obj.username || "",
-          obj.password || "",
-          obj.name || "",
-          obj.bio || "",
-          obj.about || ""
+            obj.username || "",
+            obj.password || "",
+            obj.name || "",
+            obj.bio || "",
+            obj.about || ""
         );
-      }
+    }
 }
 
 export class TR_Image {
     public title: string;
-    public img_buffer: Buffer|null;
+    public img_buffer: Buffer | null;
     public img_url: string;
     public img_type: string;
 
-    constructor(title: string, img_buffer: Buffer|null, img_url: string, img_type: string) {
+    constructor(title: string, img_buffer: Buffer | null, img_url: string, img_type: string) {
         this.title = title;
         this.img_buffer = img_buffer;
         this.img_type = img_type;
@@ -50,7 +50,7 @@ export class TR_Image {
 
     // Method to generate base64-encoded image source string
     get src(): string {
-        if (!this.img_buffer){
+        if (!this.img_buffer) {
             return this.img_url;
         }
         const base64Data = this.img_buffer.toString('base64');
@@ -59,12 +59,12 @@ export class TR_Image {
     }
 
     // Static method to create a TR_Image instance from JSON
-    static fromJSON(json: { title: string, img_buffer: string|null, img_url: string, img_type: string }): TR_Image {
-        return new TR_Image(json.title, json.img_buffer? Buffer.from(json.img_buffer, 'base64') : null, json.img_url, json.img_type);
+    static fromJSON(json: { title: string, img_buffer: string | null, img_url: string, img_type: string }): TR_Image {
+        return new TR_Image(json.title, json.img_buffer ? Buffer.from(json.img_buffer, 'base64') : null, json.img_url, json.img_type);
     }
 
     // Static method to create an array of TR_Image instances from an array of JSON objects
-    static fromJSON_array(jsonArray: { title: string, img_buffer: string|null, img_url: string, img_type: string }[]): TR_Image[] {
+    static fromJSON_array(jsonArray: { title: string, img_buffer: string | null, img_url: string, img_type: string }[]): TR_Image[] {
         return jsonArray.map(json => TR_Image.fromJSON(json));
     }
 }
@@ -135,7 +135,7 @@ export class TR_Event {
         description: string,
         phone: string,
         creator_username: string,
-        images: { title: string, img_buffer: string|null, img_url: string, img_type: string }[],
+        images: { title: string, img_buffer: string | null, img_url: string, img_type: string }[],
         openingTime: string,
         closingTime: string,
         startDate: string,
@@ -173,7 +173,7 @@ export class TR_Event {
         description: string,
         phone: string,
         creator_username: string,
-        images: { title: string, img_buffer: string|null, img_url: string, img_type: string }[],
+        images: { title: string, img_buffer: string | null, img_url: string, img_type: string }[],
         openingTime: string,
         closingTime: string,
         startDate: string,
@@ -186,6 +186,37 @@ export class TR_Event {
     }[]): TR_Event[] {
         return jsonArray.map(json => TR_Event.fromJSON(json));
     }
+
+    // Function to filter the valid dates
+  getValidDates(): string[] {
+    // Convert startDate and endDate to Date objects
+    const start = new Date(this.startDate);
+    const end = new Date(this.endDate);
+
+    const validDates: string[] = [];
+
+    // Ensure the date comparison handles midnight correctly by clearing the time portion
+    start.setHours(0, 0, 0, 0);
+    end.setHours(0, 0, 0, 0);
+
+    const currentDate = new Date(start);
+
+    // Iterate from startDate to endDate
+    while (currentDate <= end) {
+      const dayOfWeek = currentDate.getDay(); // Get the day of the week (0 = Sunday, 6 = Saturday)
+
+      // Check if the day is valid according to the daysOfWeek array
+      if (this.openDays[dayOfWeek]) {
+        // If valid, add to the result array in YYYY-MM-DD format
+        validDates.push(currentDate.toISOString().split('T')[0]);
+      }
+
+      // Increment the currentDate by one day
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    return validDates;
+  }
 }
 
 export class Review {
