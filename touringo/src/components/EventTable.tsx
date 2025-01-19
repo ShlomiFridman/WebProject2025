@@ -14,7 +14,7 @@ const EventTable: React.FC<EventTableProps> = ({ events }) => {
       <div className="event-row flex items-center justify-between">
         <b></b>
         <h1 className="text-center hidden sm:block pr-4"><b>Details</b></h1> {/* Hidden on small screens */}
-        {path != "/" ? <h1 className="hidden sm:block pr-8"><b>Options</b></h1> : <h1></h1> } {/* Hidden on small screens */}
+        <h1 className="hidden sm:block pr-8"><b>Options</b></h1>{/* Hidden on small screens */}
       </div>
       {events.map((event) => (
         <EventRow key={event.event_id} event={event} />
