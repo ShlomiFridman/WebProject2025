@@ -35,21 +35,21 @@ export default function Header() {
         {loginFlag? <HeaderLinks /> : <div className="flex justify-start gap-3 relative">
           <Link
         href="/"
-        className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${path === "/home" ? "bg-gray-200 dark:bg-gray-700 " : ""
+        className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${path === "/" ? "bg-gray-200 dark:bg-gray-700 " : ""
           }`}
       >
         TouRingo
       </Link>
         <Link
         href="/login"
-        className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${path === "/home" ? "bg-gray-200 dark:bg-gray-700 " : ""
+        className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${path === "/login" ? "bg-gray-200 dark:bg-gray-700 " : ""
           }`}
       >
         Login
       </Link>
       <Link
         href="/register"
-        className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${path === "/home" ? "bg-gray-200 dark:bg-gray-700 " : ""
+        className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${path === "/register" ? "bg-gray-200 dark:bg-gray-700 " : ""
           }`}
       >
         Register
