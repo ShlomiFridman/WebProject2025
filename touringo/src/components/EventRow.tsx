@@ -100,7 +100,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
           <span>Cancel Event</span>
           
         </button></> : <></>}
-        {path === "" ? <>
+        {path !== "/" ? <>
         <BookingButton onBook={createBooking} event={event}/>
         <button
           onClick={openMap}
