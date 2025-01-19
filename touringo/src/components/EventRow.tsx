@@ -94,8 +94,11 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
         </div>
       </div>
       <div className="mt-4 sm:mt-0 sm:ml-4">
-        {path !== "/" && (username && username != event.creator_username) ? <>
-          <BookingButton onBook={createBooking} event={event} /> </> : <p className="text-center">Your event</p>}
+        {path !== "/" && (username) ? <>
+          {username != event.creator_username ?
+            <BookingButton onBook={createBooking} event={event} /> : <p className="text-center">Your event</p>
+          }
+        </> : <></>}
         {path === "/myEvents" ? <>
           {/* <button
             //onClick={updateEvent}
