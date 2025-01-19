@@ -61,7 +61,7 @@ export default function HeaderLinks() {
             </Link>
             <Link
               href="/myEvents"
-              className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap ${path === "/events" ? "bg-gray-100 dark:bg-gray-700" : ""
+              className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap ${path === "/myEvents" ? "bg-gray-100 dark:bg-gray-700" : ""
                 }`}
               onClick={() => setIsDropdownOpen(false)}
             >
