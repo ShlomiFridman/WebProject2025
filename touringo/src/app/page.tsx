@@ -4,7 +4,7 @@ import EventTable from '@/components/EventTable';
 import LoadingBox from '@/components/LoadingBox';
 import { TR_Event } from '@/utils/classes';
 //import { decryptData, encryptData } from "@/utils/utils";
-import { redirect } from 'next/navigation';
+//import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 // fetch template example

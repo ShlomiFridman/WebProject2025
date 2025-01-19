@@ -1,7 +1,6 @@
 import React from "react";
 import EventRow from "./EventRow";
 import { TR_Event } from "@/utils/classes";
-import { usePathname } from "next/navigation";
 
 type EventTableProps = {
   events: TR_Event[];

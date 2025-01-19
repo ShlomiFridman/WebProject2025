@@ -123,6 +123,7 @@ const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
               onClick={() =>
                 createReview(
                   new Review(
+                    booking.booking_id,
                     "admin1", // Replace with dynamic username if available
                     booking.event_id,
                     5, // Example rating

@@ -4,7 +4,7 @@ import EventRow from '@/components/EventRow';
 import LoadingBox from '@/components/LoadingBox';
 import { TR_Event } from '@/utils/classes';
 import { getLoggedAccount } from '@/utils/util_client';
-import { encryptData } from '@/utils/utils';
+//import { encryptData } from '@/utils/utils';
 import React, { useEffect, useState } from 'react';
 
 const MyEventsPage = () => {
@@ -32,6 +32,7 @@ const MyEventsPage = () => {
 
   }, [events]);
 
+  /* TODO assigned a value but never used, hid for vercel check
   const createEvent = (newEvent: TR_Event) => {
     // TODO add POST fetch
     fetch('/api/events/create', {
@@ -84,7 +85,7 @@ const MyEventsPage = () => {
     }).catch((err)=>{
       console.log(err);
     })
-  }
+  }*/
 
   return (
     (events != null) ?
