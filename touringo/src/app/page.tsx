@@ -1,7 +1,11 @@
 "use client"
 
+import EventTable from '@/components/EventTable';
+import LoadingBox from '@/components/LoadingBox';
+import { TR_Event } from '@/utils/classes';
 //import { decryptData, encryptData } from "@/utils/utils";
-import { redirect } from 'next/navigation';
+//import { redirect } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 // fetch template example
 // const user = {
@@ -32,7 +36,45 @@ import { redirect } from 'next/navigation';
 
 
 export default function Page() {
-  redirect('/login');
+  const [events, setEvents] = useState<TR_Event[] | null>(null);
+
+  useEffect(() => {
+    const getEvents = async () => {
+      const response = await fetch("/api/events/getAll");
+      if (!response.ok) {
+        alert(response.statusText);
+        setEvents([]);
+        return;
+      }
+      const resData = await response.json();
+      const eventsRes = TR_Event.fromJSON_array(resData.result);
+      setEvents(eventsRes.filter(ev => (ev.isActive)));
+    };
+    if (events == null){
+      getEvents();
+    }
+  }, [events]);
+
+  return (
+    <div className="max-w-[1000px] my-4 mx-auto"> {/* Centers the content on small screens */}
+      <div className="text-3xl text-green-600 font-bold">Events</div>
+      <div className="pb-4">Local tourist attractions, restaurants, and cultural events</div>
+      <div className="flex justify-center">
+        {/* Center content on smaller screens */}
+        {events != null ? (
+          <>
+            {
+              events.length>0? <EventTable events={events} /> : <strong>There aren&apos;t any events</strong>
+            }
+          </>
+        ) : (
+          <LoadingBox />
+        )}
+      </div>
+    </div>
+  );
+
+  //redirect('/home');
 
   /*const txt = encryptData({test:"TEST"});
   const data = decryptData(txt)

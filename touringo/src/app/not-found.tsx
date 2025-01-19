@@ -6,7 +6,7 @@ const NotFoundPage = () => {
     const router = useRouter();
 
     const goHome = () => {
-        router.push('/');
+        router.push('/home');
     };
 
     return (
@@ -15,7 +15,7 @@ const NotFoundPage = () => {
             <p className="text-xl mb-6">Oops! The page you&apos;re looking for doesn&apos;t exist.</p>
             <button
                 onClick={goHome}
-                className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+                className="px-6 py-3 bg-green-500 rounded-lg hover:bg-green-600 transition"
             >
                 Go Back Home
             </button>

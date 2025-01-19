@@ -91,9 +91,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
-        <h1 className="text-2xl font-semibold text-center mb-4">Login</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-700">
+      <div className="bg-gray-200 dark:bg-gray-500 p-6 rounded-lg shadow-lg w-full max-w-sm">
+        <h1 className="text-2xl font-semibold text-center mb-4 text-black">Login</h1>
 
         {/* Error message */}
         {error && (
@@ -132,7 +132,7 @@ const LoginPage = () => {
           <button
             type='submit'
             disabled={isLoading}
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-400"
+            className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-400"
           >
             {isLoading ? 'Logging in...' : 'Login'}
           </button>
@@ -140,7 +140,7 @@ const LoginPage = () => {
 
         {/* Optionally add a link to sign up or other actions */}
         <div className="mt-4 text-center">
-          <p className="text-sm text-gray-600">Don&apos;t have an account? <a href="/register" className="text-blue-500">Sign up</a></p>
+          <p className="text-sm text-gray-600">Don&apos;t have an account? <a href="/register" className="text-green-500">Sign up</a></p>
         </div>
       </div>
     </div>

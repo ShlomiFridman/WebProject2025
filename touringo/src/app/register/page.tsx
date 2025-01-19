@@ -1,18 +1,21 @@
-"use client"
+"use client";
 
 import { useState } from 'react';
 import { useAppContext } from '@/context/MainContext';
 import { Account } from '@/utils/classes';
 import { encryptData } from '@/utils/utils';
 import React from 'react';
+import { logAccount } from '@/utils/util_client';
+import { useRouter } from 'next/navigation';
 
 const RegisterPage = () => {
   const { dispatch } = useAppContext();
+  const router = useRouter();
 
   // Local state for managing form input
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  // const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -25,36 +28,25 @@ const RegisterPage = () => {
     setPassword(e.target.value);
   };
 
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const logUserDetails = (username: string, password: string, email: string) => {
-    console.log('User Details:');
-    console.log(`Username: ${username}`);
-    console.log(`Email: ${email}`);
-    console.log(`Password: ${password}`);
-  };
+  // const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setEmail(e.target.value);
+  // };
 
   // Handle register button click
   const onBtnClick: React.MouseEventHandler<HTMLButtonElement> = (e) => {
     e.preventDefault();
-    logUserDetails(username, password, email); // Log user details to console
-    registerRequest(username, password, email);
+    const account: Account = new Account(username, password, username, "empty", "empty");
+    console.log(account);
+    registerRequest(account);
   };
 
-  const registerRequest = (username: string, password: string, email: string) => {
+  const registerRequest = (account: Account) => {
     setIsLoading(true);
     setError(null);
 
-    // Prepare data for sending
-    const requestData = { 
-      data: encryptData({ username, password, email })
-    };
-
     fetch('/api/accounts/register', {
       method: 'POST', // Assuming it's a POST request for registration
-      body: JSON.stringify(requestData),
+      body: JSON.stringify({data: encryptData({ account:account })}),
       headers: {
         'Content-Type': 'application/json', // Ensure the backend understands the JSON body
       },
@@ -72,8 +64,10 @@ const RegisterPage = () => {
           setError(resBody.message);
         } else {
           const account = resBody.result as Account;
-          console.log(`Registered account set: ${username}`);
+          console.log(`Registered account set: ${account.username}`);
           dispatch({ type: 'SET_LOGGED_ACCOUNT', payload: account });
+          logAccount(account);
+          router.push("/home");
         }
       })
       .catch((err) => {
@@ -86,9 +80,9 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
-        <h1 className="text-2xl font-semibold text-center mb-4">Register</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-700">
+      <div className="bg-gray-200 dark:bg-gray-500 p-6 rounded-lg shadow-lg w-full max-w-sm">
+        <h1 className="text-2xl font-semibold text-center mb-4 text-black">Register</h1>
 
         {/* Error message */}
         {error && (
@@ -108,10 +102,11 @@ const RegisterPage = () => {
               onChange={handleUsernameChange}
               placeholder="Enter your username"
               className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
 
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
             <input
               type="email"
@@ -121,7 +116,7 @@ const RegisterPage = () => {
               placeholder="Enter your email"
               className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          </div>
+          </div> */}
 
           <div className="mb-4">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
@@ -132,6 +127,7 @@ const RegisterPage = () => {
               onChange={handlePasswordChange}
               placeholder="Enter your password"
               className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
 
@@ -139,7 +135,7 @@ const RegisterPage = () => {
           <button
             onClick={onBtnClick}
             disabled={isLoading}
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-400"
+            className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-400"
           >
             {isLoading ? 'Registering...' : 'Register'}
           </button>
@@ -147,7 +143,7 @@ const RegisterPage = () => {
 
         {/* Optionally add a link to login or other actions */}
         <div className="mt-4 text-center">
-          <p className="text-sm text-gray-600">Already have an account? <a href="/login" className="text-blue-500">Login</a></p>
+          <p className="text-sm text-gray-600">Already have an account? <a href="/login" className="text-green-500">Login</a></p>
         </div>
       </div>
     </div>
