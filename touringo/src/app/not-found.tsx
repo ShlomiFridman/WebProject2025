@@ -6,7 +6,7 @@ const NotFoundPage = () => {
     const router = useRouter();
 
     const goHome = () => {
-        router.push('/');
+        router.push('/home');
     };
 
     return (
