@@ -58,7 +58,9 @@ const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
             <CancelBookingButton booking={booking} />
 
             {/* BookingReviewButton for Review creation */}
-            <BookingReviewButton booking={booking} />
+
+            {booking.hasPassed() ?
+            <BookingReviewButton booking={booking} /> : null}
           </div>
         </div>
       ) : (

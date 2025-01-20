@@ -21,34 +21,34 @@ const BookingReviewButton: React.FC<{
       setReview(null);
     }
 
-    
-        fetch(`/api/reviews/getByBookingId/${booking.booking_id}`)
-              .then((response) => {
-                const badRequestError = response.status >= 400 && response.status < 500;
-                if (!response.ok && !badRequestError) {
-                  alert(response.statusText);
-                  throw new Error('Unknown Error');
-                }
-                if (response.status == 204)
-                  return null;
-                return response.json();
-              })
-              .then((resBody) => {
-                if (resBody == null){
-                  console.log(`No review for booking ${booking.booking_id}`)
-                  setReview(null);
-                }
-                else if (resBody.message) {
-                  alert(resBody.message);
-                } else {
-                  const review = resBody.result as Review;
-                  console.log(`review found for booking ${booking.booking_id}`)
-                  setReview(review);
-                }
-              })
-              .catch((err) => {
-                console.log(err);
-              })
+
+    fetch(`/api/reviews/getByBookingId/${booking.booking_id}`)
+      .then((response) => {
+        const badRequestError = response.status >= 400 && response.status < 500;
+        if (!response.ok && !badRequestError) {
+          alert(response.statusText);
+          throw new Error('Unknown Error');
+        }
+        if (response.status == 204)
+          return null;
+        return response.json();
+      })
+      .then((resBody) => {
+        if (resBody == null) {
+          console.log(`No review for booking ${booking.booking_id}`)
+          setReview(null);
+        }
+        else if (resBody.message) {
+          alert(resBody.message);
+        } else {
+          const review = resBody.result as Review;
+          console.log(`review found for booking ${booking.booking_id}`)
+          setReview(review);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
 
   }, [booking.booking_id]);
 
@@ -72,16 +72,21 @@ const BookingReviewButton: React.FC<{
         headers: { "Content-Type": "application/json" },
       });
 
-      if (response.ok) {
+      if (response.status < 500) {
         const resBody = await response.json();
-        if (resBody.result) {
-          console.log(`Review created successfully:`, resBody.result);
+        if (resBody.result){
+          const review = resBody.result as Review;
+          console.log(`Review created successfully:`, review);
+          setReview(review);
           return true;
         }
-        alert(resBody.message || "Review creation failed.");
-        return false;
+        else{
+          alert(resBody.message);
+          setIsActive(false);
+          return false;
+        }
       } else {
-        alert(`Failed to create review: ${response.statusText}`);
+        alert(`Server error: ${response.statusText}`);
         return false;
       }
     } catch (error) {
@@ -116,7 +121,7 @@ const BookingReviewButton: React.FC<{
       resetForm();
     } else {
       setStatus('error');
-      alert('Failed to submit feedback. Please try again.');
+      // alert('Failed to submit feedback. Please try again.');
     }
   };
 
@@ -124,7 +129,7 @@ const BookingReviewButton: React.FC<{
     setRating(null);
     setFeedback('');
     setStatus('idle');
-    handleReviewToggle(); // Close form after submission
+    setIsActive(false); // Close form after submission
   };
 
   return (review !== undefined) ? (
