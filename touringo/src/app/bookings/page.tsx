@@ -4,13 +4,20 @@ import BookingTable from '@/components/BookingTable';
 import LoadingBox from '@/components/LoadingBox';
 import { Booking } from '@/utils/classes';
 import { getLoggedAccount } from '@/utils/util_client';  // Assuming this gets the logged-in user
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 const BookingsPage = () => {
   const [bookings, setBookings] = useState<Booking[] | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const loggedAccount = getLoggedAccount();  // Get the logged-in account
+    if (!loggedAccount) {
+      // alert("You must login first!");
+      router.push('/login');
+      return;
+    }
     if (loggedAccount) {
       const getBookings = async () => {
         const response = await fetch(`/api/bookings/get/${loggedAccount.username}`);
@@ -28,7 +35,7 @@ const BookingsPage = () => {
         getBookings();
       }
     }
-  }, [bookings]);
+  }, [bookings, router]);
 
   return (
     (bookings != null) ?

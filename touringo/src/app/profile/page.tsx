@@ -6,16 +6,23 @@ import { encryptData } from "@/utils/utils";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { getLoggedAccount, logAccount } from "@/utils/util_client";
+import { useRouter } from "next/navigation";
 
 const ProfilePage: React.FC = () => {
   const [loggedAccount, setLoggedAccount] = useState<Account | null>(null);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [profile, setProfile] = useState({ name: "", bio: "", about: "" });
   const [initialProfile, setInitialProfile] = useState({ name: "", bio: "", about: "" });
+  const router = useRouter();
   const { dispatch } = useAppContext();
 
   useEffect(() => {
     const account = getLoggedAccount();
+    if (!account){
+      // alert("You must login first!");
+      router.push('/login');
+      return;
+    }
     setLoggedAccount(account);
     const currentProfile = {
       name: account?.username || "",
@@ -24,7 +31,7 @@ const ProfilePage: React.FC = () => {
     };
     setProfile(currentProfile);
     setInitialProfile(currentProfile);
-  }, []);
+  }, [router]);
 
   const handleEditToggle = () => {
     setIsEditing((prev) => !prev);

@@ -4,14 +4,21 @@ import EventRow from '@/components/EventRow';
 import LoadingBox from '@/components/LoadingBox';
 import { TR_Event } from '@/utils/classes';
 import { getLoggedAccount } from '@/utils/util_client';
+import { useRouter } from 'next/navigation';
 //import { encryptData } from '@/utils/utils';
 import React, { useEffect, useState } from 'react';
 
 const MyEventsPage = () => {
   const [events, setEvents] = useState<TR_Event[] | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     const loggedAccount = getLoggedAccount();
+    if (!loggedAccount) {
+      // alert("You must login first!");
+      router.push('/login');
+      return;
+    }
     if (!loggedAccount)
       return;
 
@@ -30,7 +37,7 @@ const MyEventsPage = () => {
       getEvents();
     }
 
-  }, [events]);
+  }, [events, router]);
 
   return (
     (events != null) ?
@@ -40,15 +47,15 @@ const MyEventsPage = () => {
       <div className="max-w-[1000px] my-4 mx-auto">
         <div className="text-3xl text-green-600 font-bold pb-4">My Events</div>
         <div className="event-table">
-      <div className="event-row flex items-center justify-between">
-        <b></b>
-        <h1 className="hidden sm:block pr-4"><b>Details</b></h1> {/* Hidden on small screens */}
-        <h1 className="hidden sm:block pr-8"><b>Options</b></h1> {/* Hidden on small screens */}
-      </div>
-      {events.map((event) => (
-        <EventRow key={event.event_id} event={event} />
-      ))}
-    </div>
+          <div className="event-row flex items-center justify-between">
+            <b></b>
+            <h1 className="hidden sm:block pr-4"><b>Details</b></h1> {/* Hidden on small screens */}
+            <h1 className="hidden sm:block pr-8"><b>Options</b></h1> {/* Hidden on small screens */}
+          </div>
+          {events.map((event) => (
+            <EventRow key={event.event_id} event={event} />
+          ))}
+        </div>
       </div>
       : <LoadingBox />
   );
