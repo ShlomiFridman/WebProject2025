@@ -7,6 +7,7 @@ import LoadingBox from "./LoadingBox";
 import CancelBookingButton from "./bookingButtons/CancelBookingButton";
 import Link from "next/link";
 import BookingReviewButton from "./bookingButtons/BookingReviewButton";
+import { getLoggedAccount } from "@/utils/util_client";
 
 type BookingRowProps = {
   booking: Booking;
@@ -14,6 +15,8 @@ type BookingRowProps = {
 
 const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
   const [event, setEvent] = useState<TR_Event | null>(null);
+  const [username, setUsername] = useState<string | undefined>(undefined);
+  const [activeReviewBookingId, setActiveReviewBookingId] = useState<string | null>(null);
 
   // Fetch event details on mount
   useEffect(() => {
@@ -31,38 +34,61 @@ const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
     }
   }, [booking]);
 
-  // Create review request
-  const createReview = (review: Review) => {
-    const requestData = {
-      data: encryptData({ newReview: review }),
-    };
-    fetch("/api/reviews/create", {
-      method: "POST",
-      body: JSON.stringify(requestData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        const badRequestError = 400 <= response.status && response.status < 500;
-        if (!response.ok && !badRequestError) {
-          alert(response.statusText);
-          throw new Error("Unknown Error");
-        }
-        return response.json();
-      })
-      .then((resBody) => {
-        if (resBody.message) {
-          alert(resBody.message);
-        } else {
-          const newReview = resBody.result as Review;
-          console.log(`Review created for event_id=${newReview.event_id}`);
-          // TODO: Handle success response
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+  // Fetch logged-in account's username
+  useEffect(() => {
+    const account = getLoggedAccount();
+    if (account) {
+      setUsername(account.username);
+    } else {
+      alert("User not logged in.");
+    }
+  }, []);
+
+  // Handle review creation
+  const createReview = async (rating: number, feedback: string): Promise<boolean> => {
+    try {
+      const response = await fetch("/api/reviews/create", {
+        method: "POST",
+        body: JSON.stringify({
+          data: encryptData({
+            newReview: new Review(
+              booking.booking_id,
+              username || "unknown",
+              booking.event_id,
+              rating,
+              feedback,
+              new Date().toISOString().split("T")[0]
+            ),
+          }),
+        }),
+        headers: { "Content-Type": "application/json" },
       });
+
+      if (response.ok) {
+        const resBody = await response.json();
+        if (resBody.result) {
+          console.log(`Review created successfully:`, resBody.result);
+          return true;
+        }
+        alert(resBody.message || "Review creation failed.");
+        return false;
+      } else {
+        alert(`Failed to create review: ${response.statusText}`);
+        return false;
+      }
+    } catch (error) {
+      console.error("Error creating review:", error);
+      alert("An unexpected error occurred while submitting the review.");
+      return false;
+    }
+  };
+
+  // Handle toggling the active review state (and closing previously opened forms)
+  const handleReviewToggle = (bookingId: string) => {
+    // If the clicked review form is already open, close it; if not, open it and close others
+    setActiveReviewBookingId(prevBookingId =>
+      prevBookingId === bookingId ? null : bookingId
+    );
   };
 
   return (
@@ -91,20 +117,11 @@ const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
             {/* Cancel Booking Button */}
             <CancelBookingButton booking={booking} />
 
-            {/* Review Event Button */}
+            {/* BookingReviewButton for Review creation */}
             <BookingReviewButton
-              onSubmit={(rating, feedback) =>
-                createReview(
-                  new Review(
-                    booking.booking_id,
-                    "admin1", // Replace with dynamic username if available
-                    booking.event_id,
-                    rating,
-                    feedback,
-                    new Date().toISOString().split("T")[0] // Current date
-                  )
-                )
-              }
+              isActive={activeReviewBookingId === String(booking.booking_id)} // Show review form only if this booking is selected
+              onToggle={() => handleReviewToggle(String(booking.booking_id))} // Toggle the review form
+              onSubmit={(rating, feedback) => createReview(rating, feedback)} // Handle review submission
             />
           </div>
         </div>
