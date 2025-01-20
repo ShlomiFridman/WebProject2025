@@ -4,7 +4,7 @@ import { TR_Event } from "@/utils/classes";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useAppContext } from "@/context/MainContext";
-import BookingButton from "./buttons/BookButton";
+import BookingButton from "./bookingButtons/BookButton";
 import { formatDate } from "@/utils/utils";
 import { getLoggedAccount } from "@/utils/util_client";
 
@@ -23,10 +23,6 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
   const inEventPaga = (): boolean => {
     return path == `/event/${event.event_id}`;
   }
-
-  const createBooking = ({ date, tickets }: { date: string; tickets: number }) => {
-    router.push(`/event/${event.event_id}?date=${date}&tickets=${tickets}`);
-  };
 
   const selectEvent = () => {
     if (inEventPaga()) return;
@@ -96,7 +92,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
       <div className="mt-4 sm:mt-0 sm:ml-4">
         {(username) ? <>
           {username != event.creator_username ?
-            <BookingButton onBook={createBooking} event={event} /> : <p className="text-center">Your event</p>
+            <BookingButton event={event} /> : <p className="text-center">Your event</p>
           }
         </> : <></>}
         {path === "/myEvents" ? <>

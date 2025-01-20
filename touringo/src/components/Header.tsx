@@ -25,6 +25,7 @@ export default function Header() {
         router.push("/login");
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!isClient) {

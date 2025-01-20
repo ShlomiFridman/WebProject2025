@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import { Booking, TR_Event, Review } from "@/utils/classes";
 import { formatDate, encryptData } from "@/utils/utils";
 import LoadingBox from "./LoadingBox";
-import CancelBookingButton from "./buttons/CancelBookingButton";
+import CancelBookingButton from "./bookingButtons/CancelBookingButton";
+import Link from "next/link";
 
 type BookingRowProps = {
   booking: Booking;
@@ -67,23 +68,24 @@ const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
     <div className="booking-row flex flex-col sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#e7ccb3] dark:bg-[var(--box-background)] sm:bg-white hover:bg-[#e7ccb3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-[#292b2f] sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
       {event ? (
         <div className="flex flex-col sm:flex-row sm:items-center w-full">
-          <div className="event-details w-full sm:w-4/5">
-            <h3 className="text-xl font-bold">{event.name}</h3>
-            <p>
-              <strong>Booking ID:</strong> {booking.booking_id}
-            </p>
-            <p>
-              <strong>Event Date:</strong> {formatDate(booking.date)}
-            </p>
-            <p>
-              <strong>Location:</strong> {event.town}, {event.address}
-            </p>
-            <p>
-              <strong>Time:</strong> {event.openingTime.slice(0, 5)} -{" "}
-              {event.closingTime.slice(0, 5)}
-            </p>
-          </div>
-
+          <Link href={`/event/${event.event_id}`} className="event-details w-full sm:w-4/5">
+            <div>
+              <h3 className="text-xl font-bold">{event.name}</h3>
+              <p>
+                <strong>Booking ID:</strong> {booking.booking_id} ({booking.amount} tickets)
+              </p>
+              <p>
+                <strong>Date:</strong> {formatDate(booking.date)}
+              </p>
+              <p>
+                <strong>Location:</strong> {event.town}, {event.address}
+              </p>
+              <p>
+                <strong>Time:</strong> {event.openingTime.slice(0, 5)} -{" "}
+                {event.closingTime.slice(0, 5)}
+              </p>
+            </div>
+          </Link>
           <div className="actions flex gap-2 mt-4 sm:mt-0">
             {/* Cancel Booking Button */}
             <CancelBookingButton booking={booking} />
