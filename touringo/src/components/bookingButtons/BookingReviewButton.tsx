@@ -72,7 +72,7 @@ const BookingReviewButton: React.FC<{
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
               placeholder="Leave your feedback here..."
-              className="w-full h-20 p-2 rounded-md border border-gray-300"
+              className="w-full h-20 p-2 rounded-md border border-gray-300 resize-none"
               disabled={status === 'submitting'}
             />
           </div>
