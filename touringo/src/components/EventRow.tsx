@@ -7,6 +7,7 @@ import { useAppContext } from "@/context/MainContext";
 import BookingButton from "./bookingButtons/BookButton";
 import { formatDate } from "@/utils/utils";
 import { getLoggedAccount } from "@/utils/util_client";
+import CancelEventButton from "./eventsButtons/CancelEventButton";
 
 type EventRowProps = {
   event: TR_Event;
@@ -44,7 +45,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
   return (
     <div className="event-row flex sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#e7ccb3] dark:bg-[var(--box-background)] sm:bg-white hover:bg-[#e7ccb3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-[#292b2f] sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
       <div onClick={() => {
-        if (path !== "/") {
+        if (username !== "/") {
           selectEvent();
         } else {
           alert("You must login first");
@@ -92,24 +93,13 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
       <div className="mt-4 sm:mt-0 sm:ml-4">
         {(username) ? <>
           {username != event.creator_username ?
-            <BookingButton event={event} /> : <p className="text-center">Your event</p>
+            <BookingButton event={event} />
+            :<>
+            <p className="text-center">Your event</p>
+            <CancelEventButton event={event}/>
+            </>
           }
         </> : <></>}
-        {path === "/myEvents" ? <>
-          {/* <button
-            //onClick={updateEvent}
-            className="bg-green-500 px-4 py-2 m-2 rounded hover:bg-green-700 transition w-full h-full dark:bg-green-700 dark:hover:bg-green-500"
-          >
-            <span>Update Event</span>
-
-          </button> */}
-          <button
-            //onClick={cancelEvent}
-            className="bg-red-500 px-4 py-2 m-2 rounded hover:bg-red-700 transition w-full h-full dark:bg-red-700 dark:hover:bg-red-500"
-          >
-            <span>Cancel Event</span>
-
-          </button></> : <></>}
         <button
           onClick={openMap}
           className="inline-flex items-center justify-center bg-blue-500 px-4 py-2 m-2 rounded w-full hover:bg-blue-700 transition whitespace-nowrap dark:bg-blue-700 dark:hover:bg-blue-500"

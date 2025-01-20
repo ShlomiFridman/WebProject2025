@@ -129,9 +129,9 @@ function BookingButton({ event }: BookingButtonProps) {
         ref={buttonRef}
         className="bg-green-500 px-4 py-2 m-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500"
         onClick={toggleForm}
-        disabled={!event.isOngoing()}
+        disabled={event.hasPassed()}
       >
-        {event.isOngoing()? "Booking":"Passed"}
+        {!event.hasPassed()? "Booking":"Passed"}
       </button>
       {isOpen && (
         <form

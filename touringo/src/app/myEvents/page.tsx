@@ -32,61 +32,6 @@ const MyEventsPage = () => {
 
   }, [events]);
 
-  /* TODO assigned a value but never used, hid for vercel check
-  const createEvent = (newEvent: TR_Event) => {
-    // TODO add POST fetch
-    fetch('/api/events/create', {
-      method: 'POST', // Assuming it's a POST request for registration
-      body: JSON.stringify({ data: encryptData({ newEvent: newEvent }) }),
-      headers: {
-        'Content-Type': 'application/json', // Ensure the backend understands the JSON body
-      },
-    })
-      .then((response) => {
-        const badRequestError = response.status >= 400 && response.status < 500;
-        if (!response.ok && !badRequestError) {
-          alert(response.statusText);
-          throw new Error('Unknown Error');
-        }
-        return response.json();
-      })
-      .then((resBody) => {
-        if (resBody.message) {
-          alert(resBody.message);
-        } else {
-          const eventRes = resBody.result as TR_Event;
-          console.log(eventRes);
-          // TODO handle success
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-  }
-
-  const cancelEvent = (event_id: number) => {
-    
-    fetch(`/api/events/cancel/${event_id}`, {
-      method: 'PATCH'
-    }).then((response)=>{
-      const badRequestError = (400 <= response.status && response.status < 500);
-      if (!response.ok && !badRequestError) {
-        alert(response.statusText);
-        throw new Error("Unknown Error");
-      }
-      return response.json();
-    }).then((resBody)=>{
-      if (resBody.message){
-        alert(resBody.message);
-      } else{
-        console.log(`Booking cancelled: ${event_id}`);
-        // TODO handle success
-      }
-    }).catch((err)=>{
-      console.log(err);
-    })
-  }*/
-
   return (
     (events != null) ?
       // TODO create event form

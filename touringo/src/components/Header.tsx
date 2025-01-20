@@ -36,7 +36,7 @@ export default function Header() {
     <>
       <nav className="w-full p-6 flex flex-col sm:flex-row justify-between gap-2 bg-green-400 dark:bg-green-800">
         <HeaderLinks />
-        <HeaderIcons loginFlag={loginFlag} />
+        <HeaderIcons />
       </nav>
     </>
   );

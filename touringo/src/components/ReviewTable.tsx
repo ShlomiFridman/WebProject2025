@@ -1,6 +1,6 @@
 import React from "react";
 import { Review } from "@/utils/classes";
-import {formatDate} from "@/utils/utils"
+import { formatDate } from "@/utils/utils"
 
 type ReviewsTableProps = {
   reviews: Review[];
@@ -29,26 +29,28 @@ const ReviewsTable: React.FC<ReviewsTableProps> = ({ reviews }) => {
       </div>
 
       {/* Table Rows (Reviews) */}
-      {sortedReviews.map((rev: Review, ind) => (
-        <div key={ind} className="flex py-2 border-b">
-          {/* Score */}
-          <div className="w-1/12 text-lg font-medium">
-            {rev.score}/5
+      {sortedReviews.length ?
+        sortedReviews.map((rev: Review, ind) => (
+          <div key={ind} className="flex py-2 border-b">
+            {/* Score */}
+            <div className="w-1/12 text-lg font-medium">
+              {rev.score}/5
+            </div>
+            {/* Review Description */}
+            <div className="flex-1 text-lg px-4">
+              {rev.description}
+            </div>
+            {/* Date */}
+            <div className="w-1/6 text-sm text-right">
+              {formatDate(rev.date)}
+            </div>
+            {/* Username */}
+            <div className="w-1/6 text-sm text-right">
+              {rev.username}
+            </div>
           </div>
-          {/* Review Description */}
-          <div className="flex-1 text-lg px-4">
-            {rev.description}
-          </div>
-          {/* Date */}
-          <div className="w-1/6 text-sm text-right">
-            {formatDate(rev.date)}
-          </div>
-          {/* Username */}
-          <div className="w-1/6 text-sm text-right">
-            {rev.username}
-          </div>
-        </div>
-      ))}
+        )) : <strong className="text-center">No reviews</strong>
+      }
     </div>
   );
 };
