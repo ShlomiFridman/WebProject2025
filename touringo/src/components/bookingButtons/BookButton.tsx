@@ -1,20 +1,15 @@
-import { TR_Event } from "@/utils/classes";
-import { dateToFormat, getMaxDate } from "@/utils/utils";
+import { Booking, TR_Event } from "@/utils/classes";
+import { getLoggedAccount } from "@/utils/util_client";
+import { dateToFormat, encryptData, getMaxDate } from "@/utils/utils";
 import React, { useState, useEffect, useRef } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-interface BookingDetails {
-  date: string;
-  tickets: number;
-}
-
 interface BookingButtonProps {
   event: TR_Event;
-  onBook: (details: BookingDetails) => void;
 }
 
-function BookingButton({ event, onBook }: BookingButtonProps) {
+function BookingButton({ event }: BookingButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const validDates = event.getValidDates();
   const lastValidDate = validDates[validDates.length-1];
@@ -83,11 +78,11 @@ function BookingButton({ event, onBook }: BookingButtonProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isBookEnabled) {
-      onBook({
-        date: selectedDate,
-        tickets: selectedTickets,
-      });
-      setIsOpen(false);
+      const usename = getLoggedAccount()?.username;
+      if (!usename)
+        return;
+      const newBooking = new Booking(-1, usename, event.event_id, selectedDate, selectedTickets, true);
+      createBooking(newBooking);
     }
   };
 
@@ -96,35 +91,37 @@ function BookingButton({ event, onBook }: BookingButtonProps) {
     setIsOpen((prev) => !prev);
   };
 
-  // const createBooking = (booking: Booking) => {
-  //   fetch('/api/bookings/create', {
-  //         method: 'POST', // Assuming it's a POST request for registration
-  //         body: JSON.stringify({data: encryptData({ booking:booking })}),
-  //         headers: {
-  //           'Content-Type': 'application/json', // Ensure the backend understands the JSON body
-  //         },
-  //       })
-  //         .then((response) => {
-  //           const badRequestError = response.status >= 400 && response.status < 500;
-  //           if (!response.ok && !badRequestError) {
-  //             alert(response.statusText);
-  //             throw new Error('Unknown Error');
-  //           }
-  //           return response.json();
-  //         })
-  //         .then((resBody) => {
-  //           if (resBody.message) {
-  //             alert(resBody.message);
-  //           } else {
-  //             const booking = resBody.result as Booking;
-  //             console.log(booking);
-  //             // TODO handle success
-  //           }
-  //         })
-  //         .catch((err) => {
-  //           console.log(err);
-  //         })
-  // }
+  const createBooking = (booking: Booking) => {
+    fetch('/api/bookings/create', {
+          method: 'POST', // Assuming it's a POST request for registration
+          body: JSON.stringify({data: encryptData({ booking:booking })}),
+          headers: {
+            'Content-Type': 'application/json', // Ensure the backend understands the JSON body
+          },
+        })
+          .then((response) => {
+            const badRequestError = response.status >= 400 && response.status < 500;
+            if (!response.ok && !badRequestError) {
+              alert(response.statusText);
+              throw new Error('Unknown Error');
+            }
+            return response.json();
+          })
+          .then((resBody) => {
+            if (resBody.message) {
+              alert(resBody.message);
+            } else {
+              const booking = resBody.result as Booking;
+              console.log(`Booking created, booking_id=${booking.booking_id}`);
+              // TODO handle success
+              setIsOpen(false);
+              alert("Booking created!")
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+  }
 
   return (
     <div className="relative">
@@ -132,8 +129,9 @@ function BookingButton({ event, onBook }: BookingButtonProps) {
         ref={buttonRef}
         className="bg-green-500 px-4 py-2 m-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500"
         onClick={toggleForm}
+        disabled={event.hasPassed()}
       >
-        Booking
+        {!event.hasPassed()? "Booking":"Passed"}
       </button>
       {isOpen && (
         <form

@@ -6,7 +6,7 @@ export async function getBookingsByUser(creator_username: string) {
     try {
         const bookings = await BookingModel.find(
             { creator_username: creator_username }
-        );
+        ).sort({date: 1});;
         return bookings;
     } catch (err) {
         console.error(`getBookingsByUser - Error fetching bookings for creator_username=${creator_username}:`, err);

@@ -3,6 +3,7 @@
 import EventTable from '@/components/EventTable';
 import LoadingBox from '@/components/LoadingBox';
 import { TR_Event } from '@/utils/classes';
+import { getLoggedAccount } from '@/utils/util_client';
 //import { decryptData, encryptData } from "@/utils/utils";
 //import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -37,8 +38,10 @@ import { useEffect, useState } from 'react';
 
 export default function Page() {
   const [events, setEvents] = useState<TR_Event[] | null>(null);
+  const [username, setUsername] = useState<string | undefined>(undefined);
 
   useEffect(() => {
+    setUsername(getLoggedAccount()?.username);
     const getEvents = async () => {
       const response = await fetch("/api/events/getAll");
       if (!response.ok) {
@@ -57,7 +60,8 @@ export default function Page() {
 
   return (
     <div className="max-w-[1000px] my-4 mx-auto"> {/* Centers the content on small screens */}
-      <div className="text-3xl text-green-600 font-bold">Events</div>
+      <h2 className="text-3xl underline text-green-500 font-bold">Welcome to TouRingo {username? username : ""}</h2>
+      {/* <h3 className="text-3xl text-green-600 font-bold">Events</h3> */}
       <div className="pb-4">Local tourist attractions, restaurants, and cultural events</div>
       <div className="flex justify-center">
         {/* Center content on smaller screens */}

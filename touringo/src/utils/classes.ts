@@ -121,11 +121,11 @@ export class TR_Event {
     }
 
     // Method to check if the event is ongoing
-    isOngoing(): boolean {
+    hasPassed(): boolean {
         const currentDate = new Date();
-        const eventStartDateTime = new Date(`${this.startDate}T${this.openingTime}`);
-        const eventEndDateTime = new Date(`${this.endDate}T${this.closingTime}`);
-        return currentDate >= eventStartDateTime && currentDate <= eventEndDateTime;
+        const eventEndDateTime = new Date(this.endDate);
+        
+        return eventEndDateTime < currentDate;
     }
 
     // Static method to create a TR_Event instance from JSON
@@ -275,10 +275,10 @@ export class Booking {
     }
 
     // Method to check if the booking can be canceled
-    canCancel(): boolean {
+    hasPassed(): boolean {
         const currentDate = new Date();
         const bookingDate = new Date(this.date);
-        return !(this.isActive && bookingDate < currentDate);
+        return bookingDate < currentDate;
     }
 
     // Method to check if the booking was canceled

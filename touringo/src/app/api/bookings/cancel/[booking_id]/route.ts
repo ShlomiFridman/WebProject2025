@@ -25,7 +25,8 @@ export async function PATCH(request: Request, { params }: { params:Promise<Param
         }
 
         return NextResponse.json(
-            { message: "Booking cancelled successfully" }, 
+            // { message: "Booking cancelled successfully" }, 
+            {},
             { status: 200 }); // Success
     } catch (err) {
         console.error("PATCH - Error canceling booking:", err);

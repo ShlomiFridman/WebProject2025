@@ -1,11 +1,11 @@
-import { TR_EventModel } from "@/db_utils/collectionModels";
+import { BookingModel, TR_EventModel } from "@/db_utils/collectionModels";
 import { TR_Event } from "@/utils/classes";
 
 export async function getAllEvents(): Promise<TR_Event[]>{
     try{
         const eventsRes = await TR_EventModel.find(
             {}
-        );
+        ).sort({startDate: 1});;
         return eventsRes;
     } catch(err){
         throw err;
@@ -16,7 +16,7 @@ export async function getEventsByCreator(creator_username: string): Promise<TR_E
     try{
         const eventsRes = await TR_EventModel.find(
             {creator_username: creator_username}
-        );
+        ).sort({startDate: 1});
         return eventsRes;
     } catch(err){
         throw err;
@@ -62,13 +62,27 @@ export async function updateEvent(event_id: number, updatedEvent: TR_Event): Pro
 
 export async function cancelEvent(event_id: number): Promise<TR_Event>{
     try{
-        const deleteRes = await TR_EventModel.findOneAndUpdate(
+        // cancel the event
+        const cancelRes = await TR_EventModel.findOneAndUpdate(
             {event_id: event_id, isActive: true},
             {isActive: false},
             {new: true}
         );
+        // if !cancelRes then the update has failed
+        if (!cancelRes)
+            return cancelRes;
+        // update future bookings
+        const formattedToday = new Date().toISOString().split('T')[0];
+        const res = await BookingModel.updateMany(
+            {
+                event_id:event_id,
+                date: {$gt: formattedToday}
+            },
+            {isActive:false}
+        );
+        console.log(`event ${event_id} cancelled and ${res.modifiedCount} bookings were cancelled`)
         // console.log(deleteRes)
-        return deleteRes;
+        return cancelRes;
     } catch(err){
         throw err;
     }

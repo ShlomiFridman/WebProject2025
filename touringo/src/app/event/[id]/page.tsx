@@ -67,9 +67,10 @@ const EventPage = () => {
       {eventData != null ? (
         <div>
           <div className="pt-3">
-            <Link href="/home" className="text-green-500 font-bold hover:underline">← Back to All Events</Link>
+            <Link href="/" className="text-green-500 font-bold hover:underline">← Back to All Events</Link>
           </div>
-          <h1>Welcome to the event Page of {eventData.name}! ID={id}</h1>
+          <hr className='m-2'/>
+          {/* <h1>Welcome to the event Page of {eventData.name}! ID={id}</h1> */}
 
           <EventRow event={eventData} />
 
