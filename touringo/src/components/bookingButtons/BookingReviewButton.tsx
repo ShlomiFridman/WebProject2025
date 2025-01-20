@@ -115,18 +115,18 @@ const BookingReviewButton: React.FC<{
     if (success) {
       setStatus('success');
       alert('Thank you for your feedback!');
-      resetForm();
+      // resetForm();
     } else {
       setStatus('error');
     }
   };
 
-  const resetForm = () => {
-    setRating(null);
-    setFeedback('');
-    setStatus('idle');
-    setIsActive(false); // Close form after submission
-  };
+  // const resetForm = () => {
+  //   setRating(null);
+  //   setFeedback('');
+  //   setStatus('idle');
+  //   setIsActive(false); // Close form after submission
+  // };
 
   // Add condition to check for loading before rendering the button
   if (loading) {
