@@ -4,27 +4,27 @@ import React, { useState, useEffect } from "react";
 import HeaderLinks from "./HeaderLinks";
 import HeaderIcons from "./HeaderIcons";
 import { useAppContext } from "@/context/MainContext";
-import { useRouter, usePathname } from "next/navigation";
-import { isLoggedIn } from "@/utils/util_client";
+// import { useRouter, usePathname } from "next/navigation";
+// import { isLoggedIn } from "@/utils/util_client";
 
 export default function Header() {
   const [isClient, setIsClient] = useState(false);
-  const [loginFlag, setLoginFlag] = useState(true);
-  const router = useRouter();
-  const path = usePathname()
+  // const [loginFlag, setLoginFlag] = useState(true);
+  // const router = useRouter();
+  // const path = usePathname()
   useAppContext();
 
   useEffect(() => {
-    const allowedPublicPages = ["/","/login", "/register", "/about"]
-    setLoginFlag(isLoggedIn());
     setIsClient(true); // Ensures this is run only on the client
-    if (!allowedPublicPages.includes(path)) {
-      if (loginFlag) {
-        console.log(path)
-        alert("You must login");
-        router.push("/login");
-      }
-    }
+    // const allowedPublicPages = ["/","/login", "/register", "/about"]
+    // setLoginFlag(isLoggedIn());
+    // if (!allowedPublicPages.includes(path)) {
+    //   if (!loginFlag) {
+    //     console.log(path)
+    //     alert("You must login");
+    //     router.push("/login");
+    //   }
+    // }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
