@@ -48,7 +48,7 @@ const EventPage = () => {
     };
 
     const getReviews = async (event_id: number) => {
-      const response = await fetch(`/api/reviews/get/${event_id}`)
+      const response = await fetch(`/api/reviews/getByEventId/${event_id}`)
       // console.log(response);
       if (!response.ok) {
         alert(response.statusText);
