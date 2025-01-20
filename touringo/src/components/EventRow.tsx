@@ -43,7 +43,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
   }, []);
 
   return (
-    <div className="event-row flex sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#e7ccb3] dark:bg-[var(--box-background)] sm:bg-white hover:bg-[#e7ccb3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-[#292b2f] sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
+    <div className="event-row flex sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#c6e7b3] dark:bg-[var(--box-background)] sm:bg-white hover:bg-[#c6e7b3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-[#292b2f] sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
       <div onClick={() => selectEvent()} className={`flex flex-col sm:flex-row sm:items-center w-full ${!inEventPaga() ? 'cursor-pointer' : ''}`}>
         <div className="max-h-[1000px] mb-4 sm:mb-0 sm:mr-4 sm:w-1/5">
           <Image

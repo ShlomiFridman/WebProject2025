@@ -127,7 +127,7 @@ function BookingButton({ event }: BookingButtonProps) {
     <div className="relative">
       <button
         ref={buttonRef}
-        className="bg-green-500 px-4 py-2 m-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500"
+        className={!event.hasPassed()? "bg-green-500 px-4 py-2 m-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500":"px-8 py-2 m-2"}
         onClick={toggleForm}
         disabled={event.hasPassed()}
       >

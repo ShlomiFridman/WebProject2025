@@ -42,7 +42,7 @@ const BookingReviewButton: React.FC<{
   return (
     <div>
       <button
-        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700"
+        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-700 dark:bg-green-800 dark:hover:bg-green-600"
         onClick={onToggle} // Toggle review form visibility
       >
         {isActive ? 'Close Review' : 'Leave a Review'}
@@ -50,32 +50,17 @@ const BookingReviewButton: React.FC<{
       {isActive && (
         <form
           onSubmit={handleFormSubmit}
-          style={{
-            border: '1px solid #ccc',
-            padding: '1em',
-            marginTop: '0.5em',
-            borderRadius: '5px',
-          }}
+          className="border border-gray-300 p-4 mt-2 rounded-md"
         >
           <div>
-            <p>Rate your experience (1-5):</p>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1em' }}>
+            <p className="text-lg mb-4">Rate your experience</p>
+            <div className="flex justify-between mb-4">
               {[1, 2, 3, 4, 5].map((num) => (
                 <button
                   key={num}
                   type="button"
                   onClick={() => setRating(num)}
-                  style={{
-                    backgroundColor: rating === num ? 'lightblue' : 'white',
-                    border: '1px solid #ccc',
-                    borderRadius: '50%',
-                    width: '40px',
-                    height: '40px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '1rem',
-                  }}
+                  className={`w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-lg ${rating === num ? 'bg-green-400 dark:bg-green-800' : ''}`}
                 >
                   {num}
                 </button>
@@ -87,26 +72,13 @@ const BookingReviewButton: React.FC<{
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
               placeholder="Leave your feedback here..."
-              style={{
-                width: '100%',
-                height: '80px',
-                padding: '0.5em',
-                borderRadius: '5px',
-                border: '1px solid #ccc',
-              }}
+              className="w-full h-20 p-2 rounded-md border border-gray-300"
               disabled={status === 'submitting'}
             />
           </div>
           <button
             type="submit"
-            style={{
-              marginTop: '1em',
-              padding: '0.5em 1em',
-              borderRadius: '5px',
-              backgroundColor: 'blue',
-              color: 'white',
-              border: 'none',
-            }}
+            className="mt-4 px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-700"
             disabled={status === 'submitting'}
           >
             {status === 'submitting' ? 'Submitting...' : 'Submit'}
