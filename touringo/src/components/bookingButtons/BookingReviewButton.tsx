@@ -13,7 +13,6 @@ const BookingReviewButton: React.FC<{
   const [review, setReview] = useState<Review | null | undefined>(null);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [isActive, setIsActive] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true); // To track if data is loading
 
   useEffect(() => {
     const account = getLoggedAccount();
@@ -45,11 +44,9 @@ const BookingReviewButton: React.FC<{
           setRating(review.score);
           setFeedback(review.description);
         }
-        setLoading(false); // Set loading to false after data is fetched
       })
       .catch((err) => {
         console.log(err);
-        setLoading(false); // Make sure loading state is set to false in case of error
       });
   }, [booking.booking_id]);
 
@@ -127,11 +124,6 @@ const BookingReviewButton: React.FC<{
   //   setStatus('idle');
   //   setIsActive(false); // Close form after submission
   // };
-
-  // Add condition to check for loading before rendering the button
-  if (loading) {
-    return <LoadingBox />;
-  }
 
   return (
     <div>
