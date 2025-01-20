@@ -10,7 +10,7 @@ const BookingReviewButton: React.FC<{
   const [rating, setRating] = useState<number | null>(null);
   const [username, setUsername] = useState<string | null>(null);
   const [feedback, setFeedback] = useState('');
-  const [review, setReview] = useState<Review | null | undefined>(null);
+  const [review, setReview] = useState<Review | null | undefined>(undefined);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [isActive, setIsActive] = useState<boolean>(false);
 
@@ -125,7 +125,7 @@ const BookingReviewButton: React.FC<{
   //   setIsActive(false); // Close form after submission
   // };
 
-  return (
+  return ( review!==undefined?
     <div>
       <button
         className={`bg-green-500 px-4 py-2 rounded hover:bg-green-700 dark:bg-green-800 dark:hover:bg-green-600`}
@@ -169,7 +169,7 @@ const BookingReviewButton: React.FC<{
           </button>
         </form>
       )}
-    </div>
+    </div> : <LoadingBox/>
   );
 };
 
