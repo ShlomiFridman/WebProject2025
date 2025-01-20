@@ -58,7 +58,7 @@ function CancelBookingButton({ booking }: ButtonProps) {
     <button
       ref={btnRef}
       onClick={cancelRequest}
-      className={`px-4 m-2 rounded transition w-full h-full ${
+      className={`px-4 py-2 m-2 rounded transition w-full h-full ${
         !booking.hasPassed()
           ? "bg-red-500 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-500"
           : ""
