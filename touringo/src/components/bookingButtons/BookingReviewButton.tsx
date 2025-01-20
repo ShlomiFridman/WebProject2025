@@ -136,7 +136,7 @@ const BookingReviewButton: React.FC<{
       <button
         disabled={review != null}
         className={review != null
-          ? 'px-4 py-2 rounded' // Remove green styling here
+          ? 'px-4 py-2 rounded'
           : `bg-green-500 px-4 py-2 rounded hover:bg-green-700 dark:bg-green-800 dark:hover:bg-green-600`}
         onClick={handleReviewToggle}
       >
@@ -145,7 +145,7 @@ const BookingReviewButton: React.FC<{
       {isActive && (
         <form onSubmit={handleFormSubmit} className="border border-gray-700 dark:border-gray-300 p-4 mt-2 rounded-md">
           <div>
-            <p className="text-lg mb-4">Rate your experience</p>
+            <p className="text-lg mb-4">Rate your experience<br/>(1 - Worst, 5 - Best)</p>
             <div className="flex justify-between mb-4">
               {[1, 2, 3, 4, 5].map((num) => (
                 <button
