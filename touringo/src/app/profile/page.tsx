@@ -67,6 +67,11 @@ const ProfilePage: React.FC = () => {
     }
   };
 
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setProfile(initialProfile);
+  };
+
   const updateRequest = (username: string, updatedAccount: Account) => {
     fetch('/api/accounts/update', {
       method: 'PUT',
@@ -90,6 +95,7 @@ const ProfilePage: React.FC = () => {
           dispatch({ type: "SET_LOGGED_ACCOUNT", payload: account });
           logAccount(account);
           setInitialProfile({ bio: account.bio, about: account.about, name: account.username });
+          alert("Changes saved successfully!");
         }
       })
       .catch((err) => {
@@ -101,12 +107,22 @@ const ProfilePage: React.FC = () => {
     <div className="max-w-[1000px] my-4 mx-auto">
       <div className="flex justify-between items-center">
         <div className="text-3xl text-green-600 font-bold mb-4">Profile</div>
-        <button
-          onClick={isEditing ? handleSave : handleEditToggle}
-          className="px-6 py-2 bg-green-500 rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
-        >
-          {isEditing ? "Save Changes" : "Edit Profile"}
-        </button>
+        <div className="flex space-x-4">
+          <button
+            onClick={isEditing ? handleSave : handleEditToggle}
+            className="px-6 py-2 bg-green-500 rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
+          >
+            {isEditing ? "Save Changes" : "Edit Profile"}
+          </button>
+          {isEditing && (
+            <button
+              onClick={handleCancelEdit}
+              className="px-6 py-2 bg-gray-500 rounded-lg hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-500"
+            >
+              Cancel
+            </button>
+          )}
+        </div>
       </div>
 
       <div>
