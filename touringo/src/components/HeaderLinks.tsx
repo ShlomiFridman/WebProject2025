@@ -43,7 +43,7 @@ export default function HeaderLinks() {
             className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${path === "/profile" || path === "/events" || path === "/bookings" ? "bg-gray-200 dark:bg-gray-700 " : ""
               }`}
           >
-            {username}
+            [{username}]
           </button>
           {isDropdownOpen && (
             <div className="absolute left-0 mt-2 bg-white dark:bg-gray-800 border rounded shadow-lg z-10">
@@ -70,6 +70,14 @@ export default function HeaderLinks() {
                 onClick={() => setIsDropdownOpen(false)}
               >
                 My Bookings
+              </Link>
+              <Link
+                href="/login"
+                className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap ${path === "/bookings" ? "bg-gray-100 dark:bg-gray-700" : ""
+                  }`}
+                onClick={() => setIsDropdownOpen(false)}
+              >
+                Logout
               </Link>
             </div>
           )}
