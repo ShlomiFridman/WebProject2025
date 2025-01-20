@@ -275,10 +275,10 @@ export class Booking {
     }
 
     // Method to check if the booking can be canceled
-    canCancel(): boolean {
+    hasPassed(): boolean {
         const currentDate = new Date();
         const bookingDate = new Date(this.date);
-        return !(this.isActive && bookingDate < currentDate);
+        return bookingDate < currentDate;
     }
 
     // Method to check if the booking was canceled

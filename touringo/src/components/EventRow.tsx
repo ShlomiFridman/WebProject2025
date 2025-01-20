@@ -4,7 +4,7 @@ import { TR_Event } from "@/utils/classes";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useAppContext } from "@/context/MainContext";
-import BookingButton from "./BookButton";
+import BookingButton from "./buttons/BookButton";
 import { formatDate } from "@/utils/utils";
 import { getLoggedAccount } from "@/utils/util_client";
 
@@ -94,7 +94,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
         </div>
       </div>
       <div className="mt-4 sm:mt-0 sm:ml-4">
-        {path !== "/" && (username) ? <>
+        {(username) ? <>
           {username != event.creator_username ?
             <BookingButton onBook={createBooking} event={event} /> : <p className="text-center">Your event</p>
           }

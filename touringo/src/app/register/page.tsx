@@ -67,7 +67,7 @@ const RegisterPage = () => {
           console.log(`Registered account set: ${account.username}`);
           dispatch({ type: 'SET_LOGGED_ACCOUNT', payload: account });
           logAccount(account);
-          router.push("/home");
+          router.push("/");
         }
       })
       .catch((err) => {

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Booking, TR_Event, Review } from "@/utils/classes";
 import { formatDate, encryptData } from "@/utils/utils";
 import LoadingBox from "./LoadingBox";
+import CancelBookingButton from "./buttons/CancelBookingButton";
 
 type BookingRowProps = {
   booking: Booking;
@@ -27,31 +28,6 @@ const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
       getEventDetails();
     }
   }, [booking]);
-
-  // Cancel booking request
-  const cancelRequest = (booking_id: number) => {
-    fetch(`/api/bookings/cancel/${booking_id}`, {
-      method: "PATCH",
-    })
-      .then((response) => {
-        const badRequestError = 400 <= response.status && response.status < 500;
-        if (!response.ok && !badRequestError) {
-          alert(response.statusText);
-          throw new Error("Unknown Error");
-        }
-        return response.json();
-      })
-      .then((resBody) => {
-        if (resBody.message) {
-          alert(resBody.message);
-        } else {
-          console.log(`Booking cancelled: ${booking_id}`);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   // Create review request
   const createReview = (review: Review) => {
@@ -110,12 +86,7 @@ const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
 
           <div className="actions flex gap-2 mt-4 sm:mt-0">
             {/* Cancel Booking Button */}
-            <button
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
-              onClick={() => cancelRequest(booking.booking_id)}
-            >
-              Cancel Booking
-            </button>
+            <CancelBookingButton booking={booking} />
 
             {/* Review Event Button */}
             <button
