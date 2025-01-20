@@ -113,8 +113,8 @@ const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
               </p>
             </div>
           </Link>
-          <div className="actions flex gap-2 mt-4 sm:mt-0">
-            {/* Cancel Booking Button */}
+          <div className="mt-4 sm:mt-0 sm:ml-4"> 
+            {/* Cancel Booking Button actions flex gap-2 mt-4 sm:mt-0*/}
             <CancelBookingButton booking={booking} />
 
             {/* BookingReviewButton for Review creation */}
