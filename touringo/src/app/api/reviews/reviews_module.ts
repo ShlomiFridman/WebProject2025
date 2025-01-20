@@ -6,7 +6,7 @@ export async function getReviewsByEventId(event_id: number): Promise<Review[]>{
     try{
         const eventsRes = await ReviewModel.find(
             {event_id: event_id}
-        );
+        ).sort({date:-1});
         return eventsRes;
     } catch(err){
         throw err;
