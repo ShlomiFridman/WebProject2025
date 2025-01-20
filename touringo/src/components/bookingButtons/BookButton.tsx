@@ -131,7 +131,7 @@ function BookingButton({ event }: BookingButtonProps) {
         onClick={toggleForm}
         disabled={event.hasPassed()}
       >
-        {!event.hasPassed()? "Booking":"Passed"}
+        {!event.hasPassed()? "Booking":"Ended"}
       </button>
       {isOpen && (
         <form

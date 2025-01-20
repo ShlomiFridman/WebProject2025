@@ -150,7 +150,7 @@ const BookingReviewButton: React.FC<{
                   key={num}
                   type="button"
                   onClick={() => setRating(num)}
-                  className={`w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-lg ${rating === num ? 'bg-green-400 dark:bg-green-800' : ''}`}
+                  className={`w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center text-lg ${rating === num ? 'bg-green-400' : ''}`}
                 >
                   {num}
                 </button>
@@ -162,7 +162,7 @@ const BookingReviewButton: React.FC<{
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
               placeholder="Leave your feedback here..."
-              className="w-full h-20 p-2 rounded-md border border-gray-300"
+              className="w-full h-20 p-2 rounded-md border border-gray-300 resize-none"
               disabled={status === 'submitting'}
             />
           </div>

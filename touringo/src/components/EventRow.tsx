@@ -84,7 +84,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
           </div>
         </div>
       </div>
-      <div className="mt-4 sm:mt-0 sm:ml-4">
+      <div className="grid grid-cols-1 gap-3 mt-2 sm:mt-0 sm:grid-cols-1">
         {(username) ? <>
           {username != event.creator_username ?
             <BookingButton event={event} />

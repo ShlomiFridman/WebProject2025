@@ -17,7 +17,7 @@ function CancelBookingButton({ booking }: ButtonProps) {
     if (!booking.isActive)
       setBtnText("Cancelled");
     else if (booking.hasPassed())
-      setBtnText("Passed");
+      setBtnText("Ended");
     if (btnRef.current){
       btnRef.current.textContent = btnText;
       btnRef.current.disabled = disableFlag
