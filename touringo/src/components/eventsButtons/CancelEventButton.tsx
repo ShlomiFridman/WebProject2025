@@ -17,7 +17,7 @@ function CancelEventButton({ event }: ButtonProps) {
         if (!event.isActive)
             setBtnText("Cancelled");
         else if (event.hasPassed())
-            setBtnText("Passed");
+            setBtnText("Ended");
         if (btnRef.current) {
             btnRef.current.textContent = btnText;
             btnRef.current.disabled = disableFlag
@@ -58,7 +58,11 @@ function CancelEventButton({ event }: ButtonProps) {
         <button
             ref={btnRef}
             onClick={cancelRequest}
-            className="bg-red-500 px-4 py-2 m-2 rounded hover:bg-red-700 transition w-full h-full dark:bg-red-700 dark:hover:bg-red-500"
+            className={`px-4 m-2 rounded transition w-full h-full ${
+                !event.hasPassed()
+                  ? "bg-red-500 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-500"
+                  : ""
+              }`}
         >
         </button>
     );

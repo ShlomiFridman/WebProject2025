@@ -60,7 +60,7 @@ export default function Page() {
 
   return (
     <div className="max-w-[1000px] my-4 mx-auto"> {/* Centers the content on small screens */}
-      <h2 className="text-3xl underline text-green-500 font-bold">Welcome to TouRingo {username? username : ""}</h2>
+      <h2 className="text-3xl underline text-green-500 font-bold">Welcome to TouRingo{username? `, ${username}` : ""}</h2>
       {/* <h3 className="text-3xl text-green-600 font-bold">Events</h3> */}
       <div className="pb-4">Local tourist attractions, restaurants, and cultural events</div>
       <div className="flex justify-center">

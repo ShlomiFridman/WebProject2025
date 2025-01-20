@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Booking, TR_Event, Review } from "@/utils/classes";
-import { formatDate, encryptData } from "@/utils/utils";
+import { Booking, TR_Event } from "@/utils/classes";
+import { formatDate } from "@/utils/utils";
 import LoadingBox from "./LoadingBox";
 import CancelBookingButton from "./bookingButtons/CancelBookingButton";
 import Link from "next/link";
+import BookingReviewButton from "./bookingButtons/BookingReviewButton";
 
 type BookingRowProps = {
   booking: Booking;
@@ -30,45 +31,11 @@ const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
     }
   }, [booking]);
 
-  // Create review request
-  const createReview = (review: Review) => {
-    const requestData = {
-      data: encryptData({ newReview: review }),
-    };
-    fetch("/api/reviews/create", {
-      method: "POST",
-      body: JSON.stringify(requestData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        const badRequestError = 400 <= response.status && response.status < 500;
-        if (!response.ok && !badRequestError) {
-          alert(response.statusText);
-          throw new Error("Unknown Error");
-        }
-        return response.json();
-      })
-      .then((resBody) => {
-        if (resBody.message) {
-          alert(resBody.message);
-        } else {
-          const newReview = resBody.result as Review;
-          console.log(`Review created for event_id=${newReview.event_id}`);
-          // TODO: Handle success response
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   return (
-    <div className="booking-row flex flex-col sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#e7ccb3] dark:bg-[var(--box-background)] sm:bg-white hover:bg-[#e7ccb3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-[#292b2f] sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
+    <div className="booking-row flex flex-col sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#c6e7b3] dark:bg-[var(--box-background)] sm:bg-white hover:bg-[#c6e7b3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-[#292b2f] sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
       {event ? (
         <div className="flex flex-col sm:flex-row sm:items-center w-full">
-          <Link href={`/event/${event.event_id}`} className="event-details w-full sm:w-4/5">
+          <Link href={`/event/${event.event_id}`} className="p-2 outline-dashed rounded outline-1 event-details w-full sm:w-4/5">
             <div>
               <h3 className="text-xl font-bold">{event.name}</h3>
               <p>
@@ -86,28 +53,14 @@ const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
               </p>
             </div>
           </Link>
-          <div className="actions flex gap-2 mt-4 sm:mt-0">
-            {/* Cancel Booking Button */}
+          <div className="mt-4 sm:mt-0 sm:ml-4">
+            {/* Cancel Booking Button actions flex gap-2 mt-4 sm:mt-0*/}
             <CancelBookingButton booking={booking} />
 
-            {/* Review Event Button */}
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
-              onClick={() =>
-                createReview(
-                  new Review(
-                    booking.booking_id,
-                    "admin1", // Replace with dynamic username if available
-                    booking.event_id,
-                    5, // Example rating
-                    "Great event!", // Example comment
-                    new Date().toISOString().split("T")[0] // Current date
-                  )
-                )
-              }
-            >
-              Review Event
-            </button>
+            {/* BookingReviewButton for Review creation */}
+
+            {booking.hasPassed() ?
+              <BookingReviewButton booking={booking} /> : null}
           </div>
         </div>
       ) : (

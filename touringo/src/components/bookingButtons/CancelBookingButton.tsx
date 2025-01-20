@@ -17,7 +17,7 @@ function CancelBookingButton({ booking }: ButtonProps) {
     if (!booking.isActive)
       setBtnText("Cancelled");
     else if (booking.hasPassed())
-      setBtnText("Passed");
+      setBtnText("Ended");
     if (btnRef.current){
       btnRef.current.textContent = btnText;
       btnRef.current.disabled = disableFlag
@@ -57,8 +57,12 @@ function CancelBookingButton({ booking }: ButtonProps) {
   return (
     <button
       ref={btnRef}
-      className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700"
       onClick={cancelRequest}
+      className={`px-4 py-2 m-2 rounded transition w-full h-full ${
+        !booking.hasPassed()
+          ? "bg-red-500 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-500"
+          : ""
+      }`}
     >
     </button>
   );
