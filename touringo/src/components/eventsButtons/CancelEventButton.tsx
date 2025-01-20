@@ -17,7 +17,7 @@ function CancelEventButton({ event }: ButtonProps) {
         if (!event.isActive)
             setBtnText("Cancelled");
         else if (event.hasPassed())
-            setBtnText("Passed");
+            setBtnText("Ended");
         if (btnRef.current) {
             btnRef.current.textContent = btnText;
             btnRef.current.disabled = disableFlag
