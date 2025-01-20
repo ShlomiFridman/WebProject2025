@@ -13,6 +13,7 @@ const BookingReviewButton: React.FC<{
   const [review, setReview] = useState<Review | null | undefined>(undefined);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [isActive, setIsActive] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const account = getLoggedAccount();
@@ -44,9 +45,11 @@ const BookingReviewButton: React.FC<{
           setRating(review.score);
           setFeedback(review.description);
         }
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
   }, [booking.booking_id]);
 
@@ -124,6 +127,10 @@ const BookingReviewButton: React.FC<{
   //   setStatus('idle');
   //   setIsActive(false); // Close form after submission
   // };
+
+  if (loading) {
+    return <LoadingBox />;
+  }
 
   return ( review!==undefined?
     <div>
