@@ -45,7 +45,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
   return (
     <div className="event-row flex sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#e7ccb3] dark:bg-[var(--box-background)] sm:bg-white hover:bg-[#e7ccb3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-[#292b2f] sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
       <div onClick={() => {
-        if (username !== "/") {
+        if (username) {
           selectEvent();
         } else {
           alert("You must login first");
