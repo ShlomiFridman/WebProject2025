@@ -6,6 +6,7 @@ import { formatDate, encryptData } from "@/utils/utils";
 import LoadingBox from "./LoadingBox";
 import CancelBookingButton from "./bookingButtons/CancelBookingButton";
 import Link from "next/link";
+import BookingReviewButton from "./bookingButtons/BookingReviewButton";
 
 type BookingRowProps = {
   booking: Booking;
@@ -91,23 +92,20 @@ const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
             <CancelBookingButton booking={booking} />
 
             {/* Review Event Button */}
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
-              onClick={() =>
+            <BookingReviewButton
+              onSubmit={(rating, feedback) =>
                 createReview(
                   new Review(
                     booking.booking_id,
                     "admin1", // Replace with dynamic username if available
                     booking.event_id,
-                    5, // Example rating
-                    "Great event!", // Example comment
+                    rating,
+                    feedback,
                     new Date().toISOString().split("T")[0] // Current date
                   )
                 )
               }
-            >
-              Review Event
-            </button>
+            />
           </div>
         </div>
       ) : (

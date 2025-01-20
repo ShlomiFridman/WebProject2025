@@ -15,7 +15,7 @@ export async function POST(request: Request) {
         const data = decryptData(reqBody.data) as CreateBodyParam;
 
         // Normalize data
-        const newReview = (!data) ? null : reqBody.newReview;
+        const newReview = (!data) ? null : data.newReview;
 
         // Validate the normalized event data
         if (!newReview) {
