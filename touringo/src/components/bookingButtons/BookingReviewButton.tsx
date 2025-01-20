@@ -42,6 +42,8 @@ const BookingReviewButton: React.FC<{
           const review = resBody.result as Review;
           console.log(`Review found for booking ${booking.booking_id}`);
           setReview(review);
+          setRating(review.score);
+          setFeedback(review.description);
         }
         setLoading(false); // Set loading to false after data is fetched
       })
@@ -134,13 +136,10 @@ const BookingReviewButton: React.FC<{
   return (
     <div>
       <button
-        disabled={review != null}
-        className={review != null
-          ? 'px-4 py-2 rounded'
-          : `bg-green-500 px-4 py-2 rounded hover:bg-green-700 dark:bg-green-800 dark:hover:bg-green-600`}
+        className={`bg-green-500 px-4 py-2 rounded hover:bg-green-700 dark:bg-green-800 dark:hover:bg-green-600`}
         onClick={handleReviewToggle}
       >
-        {review == null ? (isActive ? 'Close Review' : 'Leave a Review') : "Already reviewed"}
+        {review == null ? (isActive ? 'Close Review' : 'Leave a Review') : "View review"}
       </button>
       {isActive && (
         <form onSubmit={handleFormSubmit} className="border border-gray-700 dark:border-gray-300 p-4 mt-2 rounded-md">
@@ -149,6 +148,7 @@ const BookingReviewButton: React.FC<{
             <div className="flex justify-between mb-4">
               {[1, 2, 3, 4, 5].map((num) => (
                 <button
+                  disabled={status === 'submitting' || review != null}
                   key={num}
                   type="button"
                   onClick={() => setRating(num)}
@@ -165,13 +165,13 @@ const BookingReviewButton: React.FC<{
               onChange={(e) => setFeedback(e.target.value)}
               placeholder="Leave your feedback here..."
               className="w-full h-20 p-2 rounded-md border border-gray-700 dark:border-gray-300 resize-none"
-              disabled={status === 'submitting'}
+              disabled={status === 'submitting' || review != null}
             />
           </div>
           <button
             type="submit"
-            className="mt-4 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-700"
-            disabled={status === 'submitting'}
+            className={`mt-4 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-700 ${review != null? "hidden":""}`}
+            disabled={review != null || status === 'submitting'}
           >
             {status === 'submitting' ? 'Submitting...' : 'Submit'}
           </button>
