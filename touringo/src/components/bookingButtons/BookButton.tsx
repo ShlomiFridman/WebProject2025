@@ -115,7 +115,7 @@ function BookingButton({ event }: BookingButtonProps) {
               console.log(`Booking created, booking_id=${booking.booking_id}`);
               // TODO handle success
               setIsOpen(false);
-              alert("Booking created!")
+              alert("The booking has been created. You may cancel it anytime up until the day of the event.")
             }
           })
           .catch((err) => {
