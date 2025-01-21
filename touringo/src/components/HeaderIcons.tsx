@@ -15,7 +15,7 @@ const HeaderIcons: React.FC = () => {
   // };
 
   return (
-    <div className="flex justify-end gap-4">
+    <div className="flex justify-end gap-4 items-center">
       {/* Alert Icon */}
       {/* hidden until the feature is added */}
       {/* <div className={`relative hidden ${!loginFlag ? 'hidden' : ''}`}>
