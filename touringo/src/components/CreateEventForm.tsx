@@ -10,10 +10,13 @@ interface CreateEventFormProps {
 
 const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCreated }) => {
   const loggedAccount = getLoggedAccount();
+  const today = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
   const [formData, setFormData] = useState<Partial<TR_Event>>({
     creator_username: loggedAccount?.username || "",
     openDays: Array(7).fill(false),
     isActive: true,
+    startDate: today, // Default to today's date
+    endDate: today,   // Default to today's date
   });
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting] = useState(false);
@@ -27,8 +30,16 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       if (formData.startDate < today) {
         setFormData({ ...formData, startDate: today });
       }
+
+      // Update endDate only if the startDate is greater than current endDate
+      if (formData.startDate && formData.endDate && formData.startDate > formData.endDate) {
+        setFormData((prevData) => ({
+          ...prevData,
+          endDate: prevData.startDate || today,
+        }));
+      }
     }
-  }, [formData.startDate]);
+  }, [formData.startDate, formData.endDate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -100,7 +111,6 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         formData.eventType || "",
         formData.isActive
       );
-      //  console.log(newEvent);
       createEvent(newEvent);
     } else {
       setError("Please fill all required fields and upload an image.");
@@ -185,10 +195,10 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         <input
           type="date"
           name="startDate"
-          value={formData.startDate || ""}
+          value={formData.startDate || today}
           onChange={handleChange}
           className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          min={new Date().toISOString().split("T")[0]} // Ensure the start date is from today
+          min={today} // Ensure the start date is from today
           required
         />
       </div>
@@ -198,10 +208,11 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         <input
           type="date"
           name="endDate"
-          value={formData.endDate || ""}
+          value={formData.endDate || formData.startDate || today}
           onChange={handleChange}
           className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          min={formData.startDate || new Date().toISOString().split("T")[0]} // Ensure the end date is after the start date
+          min={formData.startDate || today} // Ensure the end date is after the start date
+          disabled={!formData.startDate} // Disable until startDate is selected
           required
         />
       </div>
