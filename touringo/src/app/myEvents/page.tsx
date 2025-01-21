@@ -54,7 +54,7 @@ const MyEventsPage = () => {
 
       {/* Conditionally render the form */}
       {showCreateForm && <CreateEventForm onEventCreated={handleEventCreated} onSuccess={function (): void {
-        throw new Error('Function not implemented.');
+        alert("Event has been created!")
       } } />}
 
       {/* User Events */}
