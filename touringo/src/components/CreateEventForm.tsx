@@ -1,13 +1,12 @@
-"use client";
-
-import React, { useState } from "react";
-import { TR_Event } from "@/utils/classes";
+import React, { useState, useRef, useEffect } from "react";
+import { TR_Event, TR_Image } from "@/utils/classes";
 import { getLoggedAccount } from "@/utils/util_client";
+import { encryptData } from "@/utils/utils";
 
-type CreateEventFormProps = {
-  onSuccess: () => void; // Callback to refresh the event list
-  onEventCreated: (newEvent: TR_Event) => void; // Add onEventCreated prop
-};
+interface CreateEventFormProps {
+  onSuccess: () => void;
+  onEventCreated: (newEvent: TR_Event) => void;
+}
 
 const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCreated }) => {
   const loggedAccount = getLoggedAccount();
@@ -17,9 +16,19 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
     isActive: true,
   });
   const [error, setError] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [image, setImage] = useState<File | null>(null); // To store the uploaded image
-  const [imageError, setImageError] = useState<string | null>(null); // To store image validation error
+  const [isSubmitting] = useState(false);
+  const [image, setImage] = useState<TR_Image[] | null>(null);
+  const [imageError, setImageError] = useState<string | null>(null);
+  const formRef = useRef<HTMLFormElement | null>(null);
+
+  useEffect(() => {
+    if (formData.startDate) {
+      const today = new Date().toISOString().split("T")[0];
+      if (formData.startDate < today) {
+        setFormData({ ...formData, startDate: today });
+      }
+    }
+  }, [formData.startDate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -35,64 +44,103 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file && file.type === "image/jpeg") {
-      setImage(file);
-      setImageError(null);
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        const imgBuffer = reader.result as ArrayBuffer;
+        const newImage = new TR_Image(
+          file.name,
+          imgBuffer ? Buffer.from(imgBuffer) : null,
+          URL.createObjectURL(file),
+          file.type
+        );
+
+        setImage([newImage]); // Update image state with the new TR_Image object
+        setImageError(null); // Clear any previous error
+      };
+
+      reader.readAsArrayBuffer(file); // Read the image file as an array buffer
     } else {
       setImage(null);
       setImageError("Only .jpg files are allowed.");
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
-
-    // Basic validation
-    if (!formData.name || !formData.description || !formData.startDate || !formData.endDate || !formData.openDays?.includes(true)) {
-      setError("Please fill in all required fields and select at least one open day.");
-      return;
-    }
-
-    if (new Date(formData.startDate) > new Date(formData.endDate)) {
-      setError("Start date cannot be after the end date.");
-      return;
-    }
-
-    setIsSubmitting(true);
-    try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("data", JSON.stringify(formData));
-
-      // If there is an image, append it to the form data
-      if (image) {
-        formDataToSend.append("image", image);
+    if (
+      formData.name &&
+      formData.description &&
+      formData.startDate &&
+      formData.endDate &&
+      formData.openDays?.includes(true) &&
+      image // Ensure image is uploaded
+    ) {
+      const username = getLoggedAccount()?.username;
+      if (!username) {
+        return;
       }
 
-      const response = await fetch("/api/events/create", {
-        method: "POST",
-        body: formDataToSend,
-      });
+      const eventImages = image || null; // Ensure that image is not null
 
-      if (!response.ok) {
-        throw new Error(await response.text());
-      }
-
-      const newEvent = await response.json(); // Assuming the response contains the new event
-      onEventCreated(newEvent); // Trigger the onEventCreated callback
-
-      setFormData({ creator_username: loggedAccount?.username || "", openDays: Array(7).fill(false), isActive: true });
-      setImage(null); // Clear the selected image after successful submission
-      onSuccess(); // Refresh event list
-    } catch (err) {
-      console.error(err);
-      setError("Failed to create event. Please try again.");
-    } finally {
-      setIsSubmitting(false);
+      const newEvent = new TR_Event(
+        -1,
+        formData.name,
+        formData.description,
+        formData.phone || "",
+        username,
+        eventImages,
+        formData.openingTime || "00:00:00",
+        formData.closingTime || "23:59:59",
+        formData.startDate || "",
+        formData.endDate || "",
+        formData.town || "",
+        formData.address || "",
+        formData.openDays || Array(7).fill(false),
+        formData.eventType || "",
+        formData.isActive
+      );
+      //  console.log(newEvent);
+      createEvent(newEvent);
+    } else {
+      setError("Please fill all required fields and upload an image.");
     }
   };
 
+  const createEvent = (event: TR_Event) => {
+    fetch("/api/events/create", {
+      method: "POST",
+      body: JSON.stringify({ data: encryptData({ event: event }) }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        const badRequestError = response.status >= 400 && response.status < 500;
+        if (!response.ok && !badRequestError) {
+          alert(response.statusText);
+          throw new Error("Unknown Error");
+        }
+        return response.json();
+      })
+      .then((resBody) => {
+        if (resBody.message) {
+          alert(resBody.message);
+        } else {
+          const createdEvent = resBody.result as TR_Event;
+          console.log(`Event created, event_id=${createdEvent.event_id}`);
+          onEventCreated(createdEvent);
+          setFormData({ creator_username: getLoggedAccount()?.username || "", openDays: Array(7).fill(false), isActive: true });
+          onSuccess();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-white dark:bg-gray-800 shadow-md rounded dark:text-white">
+    <form ref={formRef} onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-white dark:bg-gray-800 shadow-md rounded dark:text-white">
       <h2 className="text-2xl font-bold mb-4">Create New Event</h2>
 
       {error && <div className="text-red-600 mb-4">{error}</div>}
@@ -140,6 +188,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           value={formData.startDate || ""}
           onChange={handleChange}
           className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+          min={new Date().toISOString().split("T")[0]} // Ensure the start date is from today
           required
         />
       </div>
@@ -150,6 +199,31 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           type="date"
           name="endDate"
           value={formData.endDate || ""}
+          onChange={handleChange}
+          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+          min={formData.startDate || new Date().toISOString().split("T")[0]} // Ensure the end date is after the start date
+          required
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block font-semibold mb-1">Town *</label>
+        <input
+          type="text"
+          name="town"
+          value={formData.town || ""}
+          onChange={handleChange}
+          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+          required
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block font-semibold mb-1">Address *</label>
+        <input
+          type="text"
+          name="address"
+          value={formData.address || ""}
           onChange={handleChange}
           className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           required
@@ -191,29 +265,17 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           accept=".jpg"
           onChange={handleFileChange}
           className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+          required
         />
-        {imageError && <div className="text-red-600">{imageError}</div>}
-      </div>
-
-      <div className="mb-4">
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            name="isActive"
-            checked={formData.isActive || false}
-            onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-            className="mr-2"
-          />
-          Active Event
-        </label>
+        {imageError && <div className="text-red-600 mt-2">{imageError}</div>}
       </div>
 
       <button
         type="submit"
-        className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600"
         disabled={isSubmitting}
+        className="w-full p-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
       >
-        {isSubmitting ? "Creating..." : "Create Event"}
+        {isSubmitting ? "Submitting..." : "Create Event"}
       </button>
     </form>
   );
