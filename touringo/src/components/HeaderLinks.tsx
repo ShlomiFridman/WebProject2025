@@ -78,7 +78,7 @@ export default function HeaderLinks() {
               [{username}]
             </button>
             {isDropdownOpen && (
-              <div className="absolute top-16 left-0 w-full mt-2 bg-white dark:bg-gray-800 border rounded shadow-lg z-10">
+              <div className="absolute top-full left-0 w-30 mt-2 bg-white dark:bg-gray-800 border rounded shadow-lg z-10">
                 <Link
                   href="/profile"
                   className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap ${
