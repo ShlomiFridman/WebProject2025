@@ -60,57 +60,51 @@ export default function HeaderLinks() {
 
       {/* Links Container */}
       <div
-        className={`sm:flex flex-col sm:flex-row justify-start gap-3 relative bg-white dark:bg-gray-800 sm:bg-transparent dark:sm:bg-transparent ${
-          isMenuOpen ? "block" : "hidden sm:block"
-        }`}
+        className={`flex flex-col gap-3 relative sm:flex-row sm:gap-6 bg-white dark:bg-gray-800 sm:bg-transparent dark:sm:bg-transparent ${isMenuOpen ? "block" : "hidden sm:flex"
+          }`}
       >
         <HeaderItem href="/" text="🏙 TouRingo" />
         {loggedAccount ? (
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={toggleDropdown}
-              className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${
-                path === "/profile" || path === "/events" || path === "/bookings"
+              className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${path === "/profile" || path === "/events" || path === "/bookings"
                   ? "bg-gray-200 dark:bg-gray-700 "
                   : ""
-              }`}
+                }`}
             >
               [{username}]
             </button>
+            {/* Dropdown Menu */}
             {isDropdownOpen && (
-              <div className="absolute top-full left-0 w-30 mt-2 bg-white dark:bg-gray-800 border rounded shadow-lg z-10">
+              <div className="absolute top-full left-0 mt-2 bg-white dark:bg-gray-800 border rounded shadow-lg z-10">
                 <Link
                   href="/profile"
-                  className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap ${
-                    path === "/profile" ? "bg-gray-100 dark:bg-gray-700" : ""
-                  }`}
+                  className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap ${path === "/profile" ? "bg-gray-100 dark:bg-gray-700" : ""
+                    }`}
                   onClick={() => setIsDropdownOpen(false)}
                 >
                   My Profile
                 </Link>
                 <Link
                   href="/myEvents"
-                  className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap ${
-                    path === "/myEvents" ? "bg-gray-100 dark:bg-gray-700" : ""
-                  }`}
+                  className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap ${path === "/myEvents" ? "bg-gray-100 dark:bg-gray-700" : ""
+                    }`}
                   onClick={() => setIsDropdownOpen(false)}
                 >
                   My Events
                 </Link>
                 <Link
                   href="/bookings"
-                  className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap ${
-                    path === "/bookings" ? "bg-gray-100 dark:bg-gray-700" : ""
-                  }`}
+                  className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap ${path === "/bookings" ? "bg-gray-100 dark:bg-gray-700" : ""
+                    }`}
                   onClick={() => setIsDropdownOpen(false)}
                 >
                   My Bookings
                 </Link>
                 <Link
                   href="/login"
-                  className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap ${
-                    path === "/bookings" ? "bg-gray-100 dark:bg-gray-700" : ""
-                  }`}
+                  className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap`}
                   onClick={() => setIsDropdownOpen(false)}
                 >
                   Logout
