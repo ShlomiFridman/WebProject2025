@@ -83,8 +83,8 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       setFormData({ creator_username: loggedAccount?.username || "", openDays: Array(7).fill(false), isActive: true });
       setImage(null); // Clear the selected image after successful submission
       onSuccess(); // Refresh event list
-    } catch (err) { 
-      console.error(err); 
+    } catch (err) {
+      console.error(err);
       setError("Failed to create event. Please try again.");
     } finally {
       setIsSubmitting(false);
@@ -92,7 +92,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
   };
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-white shadow-md rounded">
+    <form onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-white dark:bg-gray-800 shadow-md rounded dark:text-white">
       <h2 className="text-2xl font-bold mb-4">Create New Event</h2>
 
       {error && <div className="text-red-600 mb-4">{error}</div>}
@@ -104,7 +104,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           name="name"
           value={formData.name || ""}
           onChange={handleChange}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           required
         />
       </div>
@@ -115,7 +115,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           name="description"
           value={formData.description || ""}
           onChange={handleChange}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           required
         />
       </div>
@@ -127,7 +127,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           name="phone"
           value={formData.phone || ""}
           onChange={handleChange}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           required
         />
       </div>
@@ -139,7 +139,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           name="startDate"
           value={formData.startDate || ""}
           onChange={handleChange}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           required
         />
       </div>
@@ -151,14 +151,14 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           name="endDate"
           value={formData.endDate || ""}
           onChange={handleChange}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           required
         />
       </div>
 
       <div className="mb-4">
         <label className="block font-semibold mb-1">Open Days *</label>
-        <div className="flex gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-2">
           {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day, index) => (
             <label key={day} className="flex items-center">
               <input
@@ -180,7 +180,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           name="eventType"
           value={formData.eventType || ""}
           onChange={handleChange}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
         />
       </div>
 
@@ -190,7 +190,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           type="file"
           accept=".jpg"
           onChange={handleFileChange}
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
         />
         {imageError && <div className="text-red-600">{imageError}</div>}
       </div>
@@ -210,7 +210,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
 
       <button
         type="submit"
-        className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700"
+        className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700 dark:bg-green-500 dark:hover:bg-green-600"
         disabled={isSubmitting}
       >
         {isSubmitting ? "Creating..." : "Create Event"}
