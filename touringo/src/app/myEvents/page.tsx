@@ -45,6 +45,7 @@ const MyEventsPage = () => {
 
   const reloadPageWithDelay = async () => {
     window.location.reload(); // Reload after 5 seconds
+    alert("Event has been created!")
     await sleep(5000);
   };
 
@@ -62,19 +63,21 @@ const MyEventsPage = () => {
 
       {/* Conditionally render the form */}
       {showCreateForm && <CreateEventForm onEventCreated={handleEventCreated} onSuccess={function (): void {
-        alert("Event has been created!")
         reloadPageWithDelay();
       }} />}
 
       {/* User Events */}
-      <div className="event-row flex items-center justify-between mt-8">
+      <div>
         {events != null ? (
           events.length === 0 ? (
             <div className="flex justify-center w-full">No events found</div>
           ) : (
             <div className="event-table">
-              <h1 className="hidden sm:block pr-4"><b>Details</b></h1>
-              <h1 className="hidden sm:block pr-8"><b>Options</b></h1>
+              <div className='event-row flex items-center justify-between'>
+                <h1></h1>
+                <h1 className="hidden sm:block pr-4"><b>Details</b></h1>
+                <h1 className="hidden sm:block pr-8"><b>Options</b></h1>
+              </div>
               {events.map((event) => (
                 <EventRow key={event.event_id} event={event} />
               ))}
