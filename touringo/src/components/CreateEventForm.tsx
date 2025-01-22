@@ -10,16 +10,18 @@ interface CreateEventFormProps {
 
 const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCreated }) => {
   const loggedAccount = getLoggedAccount();
-  const today = new Date().toISOString().split("T")[0]; // Get current date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0];
   const [formData, setFormData] = useState<Partial<TR_Event>>({
     creator_username: loggedAccount?.username || "",
     openDays: Array(7).fill(false),
     isActive: true,
-    startDate: today, // Default to today's date
-    endDate: today,   // Default to today's date
+    startDate: today,
+    endDate: today,
+    openingTime: "09:00", // Default opening time
+    closingTime: "18:00", // Default closing time
   });
   const [error, setError] = useState<string | null>(null);
-  const [isSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [image, setImage] = useState<TR_Image[] | null>(null);
   const [imageError, setImageError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -30,8 +32,6 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       if (formData.startDate < today) {
         setFormData({ ...formData, startDate: today });
       }
-
-      // Update endDate only if the startDate is greater than current endDate
       if (formData.startDate && formData.endDate && formData.startDate > formData.endDate) {
         setFormData((prevData) => ({
           ...prevData,
@@ -43,7 +43,13 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    if (name === "phone") {
+      if (/^[0-9]*$/.test(value)) {
+        setFormData({ ...formData, [name]: value });
+      }
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleCheckboxChange = (index: number) => {
@@ -56,7 +62,6 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
     const file = e.target.files ? e.target.files[0] : null;
     if (file && file.type === "image/jpeg") {
       const reader = new FileReader();
-
       reader.onloadend = () => {
         const imgBuffer = reader.result as ArrayBuffer;
         const newImage = new TR_Image(
@@ -65,12 +70,10 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           URL.createObjectURL(file),
           file.type
         );
-
-        setImage([newImage]); // Update image state with the new TR_Image object
-        setImageError(null); // Clear any previous error
+        setImage([newImage]);
+        setImageError(null);
       };
-
-      reader.readAsArrayBuffer(file); // Read the image file as an array buffer
+      reader.readAsArrayBuffer(file);
     } else {
       setImage(null);
       setImageError("Only .jpg files are allowed.");
@@ -82,17 +85,15 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
     if (
       formData.name &&
       formData.description &&
+      formData.eventType &&
       formData.startDate &&
       formData.endDate &&
       formData.openDays?.includes(true) &&
-      image // Ensure image is uploaded
+      image
     ) {
+      setIsSubmitting(true);
       const username = getLoggedAccount()?.username;
-      if (!username) {
-        return;
-      }
-
-      const eventImages = image || null; // Ensure that image is not null
+      if (!username) return;
 
       const newEvent = new TR_Event(
         -1,
@@ -100,9 +101,9 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         formData.description,
         formData.phone || "",
         username,
-        eventImages,
-        formData.openingTime || "00:00:00",
-        formData.closingTime || "23:59:59",
+        image,
+        formData.openingTime || "00:00",
+        formData.closingTime || "23:59",
         formData.startDate || "",
         formData.endDate || "",
         formData.town || "",
@@ -120,33 +121,23 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
   const createEvent = (event: TR_Event) => {
     fetch("/api/events/create", {
       method: "POST",
-      body: JSON.stringify({ data: encryptData({ event: event }) }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      body: JSON.stringify({ data: encryptData({ event }) }),
+      headers: { "Content-Type": "application/json" },
     })
       .then((response) => {
-        const badRequestError = response.status >= 400 && response.status < 500;
-        if (!response.ok && !badRequestError) {
-          alert(response.statusText);
-          throw new Error("Unknown Error");
-        }
+        if (!response.ok) throw new Error(response.statusText);
         return response.json();
       })
       .then((resBody) => {
-        if (resBody.message) {
-          alert(resBody.message);
-        } else {
-          const createdEvent = resBody.result as TR_Event;
-          console.log(`Event created, event_id=${createdEvent.event_id}`);
-          onEventCreated(createdEvent);
-          setFormData({ creator_username: getLoggedAccount()?.username || "", openDays: Array(7).fill(false), isActive: true });
+        if (resBody.message) alert(resBody.message);
+        else {
+          onEventCreated(resBody.result as TR_Event);
+          setFormData({ creator_username: loggedAccount?.username || "", openDays: Array(7).fill(false), isActive: true });
           onSuccess();
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.error(err))
+      .finally(() => setIsSubmitting(false));
   };
 
   return (
@@ -198,7 +189,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           value={formData.startDate || today}
           onChange={handleChange}
           className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          min={today} // Ensure the start date is from today
+          min={today}
           required
         />
       </div>
@@ -211,8 +202,32 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           value={formData.endDate || formData.startDate || today}
           onChange={handleChange}
           className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          min={formData.startDate || today} // Ensure the end date is after the start date
-          disabled={!formData.startDate} // Disable until startDate is selected
+          min={formData.startDate || today}
+          disabled={!formData.startDate}
+          required
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block font-semibold mb-1">Opening Time *</label>
+        <input
+          type="time"
+          name="openingTime"
+          value={formData.openingTime || "09:00"}
+          onChange={handleChange}
+          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+          required
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block font-semibold mb-1">Closing Time *</label>
+        <input
+          type="time"
+          name="closingTime"
+          value={formData.closingTime || "18:00"}
+          onChange={handleChange}
+          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
           required
         />
       </div>
@@ -259,18 +274,19 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       </div>
 
       <div className="mb-4">
-        <label className="block font-semibold mb-1">Event Type</label>
+        <label className="block font-semibold mb-1">Event Type *</label>
         <input
           type="text"
           name="eventType"
           value={formData.eventType || ""}
           onChange={handleChange}
           className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+          required
         />
       </div>
 
       <div className="mb-4">
-        <label className="block font-semibold mb-1">Upload Image (JPG only)</label>
+        <label className="block font-semibold mb-1">Upload Event Image *</label>
         <input
           type="file"
           accept=".jpg"

@@ -40,6 +40,14 @@ const MyEventsPage = () => {
     setShowCreateForm(false); // Hide form after event is created
   };
 
+  // Sleep function
+  const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+  const reloadPageWithDelay = async () => {
+    window.location.reload(); // Reload after 5 seconds
+    await sleep(5000);
+  };
+
   return (
     <div className="max-w-[1000px] my-4 mx-auto">
       <div className="flex items-center justify-between pb-4">
@@ -55,7 +63,8 @@ const MyEventsPage = () => {
       {/* Conditionally render the form */}
       {showCreateForm && <CreateEventForm onEventCreated={handleEventCreated} onSuccess={function (): void {
         alert("Event has been created!")
-      } } />}
+        reloadPageWithDelay();
+      }} />}
 
       {/* User Events */}
       <div className="event-row flex items-center justify-between mt-8">
