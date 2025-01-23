@@ -35,17 +35,11 @@ const MyEventsPage = () => {
     if (events == null) fetchEvents();
   }, [events, router]);
 
-  const handleEventCreated = (newEvent: TR_Event) => {
-    setEvents((prevEvents) => (prevEvents ? [newEvent, ...prevEvents] : [newEvent]));
+  const handleEventCreated = () => {
+    setEvents(null);
     setShowCreateForm(false); // Hide form after event is created
   };
 
-  // Sleep function
-  const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-  const reloadPageWithDelay = async () => {
-    alert("Event has been created!")
-  };
 
   return (
     <div className="max-w-[1000px] my-4 mx-auto">
@@ -61,7 +55,7 @@ const MyEventsPage = () => {
 
       {/* Conditionally render the form */}
       {showCreateForm && <CreateEventForm onEventCreated={handleEventCreated} onSuccess={function (): void {
-        reloadPageWithDelay();
+        alert("Event has been created!")
       }} />}
 
       {/* User Events */}

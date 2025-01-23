@@ -28,6 +28,8 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
   const [image, setImage] = useState<TR_Image[] | null>(null);
   const [imageError, setImageError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+
 
   useEffect(() => {
     if (formData.startDate && formData.endDate) {
@@ -53,14 +55,14 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         }
         for (let i = 0; i < 7; i++) {
           disabledDays[i] = updatedDisabledDays[i]
-          if(disabledDays[i] && formData.openDays?.[i])
+          if (disabledDays[i] && formData.openDays?.[i])
             formData.openDays[i] = false;
         }
       }
       setDisabledDays(disabledDays);
 
     }
-  }, [formData.startDate, formData.endDate]);
+  }, [formData.startDate, formData.endDate, formData.openDays, todayStr]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -85,18 +87,21 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       const reader = new FileReader();
       reader.onloadend = () => {
         const imgBuffer = reader.result as ArrayBuffer;
+        const previewUrl = URL.createObjectURL(file);
         const newImage = new TR_Image(
           file.name,
           imgBuffer ? Buffer.from(imgBuffer) : null,
-          URL.createObjectURL(file),
+          previewUrl,
           file.type
         );
         setImage([newImage]);
+        setImagePreview(previewUrl);
         setImageError(null);
       };
       reader.readAsArrayBuffer(file);
     } else {
       setImage(null);
+      setImagePreview(null);
       setImageError("Only .jpg files are allowed.");
     }
   };
@@ -319,6 +324,17 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         {imageError && <div className="text-red-600 mt-2">{imageError}</div>}
       </div>
 
+      {imagePreview && (
+        <div className="mb-4">
+          <label className="block font-semibold mb-1">Image Preview</label>
+          <img
+            src={imagePreview}
+            alt="Event preview"
+            className="max-w-full h-auto rounded-lg object-cover"
+          />
+        </div>
+      )}
+
       <button
         type="submit"
         disabled={isSubmitting}
@@ -331,7 +347,4 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
 };
 
 export default CreateEventForm;
-function setDisabledDays(updatedDisabledDays: any[]) {
-  throw new Error("Function not implemented.");
-}
 

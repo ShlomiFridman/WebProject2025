@@ -3,7 +3,7 @@ import { TR_Event } from "@/utils/classes";
 import React, { useEffect, useRef, useState } from "react";
 
 interface ButtonProps {
-  event: TR_Event | any; // Allow flexibility but enforce validation inside
+  event: TR_Event ; // Allow flexibility but enforce validation inside
 }
 
 function CancelEventButton({ event }: ButtonProps) {
