@@ -33,6 +33,14 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
     if (formData.startDate && formData.endDate) {
       const startDate = new Date(formData.startDate);
       const endDate = new Date(formData.endDate);
+
+      if (endDate < startDate) {
+        setFormData((prevData) => ({
+          ...prevData,
+          endDate: formData.startDate || todayStr,
+        }));
+      }
+
       const daysBetween = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
       const disabledDays = Array(7).fill(false);
       if (daysBetween < 7) {
@@ -43,8 +51,10 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           const currentDay = currentDate.getDay();
           updatedDisabledDays[currentDay] = false; // Enable the day in the range
         }
-        for(let i = 0; i <7; i++){
+        for (let i = 0; i < 7; i++) {
           disabledDays[i] = updatedDisabledDays[i]
+          if(disabledDays[i] && formData.openDays?.[i])
+            formData.openDays[i] = false;
         }
       }
       setDisabledDays(disabledDays);
