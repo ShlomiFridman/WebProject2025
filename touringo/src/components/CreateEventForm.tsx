@@ -10,13 +10,15 @@ interface CreateEventFormProps {
 
 const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCreated }) => {
   const loggedAccount = getLoggedAccount();
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date();
+  today.setDate(today.getDate() + 1); // Start from the next day
+  const todayStr = today.toISOString().split("T")[0];
   const [formData, setFormData] = useState<Partial<TR_Event>>({
     creator_username: loggedAccount?.username || "",
     openDays: Array(7).fill(false),
     isActive: true,
-    startDate: today,
-    endDate: today,
+    startDate: todayStr,
+    endDate: todayStr,
     openingTime: "09:00", // Default opening time
     closingTime: "18:00", // Default closing time
   });
@@ -186,10 +188,10 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         <input
           type="date"
           name="startDate"
-          value={formData.startDate || today}
+          value={formData.startDate || todayStr}
           onChange={handleChange}
           className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          min={today}
+          min={todayStr}
           required
         />
       </div>
@@ -199,10 +201,10 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         <input
           type="date"
           name="endDate"
-          value={formData.endDate || formData.startDate || today}
+          value={formData.endDate || formData.startDate || todayStr}
           onChange={handleChange}
           className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          min={formData.startDate || today}
+          min={formData.startDate || todayStr}
           disabled={!formData.startDate}
           required
         />
