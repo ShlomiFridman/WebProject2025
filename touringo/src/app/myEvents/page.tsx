@@ -44,9 +44,7 @@ const MyEventsPage = () => {
   const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
   const reloadPageWithDelay = async () => {
-    window.location.reload(); // Reload after 5 seconds
     alert("Event has been created!")
-    await sleep(5000);
   };
 
   return (

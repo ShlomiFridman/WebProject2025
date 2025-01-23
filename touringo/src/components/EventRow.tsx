@@ -14,6 +14,7 @@ type EventRowProps = {
 };
 
 const EventRow: React.FC<EventRowProps> = ({ event }) => {
+  const eventInstance = event instanceof TR_Event ? event : TR_Event.fromJSON(event);
   const path = usePathname();
   const router = useRouter();
   const { dispatch } = useAppContext();
@@ -94,7 +95,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
             <BookingButton event={event} />
             : <>
               <p className="text-center">Your event</p>
-              <CancelEventButton event={event} />
+              <CancelEventButton event={eventInstance} />
             </>
           }
         </> : <></>}
