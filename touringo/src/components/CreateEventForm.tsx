@@ -9,6 +9,7 @@ interface CreateEventFormProps {
 }
 
 const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCreated }) => {
+  const [disabledDays, setDisabledDays] = useState<boolean[]>(Array(7).fill(false));
   const loggedAccount = getLoggedAccount();
   const today = new Date();
   today.setDate(today.getDate() + 1); // Start from the next day
@@ -29,17 +30,25 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
   const formRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
-    if (formData.startDate) {
-      const today = new Date().toISOString().split("T")[0];
-      if (formData.startDate < today) {
-        setFormData({ ...formData, startDate: today });
+    if (formData.startDate && formData.endDate) {
+      const startDate = new Date(formData.startDate);
+      const endDate = new Date(formData.endDate);
+      const daysBetween = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
+      const disabledDays = Array(7).fill(false);
+      if (daysBetween < 7) {
+        const updatedDisabledDays = Array(7).fill(true);
+        for (let i = 0; i <= daysBetween; i++) {
+          const currentDate: Date = new Date(formData.startDate);
+          currentDate.setDate(currentDate.getDate() + i);
+          const currentDay = currentDate.getDay();
+          updatedDisabledDays[currentDay] = false; // Enable the day in the range
+        }
+        for(let i = 0; i <7; i++){
+          disabledDays[i] = updatedDisabledDays[i]
+        }
       }
-      if (formData.startDate && formData.endDate && formData.startDate > formData.endDate) {
-        setFormData((prevData) => ({
-          ...prevData,
-          endDate: prevData.startDate || today,
-        }));
-      }
+      setDisabledDays(disabledDays);
+
     }
   }, [formData.startDate, formData.endDate]);
 
@@ -268,6 +277,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
                 checked={formData.openDays?.[index] || false}
                 onChange={() => handleCheckboxChange(index)}
                 className="mr-1"
+                disabled={disabledDays[index]}
               />
               {day}
             </label>
@@ -311,3 +321,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
 };
 
 export default CreateEventForm;
+function setDisabledDays(updatedDisabledDays: any[]) {
+  throw new Error("Function not implemented.");
+}
+
