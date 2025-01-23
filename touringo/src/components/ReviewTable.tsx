@@ -11,13 +11,13 @@ const ReviewsTable: React.FC<ReviewsTableProps> = ({ reviews }) => {
   const sortedReviews = [...reviews].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   return (
-    <div className="overflow-x-auto bg-white dark:bg-gray-500 dark:text-white shadow-md rounded-lg p-4 m-4">
+    <div className="overflow-x-auto bg-white dark:bg-gray-500 shadow-md rounded-lg p-4 m-4">
       {/* Table Header */}
       <div className="flex border-b-2 pb-2 mb-4">
-        <h1 className="w-1/12 text-lg font-semibold">
+        <h1 className="mr-4 text-lg font-semibold">
           <b>Score</b>
         </h1>
-        <h1 className="flex-1 text-lg font-semibold px-4">
+        <h1 className="flex-1 text-lg font-semibold">
           <b>Review</b>
         </h1>
         <h1 className="w-1/6 text-sm font-semibold text-center">
@@ -33,11 +33,11 @@ const ReviewsTable: React.FC<ReviewsTableProps> = ({ reviews }) => {
         sortedReviews.map((rev: Review, ind) => (
           <div key={ind} className="flex py-2 border-b">
             {/* Score */}
-            <div className="w-1/12 text-lg font-medium">
+            <div className="mr-4 text-lg font-medium">
               {rev.score}/5
             </div>
             {/* Review Description */}
-            <div className="flex-1 text-lg px-4">
+            <div className="ml-4 flex-1 text-lg">
               {rev.description}
             </div>
             {/* Date */}
