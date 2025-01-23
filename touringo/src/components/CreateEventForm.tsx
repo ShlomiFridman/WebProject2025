@@ -207,79 +207,85 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         />
       </div>
 
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Start Date *</label>
-        <input
-          type="date"
-          name="startDate"
-          value={formData.startDate || todayStr}
-          onChange={handleChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          min={todayStr}
-          required
-        />
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <label className="block font-semibold mb-1">Start Date *</label>
+          <input
+            type="date"
+            name="startDate"
+            value={formData.startDate || todayStr}
+            onChange={handleChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            min={todayStr}
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block font-semibold mb-1">End Date *</label>
+          <input
+            type="date"
+            name="endDate"
+            value={formData.endDate || formData.startDate || todayStr}
+            onChange={handleChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            min={formData.startDate || todayStr}
+            disabled={!formData.startDate}
+            required
+          />
+        </div>
       </div>
 
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">End Date *</label>
-        <input
-          type="date"
-          name="endDate"
-          value={formData.endDate || formData.startDate || todayStr}
-          onChange={handleChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          min={formData.startDate || todayStr}
-          disabled={!formData.startDate}
-          required
-        />
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <label className="block font-semibold mb-1">Opening Time *</label>
+          <input
+            type="time"
+            name="openingTime"
+            value={formData.openingTime || "09:00"}
+            onChange={handleChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block font-semibold mb-1">Closing Time *</label>
+          <input
+            type="time"
+            name="closingTime"
+            value={formData.closingTime || "18:00"}
+            onChange={handleChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            required
+          />
+        </div>
       </div>
 
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Opening Time *</label>
-        <input
-          type="time"
-          name="openingTime"
-          value={formData.openingTime || "09:00"}
-          onChange={handleChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          required
-        />
-      </div>
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <label className="block font-semibold mb-1">Town *</label>
+          <input
+            type="text"
+            name="town"
+            value={formData.town || ""}
+            onChange={handleChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            required
+          />
+        </div>
 
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Closing Time *</label>
-        <input
-          type="time"
-          name="closingTime"
-          value={formData.closingTime || "18:00"}
-          onChange={handleChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          required
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Town *</label>
-        <input
-          type="text"
-          name="town"
-          value={formData.town || ""}
-          onChange={handleChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          required
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Address *</label>
-        <input
-          type="text"
-          name="address"
-          value={formData.address || ""}
-          onChange={handleChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          required
-        />
+        <div>
+          <label className="block font-semibold mb-1">Address *</label>
+          <input
+            type="text"
+            name="address"
+            value={formData.address || ""}
+            onChange={handleChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            required
+          />
+        </div>
       </div>
 
       <div className="mb-4">
@@ -300,28 +306,30 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         </div>
       </div>
 
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Event Type *</label>
-        <input
-          type="text"
-          name="eventType"
-          value={formData.eventType || ""}
-          onChange={handleChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          required
-        />
-      </div>
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <label className="block font-semibold mb-1">Event Type *</label>
+          <input
+            type="text"
+            name="eventType"
+            value={formData.eventType || ""}
+            onChange={handleChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            required
+          />
+        </div>
 
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Upload Event Image *</label>
-        <input
-          type="file"
-          accept=".jpg"
-          onChange={handleFileChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          required
-        />
-        {imageError && <div className="text-red-600 mt-2">{imageError}</div>}
+        <div>
+          <label className="block font-semibold mb-1">Upload Event Image *</label>
+          <input
+            type="file"
+            accept=".jpg"
+            onChange={handleFileChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            required
+          />
+          {imageError && <div className="text-red-600 mt-2">{imageError}</div>}
+        </div>
       </div>
 
       {imagePreview && (
