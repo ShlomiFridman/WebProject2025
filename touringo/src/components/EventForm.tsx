@@ -1,4 +1,5 @@
 "use client";
+import { myStyles } from "@/utils/styles";
 import { useState } from "react";
 
 export default function CreateForm() {
@@ -52,7 +53,7 @@ export default function CreateForm() {
         </select>
       </label>
       <button
-        className="w-full py-2 text-white bg-blue-600 dark:bg-blue-500 rounded-md hover:bg-blue-700 dark:hover:bg-blue-400 disabled:bg-gray-400"
+        className={myStyles.button_blue}
         disabled={isLoading}
       >
         {isLoading ? "Adding..." : "Add Ticket"}

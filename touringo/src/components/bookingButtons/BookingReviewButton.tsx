@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import LoadingBox from '../LoadingBox';
 import { getLoggedAccount } from '@/utils/util_client';
 import { encryptData } from '@/utils/utils';
+import { myStyles } from '@/utils/styles';
 
 const BookingReviewButton: React.FC<{
   booking: Booking;
@@ -132,8 +133,8 @@ const BookingReviewButton: React.FC<{
     return <LoadingBox />;
   }
 
-  return ( review!==undefined?
-    <div>
+  return (review !== undefined ?
+    <div className="flex flex-col items-center">
       <button
         className={`bg-green-500 px-4 py-2 rounded hover:bg-green-700 dark:bg-green-800 dark:hover:bg-green-600`}
         onClick={handleReviewToggle}
@@ -141,9 +142,9 @@ const BookingReviewButton: React.FC<{
         {review == null ? (isActive ? 'Close Review' : 'Leave a Review') : "View review"}
       </button>
       {isActive && (
-        <form onSubmit={handleFormSubmit} className="border border-gray-700 dark:border-gray-300 p-4 mt-2 rounded-md">
+        <form onSubmit={handleFormSubmit} className="border border-gray-700 dark:border-gray-300 p-4 mt-2 rounded-md ">
           <div>
-            <p className="text-lg mb-4">Rate your experience<br/>(1 - Worst, 5 - Best)</p>
+            <p className="text-lg mb-4">Rate your experience<br />(1 - Worst, 5 - Best)</p>
             <div className="flex justify-between mb-4">
               {[1, 2, 3, 4, 5].map((num) => (
                 <button
@@ -169,14 +170,14 @@ const BookingReviewButton: React.FC<{
           </div>
           <button
             type="submit"
-            className={`mt-4 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-700 ${review != null? "hidden":""}`}
+            className={`${myStyles.button_blue} ${review != null ? "hidden" : ""}`}
             disabled={review != null || status === 'submitting'}
           >
             {status === 'submitting' ? 'Submitting...' : 'Submit'}
           </button>
         </form>
       )}
-    </div> : <LoadingBox/>
+    </div> : <LoadingBox />
   );
 };
 

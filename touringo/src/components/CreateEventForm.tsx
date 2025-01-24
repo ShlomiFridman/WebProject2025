@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { TR_Event, TR_Image } from "@/utils/classes";
 import { getLoggedAccount, ImageElement } from "@/utils/util_client";
 import { encryptData } from "@/utils/utils";
+import { myStyles } from "@/utils/styles";
 
 interface CreateEventFormProps {
   onSuccess: () => void;
@@ -342,7 +343,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full p-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
+        className={myStyles.button_blue}
       >
         {isSubmitting ? "Submitting..." : "Create Event"}
       </button>
