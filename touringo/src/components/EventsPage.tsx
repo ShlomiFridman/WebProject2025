@@ -3,6 +3,7 @@
 import EventTable from "@/components/EventTable";
 import LoadingBox from "@/components/LoadingBox";
 import { TR_Event } from "@/utils/classes";
+import { myStyles } from "@/utils/styles";
 import { useEffect, useState } from "react";
 
 const HomePage: React.FC = () => {
@@ -26,8 +27,8 @@ const HomePage: React.FC = () => {
   }, [events]);
 
   return (
-    <div className="max-w-[1000px] my-4 mx-auto"> {/* Centers the content on small screens */}
-      <div className="text-3xl text-green-600 font-bold">Events</div>
+    <div className={myStyles.container_max_width}> {/* Centers the content on small screens */}
+      <div className={myStyles.page_title}>Events</div>
       <div className="pb-4">Local tourist attractions, restaurants, and cultural events</div>
       <div className="flex justify-center">
         {/* Center content on smaller screens */}

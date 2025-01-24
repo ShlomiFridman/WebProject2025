@@ -111,9 +111,9 @@ const ProfilePage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-[1000px] my-4 mx-auto">
+    <div className={myStyles.container_max_width}>
       <div className="flex justify-between items-center">
-        <div className="text-3xl text-green-600 font-bold mb-4">Profile</div>
+        <div className={`${myStyles.page_title} mb-4`}>Profile</div>
         <div className="flex space-x-4">
           <button
             onClick={isEditing ? handleSave : handleEditToggle}
