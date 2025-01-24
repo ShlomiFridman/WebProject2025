@@ -38,7 +38,7 @@ export const ImageElement: React.FC<{ src: string; title: string; className?: st
 
   // Validate the src based on the allowed prefixes
   useEffect(() => {
-    const isValid = src.startsWith("data:image") || src.startsWith("https://");
+    const isValid = src.startsWith("data:image") || src.startsWith("https://") || src.startsWith("/");
     setIsValidSrc(isValid);
   }, [src]);
 
