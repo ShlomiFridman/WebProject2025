@@ -1,7 +1,7 @@
 "use client";
 
 import EventRow from '@/components/EventRow';
-import CreateEventForm from '@/components/CreateEventForm';
+import CreateEventForm from '@/components/CreateEventForm/CreateEventForm';
 import LoadingBox from '@/components/LoadingBox';
 import { TR_Event } from '@/utils/classes';
 import { getLoggedAccount } from '@/utils/util_client';
