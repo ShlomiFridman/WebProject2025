@@ -12,6 +12,7 @@ const BookingTable: React.FC<BookingTableProps> = ({ bookings }) => {
   return (
     <div className="booking-table">
       <div className="booking-row flex items-center justify-between">
+        <b></b>
         <b>Booking Details</b>
         <h1 className="hidden sm:block pr-4"><b>Event Details</b></h1>
       </div>

@@ -11,17 +11,13 @@ interface ButtonProps {
 function CancelBookingButton({ booking }: ButtonProps) {
   const [btnText, setBtnText] = useState<string>("Cancel");
   const [disableFlag, setDisableFlag] = useState<boolean>(true);
-  const btnRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     setDisableFlag(!booking.isActive || booking.hasPassed());
     if (!booking.isActive) setBtnText("Cancelled");
     else if (booking.hasPassed()) setBtnText("Ended");
-    if (btnRef.current) {
-      btnRef.current.textContent = btnText;
-      btnRef.current.disabled = disableFlag;
-    }
-  }, [booking, btnText, disableFlag]);
+    else setBtnText("Cancel");
+  }, [booking]);
 
   // Cancel booking request
   const cancelRequest = () => {
@@ -61,14 +57,12 @@ function CancelBookingButton({ booking }: ButtonProps) {
 
   return (
     <button
-      ref={btnRef}
       onClick={cancelRequest}
-      className={`px-4 py-2 m-2 rounded transition w-full  ${!booking.hasPassed() ? `${myStyles.button_red}` : ""
-        }`}
+      className={`px-4 py-2 m-2 rounded transition w-full ${!booking.hasPassed() ? `${myStyles.button_red}` : ""}`}
+      disabled={disableFlag}  // Disable the button based on the disableFlag state
     >
       {btnText} {/* Display the button text dynamically */}
     </button>
-
   );
 }
 

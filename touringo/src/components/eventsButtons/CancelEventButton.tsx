@@ -1,7 +1,7 @@
 "use client";
 import { TR_Event } from "@/utils/classes";
 import { myStyles } from "@/components/styles";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface ButtonProps {
   event: TR_Event; // Allow flexibility but enforce validation inside
@@ -10,7 +10,6 @@ interface ButtonProps {
 function CancelEventButton({ event }: ButtonProps) {
   const [btnText, setBtnText] = useState<string>("Cancel");
   const [disableFlag, setDisableFlag] = useState<boolean>(true);
-  const btnRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     // Validate the event object
@@ -27,13 +26,10 @@ function CancelEventButton({ event }: ButtonProps) {
       setBtnText("Cancelled");
     } else if (isEnded) {
       setBtnText("Ended");
+    } else {
+      setBtnText("Cancel");
     }
-
-    if (btnRef.current) {
-      btnRef.current.textContent = btnText;
-      btnRef.current.disabled = disableFlag;
-    }
-  }, [event, btnText, disableFlag]);
+  }, [event]);
 
   const cancelRequest = () => {
     if (!confirm("Are you sure you want to cancel?")) return;
@@ -72,13 +68,11 @@ function CancelEventButton({ event }: ButtonProps) {
 
   return (
     <button
-      ref={btnRef}
       onClick={cancelRequest}
       className={`px-4 m-2 rounded transition w-full h-full ${
-        event instanceof TR_Event && !event.hasPassed()
-          ? `${myStyles.button_red}`
-          : ""
+        event instanceof TR_Event && !event.hasPassed() ? `${myStyles.button_red}` : ""
       }`}
+      disabled={disableFlag}  // Directly bind to the disableFlag state
     >
       {btnText} {/* Dynamically show the button text */}
     </button>

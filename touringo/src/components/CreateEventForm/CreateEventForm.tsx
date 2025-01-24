@@ -68,7 +68,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [todayStr]);
+  }, [formData.startDate, formData.endDate,todayStr]);
 
 
   // const isImageUrl = (url: string): boolean => {
@@ -190,7 +190,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           className={`px-4 py-2 m-2 rounded transition ${myStyles.button_green}`}
           value="Load"
         >
-          Load
+          Preview image
         </button>
         <button
           type="button"
