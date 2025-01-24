@@ -9,8 +9,8 @@ import TextArea from "./TextArea";
 import DateInput from "./DateInput";
 import TimeInput from "./TimeInput";
 import CheckboxGroup from "./CheckBoxGroup";
-import FileUpload from "./FileUpload";
 import SubmitButton from "./SubmitButton";
+import { myStyles } from "@/utils/styles";
 
 
 interface CreateEventFormProps {
@@ -36,9 +36,10 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
   const [disabledDays, setDisabledDays] = useState<boolean[]>(Array(7).fill(false));
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string>("");
   const [image, setImage] = useState<TR_Image[] | null>(null);
-  const [imageError, setImageError] = useState<string | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [tempImage, setTempImage] = useState<TR_Image[] | null>(null);
+  // const [imageError, setImageError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
@@ -66,7 +67,14 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         }));
       }
     }
-  }, [formData.startDate, formData.endDate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [todayStr]);
+
+
+  // const isImageUrl = (url: string): boolean => {
+  //   // Check if the URL ends with common image extensions
+  //   return /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url);
+  // };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -82,28 +90,16 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
     setFormData({ ...formData, openDays: updatedDays });
   };
 
-  const handleFileChange = (file: File | null) => {
-    if (file && file.type === "image/jpeg") {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const imgBuffer = reader.result as ArrayBuffer;
-        const previewUrl = URL.createObjectURL(file);
-        const newImage = new TR_Image(
-          file.name,
-          imgBuffer ? Buffer.from(imgBuffer) : null,
-          previewUrl,
-          file.type
-        );
-        setImage([newImage]);
-        setImagePreview(previewUrl);
-        setImageError(null);
-      };
-      reader.readAsArrayBuffer(file);
-    } else {
-      setImage(null);
-      setImagePreview(null);
-      setImageError("Only .jpg files are allowed.");
-    }
+  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { value } = e.target;
+    const newImage = new TR_Image(
+      formData.name? formData.name:"Image Preview",
+      null,
+      value,
+      "url"
+    );
+    setTempImage([newImage]);
+    setImageUrl(value);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -117,6 +113,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       formData.openDays?.includes(true) &&
       image
     ) {
+      image[0].title = formData.name;
       setIsSubmitting(true);
       const newEvent = new TR_Event(
         -1,
@@ -183,8 +180,30 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         onChange={handleCheckboxChange}
       />
       <TextInput label="Event Type" name="eventType" value={formData.eventType || ""} onChange={handleChange} required />
-      <FileUpload label="Upload Event Image" accept=".jpg" onChange={handleFileChange} error={imageError} />
-      {imagePreview && <ImageElement src={imagePreview} title={"imagePreview"} />}
+      <div className="flex items-center gap-2 pb-5">
+        <TextInput label="Image Url" name="imgUrl" value={imageUrl || ""} onChange={handleUrlChange} required />
+        <button
+          type="button"
+          onClick={() => {
+            setImage(tempImage);
+          }}
+          className={`px-4 py-2 m-2 rounded transition ${myStyles.button_green}`}
+          value="Load"
+        >
+          Load
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setImage(null);
+            setImageUrl("");
+          }}
+          className={`px-4 py-2 m-2 rounded transition ${myStyles.button_red}`}
+        >
+          Clear
+        </button>
+      </div>
+      {image && <ImageElement src={image[0].src} title={"imagePreview"} />}
       <SubmitButton isSubmitting={isSubmitting} />
       {error && <ErrorMessage message={error} />}
 
