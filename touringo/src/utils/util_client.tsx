@@ -34,7 +34,6 @@ export const isLoggedIn = (): boolean => {
 export const ImageElement: React.FC<{ src: string, title: string, className?: string }> = ({ src, title, className = "" }) => {
   return (
     <Image
-      priority
       unoptimized
       src={src}
       alt={title}
@@ -42,6 +41,9 @@ export const ImageElement: React.FC<{ src: string, title: string, className?: st
       className={className}
       width={150}
       height={100}
+      loading="lazy"
+      placeholder="blur"
+      blurDataURL={"\\event_images\\gala.jpg"}
     />
   );
 }
