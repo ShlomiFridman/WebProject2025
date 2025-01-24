@@ -40,6 +40,7 @@ export async function createEvent(newEvent: TR_Event): Promise<TR_Event>{
             .sort({ event_id: -1 }) // Sort by userId in descending order
             .exec(); // Execute the query
         newEvent.event_id = lastEvent.event_id+1;
+        newEvent.isActive = true;
         // console.log(newEvent.event_id)
         const eventsRes = await TR_EventModel.create(newEvent);
         return eventsRes;
