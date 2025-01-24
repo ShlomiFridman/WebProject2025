@@ -7,7 +7,7 @@ import { encryptData } from '@/utils/utils';
 import React from 'react';
 import { logAccount } from '@/utils/util_client';
 import { useRouter } from 'next/navigation';
-import { myStyles } from '@/utils/styles';
+import { myStyles } from '@/components/styles';
 
 const RegisterPage = () => {
   const { dispatch } = useAppContext();

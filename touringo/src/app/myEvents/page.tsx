@@ -7,7 +7,7 @@ import { TR_Event } from '@/utils/classes';
 import { getLoggedAccount } from '@/utils/util_client';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { myStyles } from '@/utils/styles';
+import { myStyles } from '@/components/styles';
 
 const MyEventsPage = () => {
   const [events, setEvents] = useState<TR_Event[] | null>(null);

@@ -1,6 +1,6 @@
 "use client";
 import { TR_Event } from "@/utils/classes";
-import { myStyles } from "@/utils/styles";
+import { myStyles } from "@/components/styles";
 import React, { useEffect, useRef, useState } from "react";
 
 interface ButtonProps {

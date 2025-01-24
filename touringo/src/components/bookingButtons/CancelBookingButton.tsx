@@ -1,6 +1,6 @@
 "use client";
 import { Booking } from "@/utils/classes";
-import { myStyles } from "@/utils/styles";
+import { myStyles } from "@/components/styles";
 import React, { useEffect, useRef, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -63,7 +63,7 @@ function CancelBookingButton({ booking }: ButtonProps) {
     <button
       ref={btnRef}
       onClick={cancelRequest}
-      className={`px-4 py-2 m-2 rounded transition w-full h-full ${!booking.hasPassed() ? `${myStyles.button_red}` : ""
+      className={`px-4 py-2 m-2 rounded transition w-full  ${!booking.hasPassed() ? `${myStyles.button_red}` : ""
         }`}
     >
       {btnText} {/* Display the button text dynamically */}

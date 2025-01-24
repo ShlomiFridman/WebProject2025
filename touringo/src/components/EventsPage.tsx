@@ -3,7 +3,7 @@
 import EventTable from "@/components/EventTable";
 import LoadingBox from "@/components/LoadingBox";
 import { TR_Event } from "@/utils/classes";
-import { myStyles } from "@/utils/styles";
+import { myStyles } from "@/components/styles";
 import { useEffect, useState } from "react";
 
 const HomePage: React.FC = () => {

@@ -10,7 +10,7 @@ import DateInput from "./DateInput";
 import TimeInput from "./TimeInput";
 import CheckboxGroup from "./CheckBoxGroup";
 import SubmitButton from "./SubmitButton";
-import { myStyles } from "@/utils/styles";
+import { myStyles } from "@/components/styles";
 
 
 interface CreateEventFormProps {

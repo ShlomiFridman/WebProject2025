@@ -7,7 +7,7 @@ import { encryptData } from '@/utils/utils';
 import { logAccount } from "@/utils/util_client";
 import React from 'react';
 import { useRouter } from 'next/navigation';
-import { myStyles } from '@/utils/styles';
+import { myStyles } from '@/components/styles';
 
 const LoginPage = () => {
 

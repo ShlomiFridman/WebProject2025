@@ -3,7 +3,7 @@
 import BookingTable from '@/components/BookingTable';
 import LoadingBox from '@/components/LoadingBox';
 import { Booking } from '@/utils/classes';
-import { myStyles } from '@/utils/styles';
+import { myStyles } from '@/components/styles';
 import { getLoggedAccount } from '@/utils/util_client';  // Assuming this gets the logged-in user
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';

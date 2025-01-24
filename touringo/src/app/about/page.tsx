@@ -1,4 +1,4 @@
-import { myStyles } from '@/utils/styles';
+import { myStyles } from '@/components/styles';
 import { ImageElement } from '@/utils/util_client';
 
 export default function About() {

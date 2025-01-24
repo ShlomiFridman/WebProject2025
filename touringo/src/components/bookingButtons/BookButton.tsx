@@ -1,5 +1,5 @@
 import { Booking, TR_Event } from "@/utils/classes";
-import { myStyles } from "@/utils/styles";
+import { myStyles } from "@/components/styles";
 import { getLoggedAccount } from "@/utils/util_client";
 import { dateToFormat, encryptData, getMaxDate } from "@/utils/utils";
 import React, { useState, useEffect, useRef } from "react";

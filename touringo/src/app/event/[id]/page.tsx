@@ -5,7 +5,7 @@ import LoadingBox from '@/components/LoadingBox';
 import ReviewsTable from '@/components/ReviewTable';
 import { useAppContext } from '@/context/MainContext';
 import { Review, TR_Event } from '@/utils/classes';
-import { myStyles } from '@/utils/styles';
+import { myStyles } from '@/components/styles';
 import Link from 'next/link';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';

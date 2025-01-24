@@ -1,4 +1,4 @@
-import { myStyles } from "@/utils/styles";
+import { myStyles } from "@/components/styles";
 import React from "react";
 
 interface SubmitButtonProps {

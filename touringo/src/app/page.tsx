@@ -3,7 +3,7 @@
 import EventTable from '@/components/EventTable';
 import LoadingBox from '@/components/LoadingBox';
 import { TR_Event } from '@/utils/classes';
-import { myStyles } from '@/utils/styles';
+import { myStyles } from '@/components/styles';
 import { getLoggedAccount } from '@/utils/util_client';
 //import { decryptData, encryptData } from "@/utils/utils";
 //import { redirect } from 'next/navigation';

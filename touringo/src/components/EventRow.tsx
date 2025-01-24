@@ -6,7 +6,7 @@ import { useAppContext } from "@/context/MainContext";
 import BookingButton from "./bookingButtons/BookButton";
 import { getLoggedAccount, ImageElement, InfoElement } from "@/utils/util_client";
 import CancelEventButton from "./eventsButtons/CancelEventButton";
-import { myStyles } from "@/utils/styles";
+import { myStyles } from "@/components/styles";
 
 type EventRowProps = {
   event: TR_Event;
