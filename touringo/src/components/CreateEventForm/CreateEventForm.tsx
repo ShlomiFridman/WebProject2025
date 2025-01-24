@@ -66,7 +66,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         }));
       }
     }
-  }, [formData.startDate, formData.endDate]);
+  }, [formData.startDate, formData.endDate, formData.openDays, todayStr]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
