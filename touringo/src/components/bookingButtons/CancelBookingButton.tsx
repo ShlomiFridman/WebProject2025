@@ -63,7 +63,7 @@ function CancelBookingButton({ booking }: ButtonProps) {
     <button
       ref={btnRef}
       onClick={cancelRequest}
-      className={`px-4 py-2 m-2 rounded transition w-full h-full ${!booking.hasPassed() ? myStyles.button_red : ""
+      className={`px-4 py-2 m-2 rounded transition w-full h-full ${!booking.hasPassed() ? `${myStyles.button_red}` : ""
         }`}
     >
       {btnText} {/* Display the button text dynamically */}
