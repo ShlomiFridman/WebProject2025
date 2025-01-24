@@ -3,6 +3,7 @@
 import EventTable from '@/components/EventTable';
 import LoadingBox from '@/components/LoadingBox';
 import { TR_Event } from '@/utils/classes';
+import { myStyles } from '@/utils/styles';
 import { getLoggedAccount } from '@/utils/util_client';
 //import { decryptData, encryptData } from "@/utils/utils";
 //import { redirect } from 'next/navigation';
@@ -59,9 +60,9 @@ export default function Page() {
   }, [events]);
 
   return (
-    <div className="max-w-[1000px] my-4 mx-auto"> {/* Centers the content on small screens */}
+    <div className={myStyles.container_max_width}> {/* Centers the content on small screens */}
       <h2 className="text-3xl underline text-green-800 dark:text-green-300 font-bold">Welcome to TouRingo{username? `, ${username}` : ""}</h2>
-      {/* <h3 className="text-3xl text-green-600 font-bold">Events</h3> */}
+      {/* <h3 className={myStyles.page_title}>Events</h3> */}
       <div className="pb-4">Local tourist attractions, restaurants, and cultural events</div>
       <div className="flex justify-center">
         {/* Center content on smaller screens */}
@@ -83,8 +84,8 @@ export default function Page() {
   /*const txt = encryptData({test:"TEST"});
   const data = decryptData(txt)
   return (
-        <div className="max-w-[1000px] my-4 mx-auto">
-          <div className="text-3xl text-green-600 font-bold pb-4">Welcome to TouRingo!</div>
+        <div className={myStyles.container_max_width}>
+          <div className={`${myStyles.page_title} pb-4}>Welcome to TouRingo!</div>
           <div>
             {JSON.stringify(data)}
           </div>
