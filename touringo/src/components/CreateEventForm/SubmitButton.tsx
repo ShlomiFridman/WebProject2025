@@ -1,3 +1,4 @@
+import { myStyles } from "@/utils/styles";
 import React from "react";
 
 interface SubmitButtonProps {
@@ -10,7 +11,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitting }) => (
       type="submit"
       disabled={isSubmitting}
       className={`w-full p-2 rounded text-white ${
-        isSubmitting ? "bg-gray-500 cursor-not-allowed" : "bg-blue-500"
+        isSubmitting ? "bg-gray-500 cursor-not-allowed" : `${myStyles.button_blue}`
       }`}
     >
       {isSubmitting ? "Submitting..." : "Create Event"}

@@ -7,6 +7,7 @@ import { encryptData } from '@/utils/utils';
 import React from 'react';
 import { logAccount } from '@/utils/util_client';
 import { useRouter } from 'next/navigation';
+import { myStyles } from '@/utils/styles';
 
 const RegisterPage = () => {
   const { dispatch } = useAppContext();
@@ -169,7 +170,7 @@ const RegisterPage = () => {
           <button
             onClick={onBtnClick}
             disabled={isLoading}
-            className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-400"
+            className={myStyles.button_blue}
           >
             {isLoading ? 'Registering...' : 'Register'}
           </button>

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import LoadingBox from '../LoadingBox';
 import { getLoggedAccount } from '@/utils/util_client';
 import { encryptData } from '@/utils/utils';
+import { myStyles } from '@/utils/styles';
 
 const BookingReviewButton: React.FC<{
   booking: Booking;
@@ -169,7 +170,7 @@ const BookingReviewButton: React.FC<{
           </div>
           <button
             type="submit"
-            className={`mt-4 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-700 ${review != null ? "hidden" : ""}`}
+            className={`${myStyles.button_blue} ${review != null ? "hidden" : ""}`}
             disabled={review != null || status === 'submitting'}
           >
             {status === 'submitting' ? 'Submitting...' : 'Submit'}

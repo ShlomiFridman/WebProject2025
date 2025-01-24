@@ -6,6 +6,7 @@ import { useAppContext } from "@/context/MainContext";
 import BookingButton from "./bookingButtons/BookButton";
 import { getLoggedAccount, ImageElement, InfoElement } from "@/utils/util_client";
 import CancelEventButton from "./eventsButtons/CancelEventButton";
+import { myStyles } from "@/utils/styles";
 
 type EventRowProps = {
   event: TR_Event;
@@ -40,8 +41,8 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
   }, []);
 
   return (
-    <div className="event-row flex sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#c6e7b3] dark:bg-[var(--box-background)] sm:bg-white hover:bg-[#c6e7b3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-[#292b2f] sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
-      <div onClick={() => selectEvent()} className={`p-2 outline-dashed rounded outline-1 flex flex-col sm:flex-row sm:items-center w-full ${!inEventPaga() ? 'cursor-pointer' : ''}`}>
+    <div className={myStyles.eventRow}>
+      <div onClick={() => selectEvent()} className={`${myStyles.eventRowSelected} ${!inEventPaga() ? 'cursor-pointer' : ''}`}>
         <div className="max-h-[1000px] mb-4 sm:mb-0 sm:mr-4 sm:w-1/5">
           {event.images[0].src ? (
             <ImageElement
@@ -72,7 +73,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
         </> : <></>}
         <button
           onClick={openMap}
-          className="inline-flex items-center justify-center bg-blue-500 px-4 py-2 m-2 rounded w-full hover:bg-blue-700 transition whitespace-nowrap dark:bg-blue-700 dark:hover:bg-blue-500"
+          className={myStyles.button_blue}
         >
           Open Map
           <svg

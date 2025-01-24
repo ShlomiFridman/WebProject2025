@@ -7,6 +7,7 @@ import { encryptData } from '@/utils/utils';
 import { logAccount } from "@/utils/util_client";
 import React from 'react';
 import { useRouter } from 'next/navigation';
+import { myStyles } from '@/utils/styles';
 
 const LoginPage = () => {
 
@@ -168,7 +169,7 @@ const LoginPage = () => {
           <button
             type='submit'
             disabled={isLoading}
-            className="w-full bg-green-500 text-white py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-400"
+            className={myStyles.button_blue}
           >
             {isLoading ? 'Logging in...' : 'Login'}
           </button>
