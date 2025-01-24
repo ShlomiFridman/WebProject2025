@@ -168,13 +168,15 @@ const BookingReviewButton: React.FC<{
               disabled={status === 'submitting' || review != null}
             />
           </div>
-          <button
-            type="submit"
-            className={`${myStyles.button_blue} ${review != null ? "hidden" : ""}`}
-            disabled={review != null || status === 'submitting'}
-          >
-            {status === 'submitting' ? 'Submitting...' : 'Submit'}
-          </button>
+          <div className='flex flex-col items-center'>
+            <button
+              type="submit"
+              className={`mt-4 px-4 py-2 rounded-md ${myStyles.button_blue} ${review != null ? "hidden" : ""}`}
+              disabled={review != null || status === 'submitting'}
+            >
+              {status === 'submitting' ? 'Submitting...' : 'Submit'}
+            </button>
+          </div>
         </form>
       )}
     </div> : <LoadingBox />

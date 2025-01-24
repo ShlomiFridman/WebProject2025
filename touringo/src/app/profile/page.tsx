@@ -6,6 +6,7 @@ import { encryptData } from "@/utils/utils";
 import React, { useEffect, useState } from "react";
 import { getLoggedAccount, ImageElement, logAccount } from "@/utils/util_client";
 import { useRouter } from "next/navigation";
+import { myStyles } from "@/utils/styles";
 
 const ProfilePage: React.FC = () => {
   const [loggedAccount, setLoggedAccount] = useState<Account | null>(null);
@@ -116,7 +117,8 @@ const ProfilePage: React.FC = () => {
         <div className="flex space-x-4">
           <button
             onClick={isEditing ? handleSave : handleEditToggle}
-            className="px-6 py-2 bg-green-500 rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
+            className={`px-6 py-2 ${myStyles.button_green} rounded-lg`}
+
           >
             {isEditing ? "Save Changes" : "Edit Profile"}
           </button>
