@@ -137,7 +137,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       );
       createEvent(newEvent);
     } else {
-      setError("Please fill all required fields and upload an image.");
+      setError("Please Choose at least one day");
     }
   };
 
@@ -159,17 +159,22 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-white dark:bg-gray-800 shadow-md rounded dark:text-white">
-      <FormHeader title="Create New Event" />
-      {error && <ErrorMessage message={error} />}
+      <FormHeader title="Create New Event" subTitle={"All fields are requaired"} />
       <TextInput label="Event Name" name="name" value={formData.name || ""} onChange={handleChange} required />
       <TextArea label="Description" name="description" value={formData.description || ""} onChange={handleChange} required />
       <TextInput label="Phone" name="phone" value={formData.phone || ""} onChange={handleChange} required />
-      <DateInput label="Start Date" name="startDate" value={formData.startDate || todayStr} onChange={handleChange} min={todayStr} required />
-      <DateInput label="End Date" name="endDate" value={formData.endDate || formData.startDate || todayStr} onChange={handleChange} min={formData.startDate || todayStr} required />
-      <TimeInput label="Opening Time" name="openingTime" value={formData.openingTime || "09:00"} onChange={handleChange} required />
-      <TimeInput label="Closing Time" name="closingTime" value={formData.closingTime || "18:00"} onChange={handleChange} required />
-      <TextInput label="Town" name="town" value={formData.town || ""} onChange={handleChange} required />
-      <TextInput label="Address" name="address" value={formData.address || ""} onChange={handleChange} required />
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <DateInput label="Start Date" name="startDate" value={formData.startDate || todayStr} onChange={handleChange} min={todayStr} required />
+        <DateInput label="End Date" name="endDate" value={formData.endDate || formData.startDate || todayStr} onChange={handleChange} min={formData.startDate || todayStr} required />
+      </div>
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <TimeInput label="Opening Time" name="openingTime" value={formData.openingTime || "09:00"} onChange={handleChange} required />
+        <TimeInput label="Closing Time" name="closingTime" value={formData.closingTime || "18:00"} onChange={handleChange} required />
+      </div>
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <TextInput label="Town" name="town" value={formData.town || ""} onChange={handleChange} required />
+        <TextInput label="Address" name="address" value={formData.address || ""} onChange={handleChange} required />
+      </div>
       <CheckboxGroup
         label="Open Days"
         items={["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]}
@@ -181,6 +186,8 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       <FileUpload label="Upload Event Image" accept=".jpg" onChange={handleFileChange} error={imageError} />
       {imagePreview && <ImageElement src={imagePreview} title={"imagePreview"} />}
       <SubmitButton isSubmitting={isSubmitting} />
+      {error && <ErrorMessage message={error} />}
+
     </form>
   );
 };
