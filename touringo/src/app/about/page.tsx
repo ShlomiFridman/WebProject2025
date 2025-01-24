@@ -1,3 +1,4 @@
+import { myStyles } from '@/utils/styles';
 import { ImageElement } from '@/utils/util_client';
 
 export default function About() {
@@ -35,7 +36,7 @@ export default function About() {
   ];
 
   return (
-    <div className="max-w-[1000px] my-4 mx-auto">
+    <div className={myStyles.container_max_width}>
       <h1 className="text-3xl text-green-600 font-bold">About</h1>
       <p>TouRingo is a project for the Advanced Web Technologies Course at Braude College (Winter 2025).</p>
       <p>Made by Shlomi, Shahar, Omer, and Noam.</p>
