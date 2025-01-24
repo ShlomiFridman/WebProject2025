@@ -53,7 +53,7 @@ export default function CreateForm() {
         </select>
       </label>
       <button
-        className={myStyles.button_blue}
+        className="w-full py-2 text-white bg-blue-600 dark:bg-blue-500 rounded-md hover:bg-blue-700 dark:hover:bg-blue-400 disabled:bg-gray-400"
         disabled={isLoading}
       >
         {isLoading ? "Adding..." : "Add Ticket"}

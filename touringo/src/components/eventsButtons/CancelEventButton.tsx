@@ -1,5 +1,6 @@
 "use client";
 import { TR_Event } from "@/utils/classes";
+import { myStyles } from "@/utils/styles";
 import React, { useEffect, useRef, useState } from "react";
 
 interface ButtonProps {
@@ -75,7 +76,7 @@ function CancelEventButton({ event }: ButtonProps) {
       onClick={cancelRequest}
       className={`px-4 m-2 rounded transition w-full h-full ${
         event instanceof TR_Event && !event.hasPassed()
-          ? "bg-red-500 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-500"
+          ? myStyles.button_red
           : ""
       }`}
     >

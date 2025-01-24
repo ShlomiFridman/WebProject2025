@@ -169,7 +169,8 @@ const LoginPage = () => {
           <button
             type='submit'
             disabled={isLoading}
-            className={myStyles.button_blue}
+            className={`w-full ${myStyles.button_blue} py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:bg-gray-400`}
+
           >
             {isLoading ? 'Logging in...' : 'Login'}
           </button>
