@@ -3,9 +3,8 @@
 import { useAppContext } from "@/context/MainContext";
 import { Account } from "@/utils/classes";
 import { encryptData } from "@/utils/utils";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { getLoggedAccount, logAccount } from "@/utils/util_client";
+import { getLoggedAccount, ImageElement, logAccount } from "@/utils/util_client";
 import { useRouter } from "next/navigation";
 
 const ProfilePage: React.FC = () => {
@@ -18,7 +17,7 @@ const ProfilePage: React.FC = () => {
 
   useEffect(() => {
     const account = getLoggedAccount();
-    if (!account){
+    if (!account) {
       // alert("You must login first!");
       router.push('/login');
       return;
@@ -142,12 +141,10 @@ const ProfilePage: React.FC = () => {
               maxWidth: "150px",
             }}
           >
-            <Image
-              id="profile-pic"
-              className="rounded-full object-cover border-4 border-green-500"
+            <ImageElement
               src="/event_images/profilePicture.png"
-              alt="Profile Picture"
-              layout="fill"
+              title="Profile Picture"
+              className="rounded-full object-cover border-4 border-green-500"
             />
           </div>
 

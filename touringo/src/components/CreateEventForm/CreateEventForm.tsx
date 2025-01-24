@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { TR_Event, TR_Image } from "@/utils/classes";
-import { getLoggedAccount } from "@/utils/util_client";
+import { getLoggedAccount, ImageElement } from "@/utils/util_client";
 import { encryptData } from "@/utils/utils";
 import FormHeader from "./FormHeader";
 import ErrorMessage from "./ErrorMessage";
@@ -10,7 +10,6 @@ import DateInput from "./DateInput";
 import TimeInput from "./TimeInput";
 import CheckboxGroup from "./CheckBoxGroup";
 import FileUpload from "./FileUpload";
-import ImagePreview from "./ImagePreview";
 import SubmitButton from "./SubmitButton";
 
 
@@ -180,7 +179,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       />
       <TextInput label="Event Type" name="eventType" value={formData.eventType || ""} onChange={handleChange} required />
       <FileUpload label="Upload Event Image" accept=".jpg" onChange={handleFileChange} error={imageError} />
-      {imagePreview && <ImagePreview src={imagePreview} />}
+      {imagePreview && <ImageElement src={imagePreview} title={"imagePreview"} />}
       <SubmitButton isSubmitting={isSubmitting} />
     </form>
   );

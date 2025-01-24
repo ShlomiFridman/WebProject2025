@@ -1,6 +1,7 @@
 "use client";
 
 import { Account } from "./classes";
+import Image from "next/image";
 
 export const logAccount = (account: Account | null) => {
   if (typeof window === "undefined") return; // Prevent execution on the server
@@ -29,3 +30,18 @@ export const isLoggedIn = (): boolean => {
 
   return localStorage.getItem("loggedAccount") != null;
 };
+
+export const ImageElement: React.FC<{src:string, title: string, className?: string}> = ({src,title, className=""}) => {
+  return (
+    <Image
+      priority
+      unoptimized
+      src={src}
+      alt={title}
+      title={title}
+      className={className}
+      width={150}
+      height={100}
+    />
+  );
+}
