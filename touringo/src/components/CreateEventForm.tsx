@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { TR_Event, TR_Image } from "@/utils/classes";
-import { getLoggedAccount } from "@/utils/util_client";
+import { getLoggedAccount, ImageElement } from "@/utils/util_client";
 import { encryptData } from "@/utils/utils";
+import { myStyles } from "@/utils/styles";
 
 interface CreateEventFormProps {
   onSuccess: () => void;
@@ -207,79 +208,85 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         />
       </div>
 
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Start Date *</label>
-        <input
-          type="date"
-          name="startDate"
-          value={formData.startDate || todayStr}
-          onChange={handleChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          min={todayStr}
-          required
-        />
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <label className="block font-semibold mb-1">Start Date *</label>
+          <input
+            type="date"
+            name="startDate"
+            value={formData.startDate || todayStr}
+            onChange={handleChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            min={todayStr}
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block font-semibold mb-1">End Date *</label>
+          <input
+            type="date"
+            name="endDate"
+            value={formData.endDate || formData.startDate || todayStr}
+            onChange={handleChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            min={formData.startDate || todayStr}
+            disabled={!formData.startDate}
+            required
+          />
+        </div>
       </div>
 
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">End Date *</label>
-        <input
-          type="date"
-          name="endDate"
-          value={formData.endDate || formData.startDate || todayStr}
-          onChange={handleChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          min={formData.startDate || todayStr}
-          disabled={!formData.startDate}
-          required
-        />
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <label className="block font-semibold mb-1">Opening Time *</label>
+          <input
+            type="time"
+            name="openingTime"
+            value={formData.openingTime || "09:00"}
+            onChange={handleChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="block font-semibold mb-1">Closing Time *</label>
+          <input
+            type="time"
+            name="closingTime"
+            value={formData.closingTime || "18:00"}
+            onChange={handleChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            required
+          />
+        </div>
       </div>
 
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Opening Time *</label>
-        <input
-          type="time"
-          name="openingTime"
-          value={formData.openingTime || "09:00"}
-          onChange={handleChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          required
-        />
-      </div>
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <label className="block font-semibold mb-1">Town *</label>
+          <input
+            type="text"
+            name="town"
+            value={formData.town || ""}
+            onChange={handleChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            required
+          />
+        </div>
 
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Closing Time *</label>
-        <input
-          type="time"
-          name="closingTime"
-          value={formData.closingTime || "18:00"}
-          onChange={handleChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          required
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Town *</label>
-        <input
-          type="text"
-          name="town"
-          value={formData.town || ""}
-          onChange={handleChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          required
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Address *</label>
-        <input
-          type="text"
-          name="address"
-          value={formData.address || ""}
-          onChange={handleChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          required
-        />
+        <div>
+          <label className="block font-semibold mb-1">Address *</label>
+          <input
+            type="text"
+            name="address"
+            value={formData.address || ""}
+            onChange={handleChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            required
+          />
+        </div>
       </div>
 
       <div className="mb-4">
@@ -300,45 +307,43 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         </div>
       </div>
 
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Event Type *</label>
-        <input
-          type="text"
-          name="eventType"
-          value={formData.eventType || ""}
-          onChange={handleChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          required
-        />
-      </div>
+      <div className="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <label className="block font-semibold mb-1">Event Type *</label>
+          <input
+            type="text"
+            name="eventType"
+            value={formData.eventType || ""}
+            onChange={handleChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            required
+          />
+        </div>
 
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Upload Event Image *</label>
-        <input
-          type="file"
-          accept=".jpg"
-          onChange={handleFileChange}
-          className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
-          required
-        />
-        {imageError && <div className="text-red-600 mt-2">{imageError}</div>}
+        <div>
+          <label className="block font-semibold mb-1">Upload Event Image *</label>
+          <input
+            type="file"
+            accept=".jpg"
+            onChange={handleFileChange}
+            className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
+            required
+          />
+          {imageError && <div className="text-red-600 mt-2">{imageError}</div>}
+        </div>
       </div>
 
       {imagePreview && (
         <div className="mb-4">
           <label className="block font-semibold mb-1">Image Preview</label>
-          <img
-            src={imagePreview}
-            alt="Event preview"
-            className="max-w-full h-auto rounded-lg object-cover"
-          />
+          <ImageElement src={imagePreview} title="Event preview" className={"max-w-full h-auto rounded-lg object-cover"}/>
         </div>
       )}
 
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full p-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
+        className={myStyles.button_blue}
       >
         {isSubmitting ? "Submitting..." : "Create Event"}
       </button>

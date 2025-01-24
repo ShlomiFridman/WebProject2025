@@ -1,3 +1,5 @@
+import { formatDate } from "./utils";
+
 export class Account {
     public username: string = "";
     public password: string = "";
@@ -217,6 +219,23 @@ export class TR_Event {
 
     return validDates;
   }
+
+  getActiveDays(){
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    return daysOfWeek.filter((_, index) => this.openDays[index]);
+  }
+
+  infoMap(){
+    const activeDays = this.getActiveDays();
+    return new Map<string,string>([
+        ["Location", `${this.town}, ${this.address}`],
+        ["Phone Number", `${this.phone}`],
+        ["From", `${formatDate(this.startDate)}`],
+        ["Until", `${formatDate(this.endDate)}`],
+        ["Time", `${this.openingTime.slice(0, 5)}-${this.closingTime.slice(0, 5)}`],
+        ["Open Days", `${activeDays.length>0? activeDays.join(", "):"No open days"}`],
+    ]);
+  }
 }
 
 export class Review {
@@ -295,6 +314,15 @@ export class Booking {
     static fromJSON_array(jsonArray: { booking_id: number, creator_username: string, event_id: number, date: string, amount: number, isActive: boolean }[]): Booking[] {
         return jsonArray.map(json => Booking.fromJSON(json));
     }
+    
+  infoMap(event: TR_Event){
+    return new Map<string,string>([
+        ["Booking ID", `${this.booking_id} (${this.amount} tickets)`],
+        ["Date", `${formatDate(this.date)}`],
+        ["Location", `${event.town}, ${event.address}`],
+        ["Time", `${event.openingTime.slice(0, 5)}-${event.closingTime.slice(0, 5)}`],
+    ]);
+  }
 }
 
 export class TR_Alert {

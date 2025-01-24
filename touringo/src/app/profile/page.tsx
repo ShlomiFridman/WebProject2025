@@ -3,10 +3,10 @@
 import { useAppContext } from "@/context/MainContext";
 import { Account } from "@/utils/classes";
 import { encryptData } from "@/utils/utils";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { getLoggedAccount, logAccount } from "@/utils/util_client";
+import { getLoggedAccount, ImageElement, logAccount } from "@/utils/util_client";
 import { useRouter } from "next/navigation";
+import { myStyles } from "@/utils/styles";
 
 const ProfilePage: React.FC = () => {
   const [loggedAccount, setLoggedAccount] = useState<Account | null>(null);
@@ -18,7 +18,7 @@ const ProfilePage: React.FC = () => {
 
   useEffect(() => {
     const account = getLoggedAccount();
-    if (!account){
+    if (!account) {
       // alert("You must login first!");
       router.push('/login');
       return;
@@ -117,7 +117,8 @@ const ProfilePage: React.FC = () => {
         <div className="flex space-x-4">
           <button
             onClick={isEditing ? handleSave : handleEditToggle}
-            className="px-6 py-2 bg-green-500 rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
+            className={`px-6 py-2 ${myStyles.button_green} rounded-lg`}
+
           >
             {isEditing ? "Save Changes" : "Edit Profile"}
           </button>
@@ -142,12 +143,10 @@ const ProfilePage: React.FC = () => {
               maxWidth: "150px",
             }}
           >
-            <Image
-              id="profile-pic"
-              className="rounded-full object-cover border-4 border-green-500"
+            <ImageElement
               src="/event_images/profilePicture.png"
-              alt="Profile Picture"
-              layout="fill"
+              title="Profile Picture"
+              className="rounded-full object-cover border-4 border-green-500"
             />
           </div>
 

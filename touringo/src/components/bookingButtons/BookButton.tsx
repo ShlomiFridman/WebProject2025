@@ -1,4 +1,5 @@
 import { Booking, TR_Event } from "@/utils/classes";
+import { myStyles } from "@/utils/styles";
 import { getLoggedAccount } from "@/utils/util_client";
 import { dateToFormat, encryptData, getMaxDate } from "@/utils/utils";
 import React, { useState, useEffect, useRef } from "react";
@@ -12,7 +13,7 @@ interface BookingButtonProps {
 function BookingButton({ event }: BookingButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const validDates = event.getValidDates();
-  const lastValidDate = validDates[validDates.length-1];
+  const lastValidDate = validDates[validDates.length - 1];
   const today = new Date();
   const minValidDate = getMaxDate(dateToFormat(today), validDates[0]);
   // const maxDate = new Date(today);
@@ -49,7 +50,7 @@ function BookingButton({ event }: BookingButtonProps) {
     };
   }, [isOpen]);
 
-  const handleDateChange = (date: Date|null) => {
+  const handleDateChange = (date: Date | null) => {
     console.log(date)
     if (date)
       setSelectedDate(dateToFormat(date));
@@ -92,46 +93,50 @@ function BookingButton({ event }: BookingButtonProps) {
   };
 
   const createBooking = (booking: Booking) => {
+    if (buttonRef.current)
+      buttonRef.current.disabled = true;
     fetch('/api/bookings/create', {
-          method: 'POST', // Assuming it's a POST request for registration
-          body: JSON.stringify({data: encryptData({ booking:booking })}),
-          headers: {
-            'Content-Type': 'application/json', // Ensure the backend understands the JSON body
-          },
-        })
-          .then((response) => {
-            const badRequestError = response.status >= 400 && response.status < 500;
-            if (!response.ok && !badRequestError) {
-              alert(response.statusText);
-              throw new Error('Unknown Error');
-            }
-            return response.json();
-          })
-          .then((resBody) => {
-            if (resBody.message) {
-              alert(resBody.message);
-            } else {
-              const booking = resBody.result as Booking;
-              console.log(`Booking created, booking_id=${booking.booking_id}`);
-              // TODO handle success
-              setIsOpen(false);
-              alert("The booking has been created. You may cancel it anytime up until the day of the event.")
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          })
+      method: 'POST', // Assuming it's a POST request for registration
+      body: JSON.stringify({ data: encryptData({ booking: booking }) }),
+      headers: {
+        'Content-Type': 'application/json', // Ensure the backend understands the JSON body
+      },
+    })
+      .then((response) => {
+        const badRequestError = response.status >= 400 && response.status < 500;
+        if (!response.ok && !badRequestError) {
+          alert(response.statusText);
+          throw new Error('Unknown Error');
+        }
+        return response.json();
+      })
+      .then((resBody) => {
+        if (resBody.message) {
+          alert(resBody.message);
+        } else {
+          const booking = resBody.result as Booking;
+          console.log(`Booking created, booking_id=${booking.booking_id}`);
+          if (buttonRef.current)
+            buttonRef.current.disabled = false;
+          setIsOpen(false);
+          alert("The booking has been created. You may cancel it anytime up until the day of the event.")
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   return (
     <div className="relative">
       <button
         ref={buttonRef}
-        className={!event.hasPassed()? "bg-green-500 px-4 py-2 m-2 rounded hover:bg-green-700 transition w-full dark:bg-green-700 dark:hover:bg-green-500":"px-8 py-2 m-2"}
-        onClick={toggleForm}
+        className={`${!event.hasPassed()
+          ? `${myStyles.button_green} px-4 py-2 m-2 rounded transition w-full`
+          : "px-8 py-2 m-2"}`} onClick={toggleForm}
         disabled={event.hasPassed()}
       >
-        {!event.hasPassed()? "Booking":"Ended"}
+        {!event.hasPassed() ? "Booking" : "Ended"}
       </button>
       {isOpen && (
         <form
@@ -146,8 +151,8 @@ function BookingButton({ event }: BookingButtonProps) {
             <DatePicker
               id="date"
               className="mt-1 block w-full border rounded px-2 py-1 dark:bg-gray-700 dark:border-gray-700 dark:text-gray-300"
-              selected={selectedDate? new Date(selectedDate):null}
-              filterDate={(date:Date) => event.openDays[date.getDay()]}
+              selected={selectedDate ? new Date(selectedDate) : null}
+              filterDate={(date: Date) => event.openDays[date.getDay()]}
               minDate={new Date(minValidDate)}
               maxDate={new Date(lastValidDate)}
               onChange={handleDateChange}
@@ -172,11 +177,10 @@ function BookingButton({ event }: BookingButtonProps) {
           </div>
           <button
             type="submit"
-            className={`w-full px-4 py-2 rounded ${
-              isBookEnabled
+            className={`w-full px-4 py-2 rounded ${isBookEnabled
                 ? "bg-green-500 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500"
                 : "bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-700 dark:text-gray-500"
-            }`}
+              }`}
             disabled={!isBookEnabled}
           >
             Confirm Booking
