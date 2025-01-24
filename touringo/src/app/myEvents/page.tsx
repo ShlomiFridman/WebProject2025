@@ -48,7 +48,7 @@ const MyEventsPage = () => {
         <div className={myStyles.page_title}>My Events</div>
         <button
           onClick={() => setShowCreateForm((prev) => !prev)}
-          className={`px-6 py-2 h-full ${myStyles.button_green} rounded-lg`}
+          className={`mt-2 px-6 py-2 h-full ${myStyles.button_green} rounded-lg`}
         >
           {showCreateForm ? 'Cancel' : 'Create Event'}
         </button>
