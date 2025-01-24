@@ -73,7 +73,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
         </> : <></>}
         <button
           onClick={openMap}
-          className={myStyles.button_blue}
+          className={`${myStyles.button_blue}`}
         >
           Open Map
           <svg

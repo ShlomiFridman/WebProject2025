@@ -10,9 +10,9 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitting }) => (
     <button
       type="submit"
       disabled={isSubmitting}
-      className={`w-full p-2 rounded text-white ${
-        isSubmitting ? "bg-gray-500 cursor-not-allowed" : `${myStyles.button_blue}`
-      }`}
+      className={`w-full p-2 rounded  ${isSubmitting
+          ? "bg-gray-500 cursor-not-allowed dark:bg-gray-600"
+          : "bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-600"}`}
     >
       {isSubmitting ? "Submitting..." : "Create Event"}
     </button>
