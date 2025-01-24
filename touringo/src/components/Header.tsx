@@ -15,17 +15,7 @@ export default function Header() {
   useAppContext();
 
   useEffect(() => {
-    setIsClient(true); // Ensures this is run only on the client
-    // const allowedPublicPages = ["/","/login", "/register", "/about"]
-    // setLoginFlag(isLoggedIn());
-    // if (!allowedPublicPages.includes(path)) {
-    //   if (!loginFlag) {
-    //     console.log(path)
-    //     alert("You must login");
-    //     router.push("/login");
-    //   }
-    // }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    setIsClient(true);
   }, []);
 
   if (!isClient) {
