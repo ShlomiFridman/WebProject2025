@@ -92,6 +92,8 @@ function BookingButton({ event }: BookingButtonProps) {
   };
 
   const createBooking = (booking: Booking) => {
+    if (buttonRef.current)
+      buttonRef.current.disabled = true;
     fetch('/api/bookings/create', {
           method: 'POST', // Assuming it's a POST request for registration
           body: JSON.stringify({data: encryptData({ booking:booking })}),
@@ -113,7 +115,8 @@ function BookingButton({ event }: BookingButtonProps) {
             } else {
               const booking = resBody.result as Booking;
               console.log(`Booking created, booking_id=${booking.booking_id}`);
-              // TODO handle success
+              if (buttonRef.current)
+                buttonRef.current.disabled = false;
               setIsOpen(false);
               alert("The booking has been created. You may cancel it anytime up until the day of the event.")
             }

@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { TR_Event, TR_Image } from "@/utils/classes";
 import { getLoggedAccount } from "@/utils/util_client";
 import { encryptData } from "@/utils/utils";
+import Image from "next/image";
 
 interface CreateEventFormProps {
   onSuccess: () => void;
@@ -335,10 +336,14 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       {imagePreview && (
         <div className="mb-4">
           <label className="block font-semibold mb-1">Image Preview</label>
-          <img
+          <Image
+            priority
+            unoptimized
             src={imagePreview}
             alt="Event preview"
             className="max-w-full h-auto rounded-lg object-cover"
+            width={150}
+            height={100}
           />
         </div>
       )}
