@@ -1,7 +1,7 @@
 "use client";
 import { Booking } from "@/utils/classes";
 import { myStyles } from "@/components/styles";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
 interface ButtonProps {
