@@ -13,22 +13,22 @@ function CancelBookingButton({ booking }: ButtonProps) {
   const btnRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    setDisableFlag(!booking.isActive || booking.hasPassed())
-    if (!booking.isActive)
-      setBtnText("Cancelled");
-    else if (booking.hasPassed())
-      setBtnText("Ended");
-    if (btnRef.current){
+    setDisableFlag(!booking.isActive || booking.hasPassed());
+    if (!booking.isActive) setBtnText("Cancelled");
+    else if (booking.hasPassed()) setBtnText("Ended");
+    if (btnRef.current) {
       btnRef.current.textContent = btnText;
-      btnRef.current.disabled = disableFlag
+      btnRef.current.disabled = disableFlag;
     }
-  }, [booking,btnText,disableFlag]);
+  }, [booking, btnText, disableFlag]);
 
   // Cancel booking request
   const cancelRequest = () => {
-    if (!confirm("Are you sure you want to cancel?"))
-      return;
-    setDisableFlag(true);
+    if (!confirm("Are you sure you want to cancel?")) return;
+
+    setDisableFlag(true);  // Disable the button when the cancel request is initiated
+    setBtnText("Cancelling...");  // Change button text to indicate the process is ongoing
+
     fetch(`/api/bookings/cancel/${booking.booking_id}`, {
       method: "PATCH",
     })
@@ -47,12 +47,14 @@ function CancelBookingButton({ booking }: ButtonProps) {
           console.log(`Booking cancelled: ${booking.booking_id}`);
           alert(`Booking cancelled`);
           booking.isActive = false;
-          setDisableFlag(true);
+          setDisableFlag(true); // Ensure the button remains disabled after the cancellation
+          setBtnText("Cancelled"); // Change button text to reflect the cancellation
         }
       })
       .catch((err) => {
         console.log(err);
-        setDisableFlag(false);
+        setDisableFlag(false);  // Re-enable the button if there is an error
+        setBtnText("Cancel");  // Reset button text on error
       });
   };
 
@@ -66,6 +68,7 @@ function CancelBookingButton({ booking }: ButtonProps) {
           : ""
       }`}
     >
+      {btnText} {/* Display the button text dynamically */}
     </button>
   );
 }
