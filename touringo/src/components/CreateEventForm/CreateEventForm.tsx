@@ -350,7 +350,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
 
       <button
         type="submit"
-        disabled={isSubmitting}atu
+        disabled={isSubmitting}
         className="w-full p-2 bg-blue-500 text-white rounded disabled:bg-gray-400"
       >
         {isSubmitting ? "Submitting..." : "Create Event"}
