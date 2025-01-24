@@ -31,7 +31,7 @@ export const isLoggedIn = (): boolean => {
   return localStorage.getItem("loggedAccount") != null;
 };
 
-export const ImageElement: React.FC<{src:string, title: string, className?: string}> = ({src,title, className=""}) => {
+export const ImageElement: React.FC<{ src: string, title: string, className?: string }> = ({ src, title, className = "" }) => {
   return (
     <Image
       priority
@@ -45,3 +45,15 @@ export const ImageElement: React.FC<{src:string, title: string, className?: stri
     />
   );
 }
+
+export const InfoElement: React.FC<{ infoMap: Map<string, string> }> = ({ infoMap }) => {
+  return (
+    <div>
+      {Array.from(infoMap.entries()).map(([key, val], ind) => (
+        <div key={ind}>
+          <strong>{key}:</strong> {val}
+        </div>
+      ))}
+    </div>
+  );
+};

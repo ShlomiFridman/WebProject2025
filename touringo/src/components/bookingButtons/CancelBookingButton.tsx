@@ -28,6 +28,7 @@ function CancelBookingButton({ booking }: ButtonProps) {
   const cancelRequest = () => {
     if (!confirm("Are you sure you want to cancel?"))
       return;
+    setDisableFlag(true);
     fetch(`/api/bookings/cancel/${booking.booking_id}`, {
       method: "PATCH",
     })
@@ -51,6 +52,7 @@ function CancelBookingButton({ booking }: ButtonProps) {
       })
       .catch((err) => {
         console.log(err);
+        setDisableFlag(false);
       });
   };
 
