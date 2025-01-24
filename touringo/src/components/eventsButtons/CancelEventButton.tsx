@@ -36,7 +36,7 @@ function CancelEventButton({ event }: ButtonProps) {
 
   const cancelRequest = () => {
     if (!confirm("Are you sure you want to cancel?")) return;
-
+    setDisableFlag(true);
     fetch(`/api/events/cancel/${event.event_id}`, {
       method: "PATCH",
     })

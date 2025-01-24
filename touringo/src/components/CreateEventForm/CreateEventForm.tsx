@@ -103,7 +103,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
     } else {
       setImage(null);
       setImagePreview(null);
-      setImageError("Only .jpg files are allowed.");
+      setImageError(".jpg,.jpeg,.png,.webp files are allowed.");
     }
   };
 
@@ -324,7 +324,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           <label className="block font-semibold mb-1">Upload Event Image *</label>
           <input
             type="file"
-            accept=".jpg"
+            accept=".jpg,.jpeg,.png,.webp"
             onChange={handleFileChange}
             className="w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600"
             required
