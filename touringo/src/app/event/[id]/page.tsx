@@ -5,6 +5,7 @@ import LoadingBox from '@/components/LoadingBox';
 import ReviewsTable from '@/components/ReviewTable';
 import { useAppContext } from '@/context/MainContext';
 import { Review, TR_Event } from '@/utils/classes';
+import { myStyles } from '@/components/styles';
 import Link from 'next/link';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -74,7 +75,7 @@ const EventPage = () => {
 
           <EventRow event={eventData} />
 
-          <div className="max-w-[1000px] my-4 mx-auto text-3xl text-green-600 font-bold">Map</div>
+          <div className={`${myStyles.container_max_width} ${myStyles.page_title}`}>Map</div>
           <GoogleMap address={`${eventData.town}, ${eventData.address}`} />
           {/* reviews section */}
           {

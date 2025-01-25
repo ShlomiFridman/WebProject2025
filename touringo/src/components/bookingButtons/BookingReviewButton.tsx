@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import LoadingBox from '../LoadingBox';
 import { getLoggedAccount } from '@/utils/util_client';
 import { encryptData } from '@/utils/utils';
-import { myStyles } from '@/utils/styles';
+import { myStyles } from '@/components/styles';
 
 const BookingReviewButton: React.FC<{
   booking: Booking;

@@ -7,7 +7,7 @@ import { TR_Event } from '@/utils/classes';
 import { getLoggedAccount } from '@/utils/util_client';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
-import { myStyles } from '@/utils/styles';
+import { myStyles } from '@/components/styles';
 
 const MyEventsPage = () => {
   const [events, setEvents] = useState<TR_Event[] | null>(null);
@@ -43,12 +43,12 @@ const MyEventsPage = () => {
 
 
   return (
-    <div className="max-w-[1000px] my-4 mx-auto">
+    <div className={myStyles.container_max_width}>
       <div className="flex items-center justify-between pb-4">
-        <div className="text-3xl text-green-600 font-bold">My Events</div>
+        <div className={myStyles.page_title}>My Events</div>
         <button
           onClick={() => setShowCreateForm((prev) => !prev)}
-          className={`px-6 py-2 h-full ${myStyles.button_green} rounded-lg`}
+          className={`mt-2 px-6 py-2 h-full ${myStyles.button_green} rounded-lg`}
         >
           {showCreateForm ? 'Cancel' : 'Create Event'}
         </button>

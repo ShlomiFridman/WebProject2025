@@ -3,6 +3,7 @@
 import BookingTable from '@/components/BookingTable';
 import LoadingBox from '@/components/LoadingBox';
 import { Booking } from '@/utils/classes';
+import { myStyles } from '@/components/styles';
 import { getLoggedAccount } from '@/utils/util_client';  // Assuming this gets the logged-in user
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -39,8 +40,8 @@ const BookingsPage = () => {
 
   return (
     (bookings != null) ?
-      <div className="max-w-[1000px] my-4 mx-auto">
-        <div className="text-3xl text-green-600 font-bold pb-4">Your Bookings</div>
+      <div className={myStyles.container_max_width}>
+        <div className={`${myStyles.page_title} pb-4`}>Your Bookings</div>
         <div>
           {bookings.length === 0 ? (
             <p>No bookings found.</p>
