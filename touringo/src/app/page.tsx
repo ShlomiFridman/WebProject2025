@@ -98,7 +98,7 @@ export default function Page() {
               <strong>There aren&apos;t any events</strong>
             )}
             {/* Pagination buttons below the last event, visible only on small screens */}
-            <div className="flex justify-between w-full mt-4 sm:hidden"> {/* Hide on screens larger than sm */}
+            <div className="flex justify-between w-full mt-4 md:hidden"> {/* Hide on screens larger than sm */}
               <button
                 onClick={handlePrevPage}
                 className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 disabled:opacity-50"
