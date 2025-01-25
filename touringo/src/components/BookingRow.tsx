@@ -14,6 +14,8 @@ type BookingRowProps = {
 
 const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
   const [event, setEvent] = useState<TR_Event | null>(null);
+  const linkClasses = "p-2 outline-dashed rounded outline-1 event-details w-full sm:w-4/5";
+
 
   // Fetch event details on mount
   useEffect(() => {
@@ -35,17 +37,23 @@ const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
     <div className="booking-row flex flex-col sm:flex-row items-center justify-between p-4 mb-4 transition bg-[#c6e7b3] dark:bg-[var(--box-background)] sm:bg-white hover:bg-[#c6e7b3] hover:rounded-lg hover:shadow-md dark:bg[var(--background)] dark:hover:bg-[var(--box-background)] sm:dark:bg-[#292b2f] sm:dark:hover:bg-[var(--box-background)] dark:hover:shadow-lg">
       {event ? (
         <div className="flex flex-col sm:flex-row sm:items-center w-full">
-          <Link href={`/event/${event.event_id}`} className="p-2 outline-dashed rounded outline-1 event-details w-full sm:w-4/5">
+
+          <Link
+            href={`/event/${event.event_id}`}
+            className={linkClasses}
+            prefetch
+          >
             <InfoElement infoMap={booking.infoMap(event)} />
-           </Link>
+          </Link>
+
           <div className="mt-4 sm:mt-0 sm:ml-4">
-            {/* Cancel Booking Button actions flex gap-2 mt-4 sm:mt-0*/}
+            {/* Cancel Booking Button */}
             <CancelBookingButton booking={booking} />
 
-            {/* BookingReviewButton for Review creation */}
-
-            {booking.hasPassed() ?
-              <BookingReviewButton booking={booking} /> : null}
+            {/* BookingReviewButton: Render only if the event is active and has passed */}
+            {booking.isActive && booking.hasPassed() ? (
+              <BookingReviewButton booking={booking} />
+            ) : null}
           </div>
         </div>
       ) : (

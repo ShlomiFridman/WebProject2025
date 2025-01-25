@@ -43,7 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AppProvider>
           <ThemeProvider>
             <Header />
-            <main className="flex-grow px-3 bg-gray-100 dark:bg-gray-600">{children}</main>
+            <main className="flex-grow px-3 bg-gray-100 dark:bg-gray-600 min-h-screen">{children}</main>
             <Footer />
           </ThemeProvider>
         </AppProvider>

@@ -7,6 +7,15 @@ import React, { useState, useEffect, useRef } from "react";
 import HeaderItem from "./HeaderItem";
 
 export default function HeaderLinks() {
+  const dropdownLinks = [
+    {href: "/profile", text: "My Profile" },
+    {href: "/myEvents", text: "My Events" },
+    {href: "/bookings", text: "My Bookings" },
+    {href: "/login", text: "Logout" },
+    ];
+
+    const linkClasses =
+    "block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap";
   const path = usePathname();
   const loggedAccount = getLoggedAccount();
   const username = loggedAccount?.username || "Profile";
@@ -69,8 +78,8 @@ export default function HeaderLinks() {
             <button
               onClick={toggleDropdown}
               className={`font-bold px-2 py-1 rounded hover:underline text-green-800 dark:text-green-400 ${path === "/profile" || path === "/myEvents" || path === "/bookings"
-                  ? "bg-gray-200 dark:bg-gray-700 "
-                  : ""
+                ? "bg-gray-200 dark:bg-gray-700 "
+                : ""
                 }`}
             >
               [{username}]
@@ -78,37 +87,21 @@ export default function HeaderLinks() {
             {/* Dropdown Menu */}
             {isDropdownOpen && (
               <div className="absolute top-full left-0 mt-2 bg-white dark:bg-gray-800 border rounded shadow-lg z-10">
-                <Link
-                  href="/profile"
-                  className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap ${path === "/profile" ? "bg-gray-100 dark:bg-gray-700" : ""
-                    }`}
-                  onClick={() => setIsDropdownOpen(false)}
-                >
-                  My Profile
-                </Link>
-                <Link
-                  href="/myEvents"
-                  className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap ${path === "/myEvents" ? "bg-gray-100 dark:bg-gray-700" : ""
-                    }`}
-                  onClick={() => setIsDropdownOpen(false)}
-                >
-                  My Events
-                </Link>
-                <Link
-                  href="/bookings"
-                  className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap ${path === "/bookings" ? "bg-gray-100 dark:bg-gray-700" : ""
-                    }`}
-                  onClick={() => setIsDropdownOpen(false)}
-                >
-                  My Bookings
-                </Link>
-                <Link
-                  href="/login"
-                  className={`block px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-700 text-green-800 dark:text-green-400 whitespace-nowrap`}
-                  onClick={() => setIsDropdownOpen(false)}
-                >
-                  Logout
-                </Link>
+
+
+                {dropdownLinks.map(({ href, text }) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    className={`${linkClasses} ${path === href ? "bg-gray-100 dark:bg-gray-700" : ""
+                      }`}
+                    aria-current={path === href ? "page" : undefined}
+                    onClick={() => setIsDropdownOpen(false)}
+                  >
+                    {text}
+                  </Link>
+                ))}
+
               </div>
             )}
           </div>

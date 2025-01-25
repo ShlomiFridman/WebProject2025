@@ -70,7 +70,8 @@ function CancelEventButton({ event }: ButtonProps) {
     <button
       onClick={cancelRequest}
       className={`px-4 m-2 rounded transition w-full h-full ${
-        event instanceof TR_Event && !event.hasPassed() ? `${myStyles.button_red}` : ""
+        event instanceof TR_Event && !event.hasPassed() || 
+          btnText === "Cancelled" || btnText === "Cancel" ? `${myStyles.button_red}` : ""
       }`}
       disabled={disableFlag}  // Directly bind to the disableFlag state
     >
