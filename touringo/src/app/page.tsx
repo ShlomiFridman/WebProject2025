@@ -58,15 +58,28 @@ export default function Page() {
   // Calculate the total number of pages
   const totalPages = Math.ceil((events?.length || 0) / eventsPerPage);
 
+  // Scroll to top helper function
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Add smooth scrolling effect
+    });
+  };
+
+  useEffect(() => {
+    // Scroll to the top every time the page changes
+    scrollToTop();
+  }, [currentPage]); // This will run whenever `currentPage` changes
+
   const handleNextPage = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+      setCurrentPage(prevPage => prevPage + 1); // Use functional update to ensure the correct page
     }
   };
 
   const handlePrevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      setCurrentPage(prevPage => prevPage - 1); // Use functional update to ensure the correct page
     }
   };
 
@@ -82,7 +95,7 @@ export default function Page() {
             {currentEvents && currentEvents.length > 0 ? (
               <EventTable events={currentEvents} />
             ) : (
-              <strong>There aren&apost any events</strong>
+              <strong>There aren&apos;t any events</strong>
             )}
             {/* Pagination buttons below the last event, visible only on small screens */}
             <div className="flex justify-between w-full mt-4 sm:hidden"> {/* Hide on screens larger than sm */}
@@ -109,6 +122,7 @@ export default function Page() {
     </div>
   );
 }
+
 
 
 
