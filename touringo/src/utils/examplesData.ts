@@ -23,7 +23,7 @@ const imagesUrls: [string, string][] = [
   ["Taizu Restaurant", "https://images.adsttc.com/media/images/5167/b938/b3fc/4bf5/7e00/0079/large_jpg/TAIZU_022.jpg?1365752115"],
   ["Shila Restaurant", "https://www.theworlds50best.com/discovery/filestore/jpg/shila-israel-a%20(3).jpg"],
   ["White Night Festival", "https://irp-cdn.multiscreensite.com/c846e0b3/Tel-Aviv-White-Night-010.jpg"],
-  ["Music Festival", "https://www.secrettelaviv.com/wp-content/uploads/2014/10/15271763_1286130451408439_1952906880145158519_o-1024x684.jpg"],
+  ["Music Festival", "https://i8.amplience.net/i/naras/GettyImages-1251852258"],
   ["Jaffa Market", "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/26/67/1c/jaffa-s-flea-market.jpg?w=1200&h=1200&s=1"]
 ];
 
