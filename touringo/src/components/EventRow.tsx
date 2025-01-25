@@ -54,7 +54,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
           )}
         </div>
         <div className="w-full sm:w-4/5">
-          <h3 className="text-xl font-bold">{event.name}</h3>
+          <div className="text-xl font-bold">{event.name}</div>
           <div className="grid grid-cols-1 gap-3 mt-2 sm:mt-0 sm:grid-cols-2">
             <p>{event.description}</p>
             <InfoElement infoMap={event.infoMap()}/>

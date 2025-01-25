@@ -24,7 +24,7 @@ export default function Header() {
 
   return (
     <>
-      <nav className="w-full h-16 p-4 flex flex-row sm:flex-row justify-between gap-2 bg-green-400 dark:bg-green-800">
+      <nav className="w-full h-16 p-4 flex flex-row sm:flex-row justify-between gap-2 bg-green-300 dark:bg-green-900">
         <HeaderLinks />
         <HeaderIcons />
       </nav>
