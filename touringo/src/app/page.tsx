@@ -82,7 +82,7 @@ export default function Page() {
             {currentEvents && currentEvents.length > 0 ? (
               <EventTable events={currentEvents} />
             ) : (
-              <strong>There aren't any events</strong>
+              <strong>There aren&apost any events</strong>
             )}
             {/* Pagination buttons below the last event, visible only on small screens */}
             <div className="flex justify-between w-full mt-4 sm:hidden"> {/* Hide on screens larger than sm */}
