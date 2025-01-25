@@ -11,9 +11,7 @@ import { useEffect } from "react";
 // TODO use reducer to get logged in user (state: username)
 // TODO if username is null, Link to login page
 
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-
   useEffect(() => {
     const script = document.createElement("script");
     script.type = "text/javascript";
@@ -33,16 +31,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <title>TouRingo</title>
-        <meta name="description" content="An app that showcases local tourist attractions, restaurants, and cultural events. The app will include user reviews, navigation features, and event booking options." />
+        <meta
+          name="description"
+          content="An app that showcases local tourist attractions, restaurants, and cultural events. The app will include user reviews, navigation features, and event booking options."
+        />
       </head>
       <body
-        className="max-w-[1000px] mx-auto py-2 flex flex-col min-h-[100vh] bg-white dark:bg-[#292b2f] text-black dark:text-white"
+        className="max-w-[1000px] mx-auto py-2 flex flex-col min-h-screen bg-white dark:bg-[#292b2f] text-black dark:text-white"
       >
         <div id="bthn" lang="he"></div>
         <AppProvider>
           <ThemeProvider>
             <Header />
-            <main className="bg-gray-100 px-3 dark:bg-gray-600">{children}</main>
+            <main className="flex-grow px-3 bg-gray-100 px-3 dark:bg-gray-600">{children}</main>
             <Footer />
           </ThemeProvider>
         </AppProvider>
