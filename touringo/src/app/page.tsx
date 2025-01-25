@@ -61,7 +61,7 @@ export default function Page() {
 
   return (
     <div className={myStyles.container_max_width}> {/* Centers the content on small screens */}
-      <h2 className="text-3xl underline text-green-800 dark:text-green-300 font-bold">Welcome to TouRingo{username? `, ${username}` : ""}</h2>
+      <h2 className={myStyles.page_title}>Welcome to TouRingo{username? `, ${username}` : ""}</h2>
       {/* <h3 className={myStyles.page_title}>Events</h3> */}
       <div className="pb-4">Local tourist attractions, restaurants, and cultural events</div>
       <div className="flex justify-center">

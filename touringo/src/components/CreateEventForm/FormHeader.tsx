@@ -7,8 +7,8 @@ interface FormHeaderProps {
 
 const FormHeader: React.FC<FormHeaderProps> = ({ title, subTitle }) => (
   <div className="mb-6">
-    <h2 className="text-xl font-bold">{title}</h2>
-    <h2 className="text-l text-red-500">{subTitle}</h2>
+    <div className="text-xl font-bold">{title}</div>
+    <div className="text-l text-red-500">{subTitle}</div>
   </div>
 );
 

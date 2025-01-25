@@ -3,7 +3,7 @@ export const myStyles = {
     button_green: "bg-green-500 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-500",
     button_red: "bg-red-500 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-500",
     container_max_width: "max-w-[1000px] my-4 mx-auto",
-    page_title: "text-3xl text-green-600 font-bold",
+    page_title: "text-3xl text-green-800 dark:text-green-200 font-bold",
 
     
     

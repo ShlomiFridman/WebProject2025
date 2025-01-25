@@ -68,7 +68,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formData.startDate, formData.endDate,todayStr]);
+  }, [formData.startDate, formData.endDate, todayStr]);
 
 
   // const isImageUrl = (url: string): boolean => {
@@ -93,7 +93,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value } = e.target;
     const newImage = new TR_Image(
-      formData.name? formData.name:"Image Preview",
+      formData.name ? formData.name : "Image Preview",
       null,
       value,
       "url"
@@ -180,14 +180,14 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         onChange={handleCheckboxChange}
       />
       <TextInput label="Event Type" name="eventType" value={formData.eventType || ""} onChange={handleChange} required />
-      <div className="flex items-center gap-2 pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-2 pb-5">
         <TextInput label="Image Url" name="imgUrl" value={imageUrl || ""} onChange={handleUrlChange} required />
         <button
           type="button"
           onClick={() => {
             setImage(tempImage);
           }}
-          className={`px-4 py-2 m-2 rounded transition ${myStyles.button_green}`}
+          className={`w-full sm:w-auto px-4 py-2 m-2 rounded transition ${myStyles.button_green}`}
           value="Load"
         >
           Preview image
@@ -198,7 +198,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
             setImage(null);
             setImageUrl("");
           }}
-          className={`px-4 py-2 m-2 rounded transition ${myStyles.button_red}`}
+          className={`w-full sm:w-auto px-4 py-2 m-2 rounded transition ${myStyles.button_red}`}
         >
           Clear
         </button>
