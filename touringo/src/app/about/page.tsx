@@ -37,7 +37,7 @@ export default function About() {
 
   return (
     <div className={myStyles.container_max_width}>
-      <h1 className="text-3xl text-green-600 font-bold">About</h1>
+      <h1 className={myStyles.page_title}>About</h1>
       <p>TouRingo is a project for the Advanced Web Technologies Course at Braude College (Winter 2025).</p>
       <p>Made by Shlomi, Shahar, Omer, and Noam.</p>
       
