@@ -15,7 +15,7 @@ const imagesUrls: [string, string][] = [
   ["Speaker", "https://i.pinimg.com/originals/ac/3b/d1/ac3bd12c52c04fe1d8591c525360e6f0.jpg"],
   ["Vip", "https://assets.imcas.com/congresses/imcas2021/rooms/702/2.jpg"],
   ["Workshop", "https://c8.alamy.com/comp/2EKYCRC/woodwork-joiner-or-carpenter-workshop-metal-plate-rusty-or-vector-retro-poster-wood-carpentry-and-timber-works-tools-joiner-plane-or-jointer-woodw-2EKYCRC.jpg"],
-  ["Tel Aviv Museum", "https://lh3.googleusercontent.com/p/AF1QipPvUGM_yConeY8XaO4rHsx99plW07103PDJO-E=s1360-w1360-h1020"],
+  ["Tel Aviv Museum", "https://media.cntraveler.com/photos/5474be4bcbbd2620680dd52b/16:9/w_2560,c_limit/tel-aviv-museum-of-art-israel.jpg"],
   ["Eretz Israel Museum", "https://upload.wikimedia.org/wikipedia/commons/4/4e/Eretz_Israel_Museum2.jpg"],
   ["Cultural District", "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/0e/9e/78/6d/caption.jpg?w=1200&h=-1&s=1"],
   ["Market", "https://www.secrettelaviv.com/wp-content/uploads/2016/03/21862_Shuk-hacarmel.jpg"],
@@ -54,7 +54,7 @@ export const imageExamples = imagesUrls.map(([title, imageUrl]) =>
 
 // TR_Event examples
 export const eventExamples = [
-  new TR_Event(201, "Music Fest", "Live music festival", "123-456-7890", accountExamples[0].username, [imageExamples[6]], "18:00:00", "23:00:00", "2024-01-15", "2025-12-31", "New York", "123 Broadway", [true, true, true, true, true, false, false], "Concert"),
+  new TR_Event(201, "Music Fest", "Live music festival", "123-456-7890", accountExamples[0].username, [imageExamples[18]], "18:00:00", "23:00:00", "2024-01-15", "2025-12-31", "New York", "123 Broadway", [true, true, true, true, true, false, false], "Concert"),
   new TR_Event(202, "Art Expo", "Modern art exhibition", "098-765-4321", accountExamples[1].username, [imageExamples[2]], "09:00:00", "18:00:00", "2024-02-10", "2025-12-31", "San Francisco", "456 Market St", [true, false, true, false, true, false, true], "Exhibition"),
   new TR_Event(203, "Tech Conference", "Technology and innovation", "555-123-4567", accountExamples[2].username, [imageExamples[7]], "10:00:00", "17:00:00", "2024-03-05", "2025-12-31", "Austin", "789 Tech Rd", [true, true, true, false, false, false, false], "Conference"),
   new TR_Event(204, "Food Carnival", "Taste global cuisines", "333-999-1111", accountExamples[3].username, [imageExamples[14]], "11:00:00", "21:00:00", "2024-04-10", "2025-12-31", "Seattle", "101 Pine St", [false, true, true, true, false, true, false], "Festival"),

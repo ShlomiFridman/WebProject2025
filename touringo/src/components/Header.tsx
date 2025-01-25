@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import HeaderLinks from "./HeaderLinks";
 import HeaderIcons from "./HeaderIcons";
 import { useAppContext } from "@/context/MainContext";
+import { myStyles } from "./styles";
 // import { useRouter, usePathname } from "next/navigation";
 // import { isLoggedIn } from "@/utils/util_client";
 
@@ -24,7 +25,7 @@ export default function Header() {
 
   return (
     <>
-      <nav className="w-full h-16 p-4 flex flex-row sm:flex-row justify-between gap-2 bg-green-300 dark:bg-green-900">
+      <nav className={myStyles.green_container}>
         <HeaderLinks />
         <HeaderIcons />
       </nav>
