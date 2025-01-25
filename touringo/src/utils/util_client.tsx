@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Account } from "./classes";
 import Image from "next/image";
 
@@ -35,6 +35,7 @@ export const isLoggedIn = (): boolean => {
 export const ImageElement: React.FC<{ src: string; title: string; className?: string }> = ({ src, title, className = "" }) => {
   const [isValidSrc, setIsValidSrc] = useState<boolean>(false);
   const [altText, setAltText] = useState<string>(title);
+  const imageRef = useRef<HTMLImageElement | null>(null);
 
   // Validate the src based on the allowed prefixes
   useEffect(() => {
@@ -53,17 +54,23 @@ export const ImageElement: React.FC<{ src: string; title: string; className?: st
 
   return (
     <Image
+      ref={imageRef}
       unoptimized
       src={src}
       alt={altText}
       title={title}
       className={className}
-      width={150}
-      height={100}
+      width={50}
+      height={50}
       loading="lazy"
       placeholder="blur"
       blurDataURL={"\\event_images\\gala.jpg"}
       onError={handleImageError}
+      onLoad={()=>{
+        if (imageRef.current){
+          imageRef.current.width=150;
+        }
+      }}
     />
   );
 };
