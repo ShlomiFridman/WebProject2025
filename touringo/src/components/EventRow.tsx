@@ -49,12 +49,13 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
             <ImageElement
               src={event.images[0].src}
               title={event.images[0].title}
+              className="w-100% h-auto"
             />
           ) : (
-            <div className="no-image">No image available</div> // Fallback content when there is no image
+            <div className="no-image w-100% h-auto">No image available</div> // Fallback content when there is no image
           )}
         </div>
-        <div className="w-full sm:w-4/5">
+        <div className="w-full sm:w-4/5 flex-none">
           <div className="text-xl font-bold">{event.name}</div>
           <div className="grid grid-cols-1 gap-3 mt-2 sm:mt-0 sm:grid-cols-2">
             <p>{event.description}</p>
