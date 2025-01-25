@@ -1,18 +1,18 @@
-import { Booking, Review } from '@/utils/classes';
-import React, { useEffect, useState } from 'react';
-import LoadingBox from '../LoadingBox';
-import { getLoggedAccount } from '@/utils/util_client';
-import { encryptData } from '@/utils/utils';
-import { myStyles } from '@/components/styles';
+import { Booking, Review } from "@/utils/classes";
+import React, { useEffect, useState } from "react";
+import LoadingBox from "../LoadingBox";
+import { getLoggedAccount } from "@/utils/util_client";
+import { encryptData } from "@/utils/utils";
+import { myStyles } from "@/components/styles";
 
 const BookingReviewButton: React.FC<{
   booking: Booking;
 }> = ({ booking }) => {
   const [rating, setRating] = useState<number | null>(null);
   const [username, setUsername] = useState<string | null>(null);
-  const [feedback, setFeedback] = useState('');
+  const [feedback, setFeedback] = useState("");
   const [review, setReview] = useState<Review | null | undefined>(undefined);
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [isActive, setIsActive] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -28,7 +28,7 @@ const BookingReviewButton: React.FC<{
         const badRequestError = response.status >= 400 && response.status < 500;
         if (!response.ok && !badRequestError) {
           alert(response.statusText);
-          throw new Error('Unknown Error');
+          throw new Error("Unknown Error");
         }
         if (response.status == 204) return null;
         return response.json();
@@ -103,43 +103,36 @@ const BookingReviewButton: React.FC<{
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (rating === null) {
-      alert('Please select a rating.');
+      alert("Please select a rating.");
       return;
     }
     if (!feedback.trim()) {
-      alert('Please provide some feedback.');
+      alert("Please provide some feedback.");
       return;
     }
-    setStatus('submitting');
+    setStatus("submitting");
     const success = await createReview(rating, feedback);
 
     if (success) {
-      setStatus('success');
-      alert('Thank you for your feedback!');
+      setStatus("success");
+      alert("Thank you for your feedback!");
       // resetForm();
     } else {
-      setStatus('error');
+      setStatus("error");
     }
   };
-
-  // const resetForm = () => {
-  //   setRating(null);
-  //   setFeedback('');
-  //   setStatus('idle');
-  //   setIsActive(false); // Close form after submission
-  // };
 
   if (loading) {
     return <LoadingBox />;
   }
 
-  return (review !== undefined ?
+  return review !== undefined ? (
     <div className="flex flex-col items-center">
       <button
         className={`bg-green-500 px-4 py-2 rounded hover:bg-green-700 dark:bg-green-800 dark:hover:bg-green-600`}
         onClick={handleReviewToggle}
       >
-        {review == null ? (isActive ? 'Close Review' : 'Leave a Review') : "View review"}
+        {review == null ? (isActive ? "Close Review" : "Leave a Review") : "View review"}
       </button>
       {isActive && (
         <form onSubmit={handleFormSubmit} className="border border-gray-700 dark:border-gray-300 p-4 mt-2 rounded-md ">
@@ -148,11 +141,13 @@ const BookingReviewButton: React.FC<{
             <div className="flex justify-between mb-4">
               {[1, 2, 3, 4, 5].map((num) => (
                 <button
-                  disabled={status === 'submitting' || review != null}
+                  disabled={status === "submitting" || review != null}
                   key={num}
                   type="button"
                   onClick={() => setRating(num)}
-                  className={`w-10 h-10 rounded-full border border-gray-700 dark:border-gray-300 flex items-center justify-center text-lg ${rating === num ? 'bg-green-400' : ''}`}
+                  className={`w-10 h-10 rounded-full border border-gray-700 dark:border-gray-300 flex items-center justify-center text-lg ${
+                    rating === num ? "bg-green-400" : ""
+                  }`}
                 >
                   {num}
                 </button>
@@ -165,21 +160,23 @@ const BookingReviewButton: React.FC<{
               onChange={(e) => setFeedback(e.target.value)}
               placeholder="Leave your feedback here..."
               className="w-full h-20 p-2 rounded-md border border-gray-700 dark:border-gray-300 resize-none"
-              disabled={status === 'submitting' || review != null}
+              disabled={status === "submitting" || review != null}
             />
           </div>
-          <div className='flex flex-col items-center'>
+          <div className="flex flex-col items-center">
             <button
               type="submit"
               className={`mt-4 px-4 py-2 rounded-md ${myStyles.button_blue} ${review != null ? "hidden" : ""}`}
-              disabled={review != null || status === 'submitting'}
+              disabled={review != null || status === "submitting"}
             >
-              {status === 'submitting' ? 'Submitting...' : 'Submit'}
+              {status === "submitting" ? "Submitting..." : "Submit"}
             </button>
           </div>
         </form>
       )}
-    </div> : <LoadingBox />
+    </div>
+  ) : (
+    <LoadingBox />
   );
 };
 

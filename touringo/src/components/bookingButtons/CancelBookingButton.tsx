@@ -23,8 +23,8 @@ function CancelBookingButton({ booking }: ButtonProps) {
   const cancelRequest = () => {
     if (!confirm("Are you sure you want to cancel?")) return;
 
-    setDisableFlag(true);  // Disable the button when the cancel request is initiated
-    setBtnText("Cancelling...");  // Change button text to indicate the process is ongoing
+    setDisableFlag(true); // Disable the button when the cancel request is initiated
+    setBtnText("Cancelling..."); // Change button text to indicate the process is ongoing
 
     fetch(`/api/bookings/cancel/${booking.booking_id}`, {
       method: "PATCH",
@@ -50,16 +50,18 @@ function CancelBookingButton({ booking }: ButtonProps) {
       })
       .catch((err) => {
         console.log(err);
-        setDisableFlag(false);  // Re-enable the button if there is an error
-        setBtnText("Cancel");  // Reset button text on error
+        setDisableFlag(false); // Re-enable the button if there is an error
+        setBtnText("Cancel"); // Reset button text on error
       });
   };
 
   return (
     <button
       onClick={cancelRequest}
-      className={`px-4 py-2 m-2 rounded transition w-full ${!booking.hasPassed() ? `${myStyles.button_red}` : ""}`}
-      disabled={disableFlag}  // Disable the button based on the disableFlag state
+      className={`px-4 py-2 m-2 rounded transition w-full ${
+        btnText === "Cancelled" || btnText === "Cancel" ? myStyles.button_red : ""
+      }`}
+      disabled={disableFlag} // Disable the button based on the disableFlag state
     >
       {btnText} {/* Display the button text dynamically */}
     </button>

@@ -37,15 +37,15 @@ const BookingRow: React.FC<BookingRowProps> = ({ booking }) => {
         <div className="flex flex-col sm:flex-row sm:items-center w-full">
           <Link href={`/event/${event.event_id}`} className="p-2 outline-dashed rounded outline-1 event-details w-full sm:w-4/5">
             <InfoElement infoMap={booking.infoMap(event)} />
-           </Link>
+          </Link>
           <div className="mt-4 sm:mt-0 sm:ml-4">
-            {/* Cancel Booking Button actions flex gap-2 mt-4 sm:mt-0*/}
+            {/* Cancel Booking Button */}
             <CancelBookingButton booking={booking} />
 
-            {/* BookingReviewButton for Review creation */}
-
-            {booking.hasPassed() ?
-              <BookingReviewButton booking={booking} /> : null}
+            {/* BookingReviewButton: Render only if the event is active and has passed */}
+            {booking.isActive && booking.hasPassed() ? (
+              <BookingReviewButton booking={booking} />
+            ) : null}
           </div>
         </div>
       ) : (
