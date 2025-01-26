@@ -59,7 +59,7 @@ function CancelBookingButton({ booking }: ButtonProps) {
     <button
       onClick={cancelRequest}
       className={`px-4 py-2 m-2 rounded transition w-full ${
-        btnText === "Cancelled" || btnText === "Cancel" ? myStyles.button_red : ""
+        btnText === "Cancelled" || btnText === "Cancel" || btnText === "Cancelling..." ? myStyles.button_red : ""
       }`}
       disabled={disableFlag} // Disable the button based on the disableFlag state
     >

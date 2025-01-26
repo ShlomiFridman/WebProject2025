@@ -155,7 +155,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
   };
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-white dark:bg-gray-800 shadow-md rounded dark:text-white">
+    <form ref={formRef} onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-white dark:bg-gray-800 shadow-md rounded">
       <FormHeader title="Create New Event" subTitle={"All fields are requaired"} />
       <TextInput label="Event Name" name="name" value={formData.name || ""} onChange={handleChange} required />
       <TextArea label="Description" name="description" value={formData.description || ""} onChange={handleChange} required />

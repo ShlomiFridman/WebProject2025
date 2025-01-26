@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body
-        className="max-w-[1000px] mx-auto py-2 flex flex-col min-h-screen bg-white dark:bg-[#292b2f] text-blue-900 dark:text-white"
+        className="max-w-[1000px] mx-auto py-2 flex flex-col min-h-screen bg-white dark:bg-[#292b2f] text-black dark:text-white"
       >
         <div id="bthn" lang="he"></div>
         <AppProvider>

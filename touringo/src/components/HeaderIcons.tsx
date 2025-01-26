@@ -24,7 +24,7 @@ const HeaderIcons: React.FC = () => {
         href="https://github.com/ShlomiFridman/WebProject2025/tree/main"
         target="_blank"
         rel="noopener noreferrer"
-        className={`inline-flex items-center py-2 px-3 text-base font-medium text-blue-800 dark:text-blue-300 rounded-md`}
+        className={`inline-flex items-center py-2 px-3 text-base font-medium rounded-md`}
       >
         <span className="sr-only">GitHub Repository</span>
         {mySvgs.gitHub_icon}

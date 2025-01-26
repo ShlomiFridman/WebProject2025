@@ -108,7 +108,7 @@ const LoginPage = () => {
         {/* Login Form */}
         <form onSubmit={onBtnClick}>
           <div className="mb-4">
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Username</label>
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700 dark:text-gray-200">Username</label>
             <input
               type="text"
               id="username"
@@ -120,7 +120,7 @@ const LoginPage = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-200">
               Password
             </label>
             <div className="relative">
@@ -160,7 +160,7 @@ const LoginPage = () => {
 
         {/* Optionally add a link to register or other actions */}
         <div className="mt-4 text-center">
-          <p className="text-sm dark:text-gray-200 text-gray-600">Don&apos;t have an account? <a href="/register" className="text-green-500">Register</a></p>
+          <p className="text-sm dark:text-gray-200 text-gray-600">Don&apos;t have an account? <a href="/register" className="text-green-600 dark:text-green-300">Register</a></p>
         </div>
       </div>
     </div>

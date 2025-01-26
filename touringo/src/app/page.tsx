@@ -36,7 +36,7 @@ export default function Page() {
         setEventsPerPage(events?.length || 0); // Show all events on desktop
         setCurrentPage(1); // Reset to the first page
       } else {
-        setEventsPerPage(4); // Show only 4 events per page on small screens
+        setEventsPerPage(3); // Show only 4 events per page on small screens
       }
     };
 
@@ -101,14 +101,14 @@ export default function Page() {
             <div className="flex justify-between w-full mt-4 md:hidden"> {/* Hide on screens larger than sm */}
               <button
                 onClick={handlePrevPage}
-                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 disabled:opacity-50"
+                className="px-4 py-2 bg-gray-500 rounded hover:bg-gray-700 disabled:opacity-50"
                 disabled={currentPage === 1}
               >
                 Previous
               </button>
               <button
                 onClick={handleNextPage}
-                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 disabled:opacity-50"
+                className="px-4 py-2 bg-gray-500 rounded hover:bg-gray-700 disabled:opacity-50"
                 disabled={currentPage === totalPages}
               >
                 Next
@@ -122,25 +122,3 @@ export default function Page() {
     </div>
   );
 }
-
-
-
-
-
-
-  //redirect('/home');
-
-  /*const txt = encryptData({test:"TEST"});
-  const data = decryptData(txt)
-  return (
-        <div className={myStyles.container_max_width}>
-          <div className={`${myStyles.page_title} pb-4}>Welcome to TouRingo!</div>
-          <div>
-            {JSON.stringify(data)}
-          </div>
-          <div>
-            lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          </div>
-
-        </div>
-  );*/
