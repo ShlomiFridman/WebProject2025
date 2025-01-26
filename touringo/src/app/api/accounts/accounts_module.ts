@@ -1,7 +1,6 @@
 import { AccountModel } from "@/db_utils/collectionModels";
 import { Account, MongooseError } from "@/utils/classes";
 
-// TODO login
 export async function verifyAccount(username: string, password: string) {
   try {
     const exists = await AccountModel.findOne({ username: username, password: password });
