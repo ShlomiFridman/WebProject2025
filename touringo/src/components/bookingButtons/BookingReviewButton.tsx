@@ -138,6 +138,7 @@ const BookingReviewButton: React.FC<{
   // If review data exists, display the review button or review form
   return review !== undefined ? (
     <div className="flex flex-col items-center">
+      {/* Button to toggle the review form or view the review */}
       <button
         className={`bg-green-500 px-4 py-2 rounded hover:bg-green-700 dark:bg-green-800 dark:hover:bg-green-600`}
         onClick={handleReviewToggle}
@@ -145,6 +146,7 @@ const BookingReviewButton: React.FC<{
         {review == null ? (isActive ? "Close Review" : "Leave a Review") : "View review"}
       </button>
       {isActive && (
+        // Review form for submitting feedback
         <form onSubmit={handleFormSubmit} className="border border-gray-700 dark:border-gray-300 p-4 mt-2 rounded-md ">
           <div>
             <p className="text-lg mb-4">Rate your experience<br />(1 - Worst, 5 - Best)</p>
