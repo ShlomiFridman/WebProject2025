@@ -9,7 +9,6 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
-      // TODO add default dark and light colors
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

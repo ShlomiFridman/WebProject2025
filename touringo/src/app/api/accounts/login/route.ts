@@ -1,13 +1,11 @@
 
 
-// TODO solve password protection, currently it is through URL which is bad 
 
 import { NextResponse } from "next/server";
 import { verifyAccount } from "../accounts_module";
 import { Account } from "@/utils/classes";
 import { decryptData } from "@/utils/utils";
 
-// TODO use HTTPS format to send information in client side, POST
 // check login - body-params: username (type: String), password (type: String)
 interface LoginBodyParams{
     username: string;
