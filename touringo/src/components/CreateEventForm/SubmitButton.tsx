@@ -1,22 +1,25 @@
-import { myStyles } from "@/components/styles";
-import React from "react";
+import { myStyles } from "@/components/styles"; // Importing custom styles
+import React from "react"; // Import React for component creation
 
+// Define interface for props
 interface SubmitButtonProps {
-  isSubmitting: boolean;
+  isSubmitting: boolean; // A boolean to indicate whether the form is being submitted
 }
 
+// Functional component to render the Submit button
 const SubmitButton: React.FC<SubmitButtonProps> = ({ isSubmitting }) => (
-  <div>
+  <div> {/* Wrapper div for the button */}
     <button
-      type="submit"
-      disabled={isSubmitting}
+      type="submit" // Button type is 'submit' to submit the form
+      disabled={isSubmitting} // Button is disabled when submitting
       className={`w-full p-2 rounded  ${isSubmitting
-          ? "bg-gray-500 cursor-not-allowed dark:bg-gray-600"
-          : myStyles.button_blue}`}
+          ? "bg-gray-500 cursor-not-allowed dark:bg-gray-600" // Styles when submitting
+          : myStyles.button_blue}`} // Styles when not submitting (using custom styles)
     >
+      {/* Text changes based on isSubmitting state */}
       {isSubmitting ? "Submitting..." : "Create Event"}
     </button>
   </div>
 );
 
-export default SubmitButton;
+export default SubmitButton; // Export the component for usage elsewhere
