@@ -122,25 +122,3 @@ export default function Page() {
     </div>
   );
 }
-
-
-
-
-
-
-  //redirect('/home');
-
-  /*const txt = encryptData({test:"TEST"});
-  const data = decryptData(txt)
-  return (
-        <div className={myStyles.container_max_width}>
-          <div className={`${myStyles.page_title} pb-4}>Welcome to TouRingo!</div>
-          <div>
-            {JSON.stringify(data)}
-          </div>
-          <div>
-            lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-          </div>
-
-        </div>
-  );*/
