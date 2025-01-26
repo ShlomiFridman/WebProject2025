@@ -36,7 +36,7 @@ export default function Page() {
         setEventsPerPage(events?.length || 0); // Show all events on desktop
         setCurrentPage(1); // Reset to the first page
       } else {
-        setEventsPerPage(4); // Show only 4 events per page on small screens
+        setEventsPerPage(3); // Show only 4 events per page on small screens
       }
     };
 
