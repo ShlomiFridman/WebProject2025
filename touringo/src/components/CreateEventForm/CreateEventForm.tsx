@@ -1,64 +1,82 @@
-import React, { useState, useEffect, useRef } from "react";
-import { TR_Event, TR_Image } from "@/utils/classes";
-import { getLoggedAccount, ImageElement } from "@/utils/util_client";
-import { encryptData } from "@/utils/utils";
-import FormHeader from "./FormHeader";
-import ErrorMessage from "./ErrorMessage";
-import TextInput from "./TextInput";
-import TextArea from "./TextArea";
-import DateInput from "./DateInput";
-import TimeInput from "./TimeInput";
-import CheckboxGroup from "./CheckBoxGroup";
-import SubmitButton from "./SubmitButton";
-import { myStyles } from "@/components/styles";
+import React, { useState, useEffect, useRef } from "react"; // Import React and necessary hooks
+import { TR_Event, TR_Image } from "@/utils/classes"; // Import event and image class definitions
+import { getLoggedAccount, ImageElement } from "@/utils/util_client"; // Import utility functions for account and image rendering
+import { encryptData } from "@/utils/utils"; // Import encryption utility
+import FormHeader from "./FormHeader"; // Import the form header component
+import ErrorMessage from "./ErrorMessage"; // Import error message display component
+import TextInput from "./TextInput"; // Import text input component
+import TextArea from "./TextArea"; // Import text area component
+import DateInput from "./DateInput"; // Import date input component
+import TimeInput from "./TimeInput"; // Import time input component
+import CheckboxGroup from "./CheckBoxGroup"; // Import checkbox group component
+import SubmitButton from "./SubmitButton"; // Import submit button component
+import { myStyles } from "@/components/styles"; // Import custom styles
 
-
+// Define interface for component props
 interface CreateEventFormProps {
-  onSuccess: () => void;
-  onEventCreated: (newEvent: TR_Event) => void;
+  onSuccess: () => void; // Callback when the event is successfully created
+  onEventCreated: (newEvent: TR_Event) => void; // Callback when the event is created and returned
 }
 
 const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCreated }) => {
+  // Fetch logged account information
   const loggedAccount = getLoggedAccount();
+  
+  // Set default value for today, one day ahead to ensure the event starts in the future
   const today = new Date();
   today.setDate(today.getDate() + 1);
-  const todayStr = today.toISOString().split("T")[0];
+  const todayStr = today.toISOString().split("T")[0]; // Date format: YYYY-MM-DD
 
+  // State variables for the form data
   const [formData, setFormData] = useState<Partial<TR_Event>>({
-    creator_username: loggedAccount?.username || "",
-    openDays: Array(7).fill(false),
-    isActive: true,
-    startDate: todayStr,
-    endDate: todayStr,
-    openingTime: "09:00",
-    closingTime: "18:00",
+    creator_username: loggedAccount?.username || "", // Set the creator's username
+    openDays: Array(7).fill(false), // Initially all days are set to false (not open)
+    isActive: true, // Default event status is active
+    startDate: todayStr, // Default start date is set to tomorrow
+    endDate: todayStr, // Default end date is set to tomorrow
+    openingTime: "09:00", // Default opening time
+    closingTime: "18:00", // Default closing time
   });
+  
+  // State for disabled days based on the start and end dates
   const [disabledDays, setDisabledDays] = useState<boolean[]>(Array(7).fill(false));
+  
+  // Error state for displaying validation errors
   const [error, setError] = useState<string | null>(null);
+  
+  // State to manage form submission state
   const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // State for managing image URL and preview state
   const [imageUrl, setImageUrl] = useState<string>("");
   const [image, setImage] = useState<TR_Image[] | null>(null);
   const [tempImage, setTempImage] = useState<TR_Image[] | null>(null);
+  
+  // Reference for the form element
   const formRef = useRef<HTMLFormElement | null>(null);
 
+  // Effect to handle the logic when the start date or end date changes
   useEffect(() => {
     if (formData.startDate && formData.endDate) {
       const startDate = new Date(formData.startDate);
       const endDate = new Date(formData.endDate);
 
+      // Ensure end date is not before start date
       if (endDate < startDate) {
         setFormData((prev) => ({ ...prev, endDate: formData.startDate || todayStr }));
       }
 
+      // Calculate the days between start and end dates
       const daysBetween = Math.ceil((endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24));
-      const updatedDisabledDays = Array(7).fill(true);
+      const updatedDisabledDays = Array(7).fill(true); // Initially all days are disabled
       for (let i = 0; i <= daysBetween; i++) {
         const currentDate = new Date(formData.startDate!);
         currentDate.setDate(currentDate.getDate() + i);
-        updatedDisabledDays[currentDate.getDay()] = false;
+        updatedDisabledDays[currentDate.getDay()] = false; // Enable days between start and end
       }
       setDisabledDays(updatedDisabledDays);
 
+      // Update openDays state based on disabled days
       if (formData.openDays) {
         setFormData((prev) => ({
           ...prev,
@@ -66,25 +84,25 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         }));
       }
     }
-  }, [formData.startDate, formData.endDate, todayStr]);
+  }, [formData.startDate, formData.endDate, todayStr]); // Trigger effect when dates change
 
-
-
-
+  // Handle input field changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === "phone" && !/^[0-9]*$/.test(value) ? prev[name] : value,
+      [name]: name === "phone" && !/^[0-9]*$/.test(value) ? prev[name] : value, // Validate phone field for numbers only
     }));
   };
 
+  // Handle checkbox state changes for open days
   const handleCheckboxChange = (index: number) => {
     const updatedDays = [...(formData.openDays || [])];
-    updatedDays[index] = !updatedDays[index];
+    updatedDays[index] = !updatedDays[index]; // Toggle day status
     setFormData({ ...formData, openDays: updatedDays });
   };
 
+  // Handle URL change for image preview
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { value } = e.target;
     const newImage = new TR_Image(
@@ -93,12 +111,15 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       value,
       "url"
     );
-    setTempImage([newImage]);
-    setImageUrl(value);
+    setTempImage([newImage]); // Set the temporary image for preview
+    setImageUrl(value); // Set the image URL
   };
 
+  // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate required fields before submitting
     if (
       formData.name &&
       formData.description &&
@@ -108,8 +129,8 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       formData.openDays?.includes(true) &&
       image
     ) {
-      image[0].title = formData.name;
-      setIsSubmitting(true);
+      image[0].title = formData.name; // Set image title based on event name
+      setIsSubmitting(true); // Set submitting state
       const newEvent = new TR_Event(
         -1,
         formData.name,
@@ -127,31 +148,32 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         formData.eventType || "",
         formData.isActive
       );
-      createEvent(newEvent);
+      createEvent(newEvent); // Call API to create the event
     } else {
-      setError("Please Choose at least one day");
+      setError("Please Choose at least one day"); // Display error if validation fails
     }
   };
 
+  // Create the event by sending a POST request to the server
   const createEvent = (event: TR_Event) => {
     fetch("/api/events/create", {
       method: "POST",
-      body: JSON.stringify({ data: encryptData({ event }) }),
+      body: JSON.stringify({ data: encryptData({ event }) }), // Encrypt event data before sending
       headers: { "Content-Type": "application/json" },
     })
-      .then((res) => res.ok ? res.json() : Promise.reject(res.statusText))
+      .then((res) => res.ok ? res.json() : Promise.reject(res.statusText)) // Handle successful response
       .then((resBody) => {
-        onEventCreated(resBody.result as TR_Event);
-        setFormData({ creator_username: loggedAccount?.username || "", openDays: Array(7).fill(false), isActive: true });
-        onSuccess();
+        onEventCreated(resBody.result as TR_Event); // Invoke callback with the created event
+        setFormData({ creator_username: loggedAccount?.username || "", openDays: Array(7).fill(false), isActive: true }); // Reset form state
+        onSuccess(); // Invoke success callback
       })
-      .catch(console.error)
-      .finally(() => setIsSubmitting(false));
+      .catch(console.error) // Handle errors
+      .finally(() => setIsSubmitting(false)); // Reset submitting state
   };
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} className="max-w-lg mx-auto p-4 bg-white dark:bg-gray-800 shadow-md rounded">
-      <FormHeader title="Create New Event" subTitle={"All fields are requaired"} />
+      <FormHeader title="Create New Event" subTitle={"All fields are required"} />
       <TextInput label="Event Name" name="name" value={formData.name || ""} onChange={handleChange} required />
       <TextArea label="Description" name="description" value={formData.description || ""} onChange={handleChange} required />
       <TextInput label="Phone" name="phone" value={formData.phone || ""} onChange={handleChange} required />
@@ -180,7 +202,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         <button
           type="button"
           onClick={() => {
-            setImage(tempImage);
+            setImage(tempImage); // Set preview image
           }}
           className={`w-full sm:w-auto px-4 py-2 m-2 rounded transition ${myStyles.button_green}`}
           value="Load"
@@ -190,7 +212,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         <button
           type="button"
           onClick={() => {
-            setImage(null);
+            setImage(null); // Clear image
             setImageUrl("");
           }}
           className={`w-full sm:w-auto px-4 py-2 m-2 rounded transition ${myStyles.button_red}`}
@@ -198,10 +220,9 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
           Clear
         </button>
       </div>
-      {image && <ImageElement src={image[0].src} title={"imagePreview"} />}
-      <SubmitButton isSubmitting={isSubmitting} />
-      {error && <ErrorMessage message={error} />}
-
+      {image && <ImageElement src={image[0].src} title={"imagePreview"} />} {/* Display image preview */}
+      <SubmitButton isSubmitting={isSubmitting} /> {/* Submit button */}
+      {error && <ErrorMessage message={error} />} {/* Display error message */}
     </form>
   );
 };
