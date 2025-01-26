@@ -39,7 +39,6 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
   const [imageUrl, setImageUrl] = useState<string>("");
   const [image, setImage] = useState<TR_Image[] | null>(null);
   const [tempImage, setTempImage] = useState<TR_Image[] | null>(null);
-  // const [imageError, setImageError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
@@ -67,14 +66,10 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         }));
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData.startDate, formData.endDate, todayStr]);
 
 
-  // const isImageUrl = (url: string): boolean => {
-  //   // Check if the URL ends with common image extensions
-  //   return /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url);
-  // };
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
