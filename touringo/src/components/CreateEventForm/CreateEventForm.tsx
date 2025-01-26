@@ -21,7 +21,7 @@ interface CreateEventFormProps {
 const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCreated }) => {
   // Fetch logged account information
   const loggedAccount = getLoggedAccount();
-  
+
   // Set default value for today, one day ahead to ensure the event starts in the future
   const today = new Date();
   today.setDate(today.getDate() + 1);
@@ -37,21 +37,21 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
     openingTime: "09:00", // Default opening time
     closingTime: "18:00", // Default closing time
   });
-  
+
   // State for disabled days based on the start and end dates
   const [disabledDays, setDisabledDays] = useState<boolean[]>(Array(7).fill(false));
-  
+
   // Error state for displaying validation errors
   const [error, setError] = useState<string | null>(null);
-  
+
   // State to manage form submission state
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   // State for managing image URL and preview state
   const [imageUrl, setImageUrl] = useState<string>("");
   const [image, setImage] = useState<TR_Image[] | null>(null);
   const [tempImage, setTempImage] = useState<TR_Image[] | null>(null);
-  
+
   // Reference for the form element
   const formRef = useRef<HTMLFormElement | null>(null);
 
@@ -127,7 +127,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       formData.startDate &&
       formData.endDate &&
       formData.openDays?.includes(true) &&
-      image
+      image // Ensure image is selected
     ) {
       image[0].title = formData.name; // Set image title based on event name
       setIsSubmitting(true); // Set submitting state
@@ -150,9 +150,14 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
       );
       createEvent(newEvent); // Call API to create the event
     } else {
-      setError("Please Choose at least one day"); // Display error if validation fails
+      if (!formData.openDays?.includes(true)) {
+        setError("Please select at least one open day."); // Error if no open days are selected
+      } else if (!image) {
+        setError("Please preview an image before submitting."); // Error if no image is selected
+      }
     }
   };
+
 
   // Create the event by sending a POST request to the server
   const createEvent = (event: TR_Event) => {
