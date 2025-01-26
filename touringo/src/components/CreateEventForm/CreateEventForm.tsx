@@ -84,7 +84,7 @@ const CreateEventForm: React.FC<CreateEventFormProps> = ({ onSuccess, onEventCre
         }));
       }
     }
-  }, [formData.startDate, formData.endDate, todayStr]); // Trigger effect when dates change
+  }, [formData.startDate, formData.endDate, todayStr, formData.openDays]); // Trigger effect when dates change
 
   // Handle input field changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
