@@ -27,15 +27,6 @@ const imagesUrls: [string, string][] = [
   ["Jaffa Market", "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/11/26/67/1c/jaffa-s-flea-market.jpg?w=1200&h=1200&s=1"]
 ];
 
-// const imagesPromises = imageNames.map(async name => {
-//     const [simpleName, extension] = name.split('.');
-//     const capitalized = simpleName.charAt(0).toUpperCase() + simpleName.slice(1);
-//     const imagePath = path.join(process.cwd(), 'public', 'event_images', `${simpleName}.${extension}`); // Assuming images are JPG files
-//     const imageData = await fs.promises.readFile(imagePath);
-//     // const blob = new Blob([imageData], {type: `image/${extension}`});
-//     return new TR_Image(capitalized, imageData, extension);
-//   });
-
 // Account examples
 export const accountExamples = [
   new Account("user1", "pass123", "User One", "A passionate coder who loves learning new technologies.", "I enjoy building web applications and exploring different programming languages."),
@@ -75,8 +66,6 @@ export const eventExamples = [
   new TR_Event(219,"Israel Festival","Multi-disciplinary arts festival featuring theater, dance, and music. Audiences can enjoy a rich blend of contemporary and traditional performances.","555-666-7777",accountExamples[3].username,[imageExamples[18]],"10:00:00","22:00:00","2025-05-01","2025-05-10","Jerusalem","Jerusalem Theater, 20 David Marcus Street",[true, false, true, true, false, false, true],"Festival"),
   new TR_Event(220,"Jaffa Flea Market","Historic market with antiques, crafts, live music, and performances. It offers a vibrant atmosphere filled with unique finds and delightful street food.","444-111-2222",accountExamples[4].username,[imageExamples[19]],"10:00:00","22:00:00","2025-01-01","2025-12-31","Tel Aviv","Jaffa",[true, true, false, true, false, true, true],"Jaffa Market")
 ];
-
-
 
 // Review examples
 export const reviewExamples = [
