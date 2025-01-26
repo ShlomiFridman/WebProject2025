@@ -41,10 +41,10 @@ export default function About() {
       <p>TouRingo is a project for the Advanced Web Technologies Course at Braude College (Winter 2025).</p>
       <p>Made by Shlomi, Shahar, Omer, and Noam.</p>
       
-      <h2 className="text-2xl text-green-600 font-bold">Subject</h2>
+      <h2 className="text-2xl font-bold">Subject</h2>
       <p><u><strong>Local Tourism Guide App:</strong></u> Develop an app that showcases local tourist attractions, restaurants, and cultural events. The app will include user reviews, navigation features, and event booking options.</p>
 
-      <h2 className="text-2xl text-green-600 font-bold mt-6">Created Using</h2>
+      <h2 className="text-2xl font-bold mt-6">Created Using</h2>
       <br/>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 justify-items-center">
         {logoItems.map((item, index) => (

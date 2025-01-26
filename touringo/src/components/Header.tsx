@@ -25,7 +25,7 @@ export default function Header() {
 
   return (
     <>
-      <nav className={myStyles.green_container}>
+      <nav className={myStyles.headerContainer_green}>
         <HeaderLinks />
         <HeaderIcons />
       </nav>

@@ -81,7 +81,7 @@ const EventRow: React.FC<EventRowProps> = ({ event }) => {
         )}
         <button
           onClick={openMap}
-          className="inline-flex items-center text-white justify-center bg-blue-600 px-4 py-2 m-2 rounded w-full hover:bg-blue-700 transition whitespace-nowrap dark:bg-blue-700 dark:hover:bg-blue-500"
+          className={`${myStyles.button_blue} inline-flex items-center justify-center px-4 py-2 m-2 rounded w-full transition whitespace-nowrap`}
         >
           Open Map
           {mySvgs.externalLink_icon}

@@ -13,7 +13,7 @@ const HeaderItem: React.FC<ItemProps> = ({ href, text }) => {
     return (
       <Link
         href={href}
-        className={`font-bold px-2 py-1 rounded hover:underline text-blue-800 dark:text-blue-300 ${path === href ? "bg-gray-200 dark:bg-gray-700 " : ""
+        className={`font-bold px-2 py-1 rounded hover:underline ${path === href ? "bg-gray-200 dark:bg-gray-700 " : ""
           }`}
       >
         {text}

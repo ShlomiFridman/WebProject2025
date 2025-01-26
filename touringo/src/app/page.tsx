@@ -101,14 +101,14 @@ export default function Page() {
             <div className="flex justify-between w-full mt-4 md:hidden"> {/* Hide on screens larger than sm */}
               <button
                 onClick={handlePrevPage}
-                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 disabled:opacity-50"
+                className="px-4 py-2 bg-gray-500 rounded hover:bg-gray-700 disabled:opacity-50"
                 disabled={currentPage === 1}
               >
                 Previous
               </button>
               <button
                 onClick={handleNextPage}
-                className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 disabled:opacity-50"
+                className="px-4 py-2 bg-gray-500 rounded hover:bg-gray-700 disabled:opacity-50"
                 disabled={currentPage === totalPages}
               >
                 Next
