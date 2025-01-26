@@ -195,6 +195,10 @@ export class TR_Event {
     hasPassed(): boolean {
         const currentDate = new Date();
         const eventEndDateTime = new Date(this.endDate);
+        if (this.closingTime) {
+            const closingTimeParts = this.closingTime.split(':');
+            eventEndDateTime.setHours(parseInt(closingTimeParts[0]), parseInt(closingTimeParts[1]));
+        }
         return eventEndDateTime < currentDate;
     }
 

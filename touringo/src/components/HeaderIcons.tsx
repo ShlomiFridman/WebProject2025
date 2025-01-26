@@ -1,8 +1,6 @@
 "use client";
-// import { useState } from "react";
 import { useTheme } from '@/context/ThemeProvider';
 import { mySvgs } from './svgs';
-// import Link from "next/link";
 
 const HeaderIcons: React.FC = () => {
   const { theme, toggleTheme } = useTheme();

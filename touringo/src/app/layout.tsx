@@ -8,8 +8,7 @@ import { AppProvider } from "@/context/MainContext";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import { useEffect } from "react";
 
-// TODO use reducer to get logged in user (state: username)
-// TODO if username is null, Link to login page
+
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {

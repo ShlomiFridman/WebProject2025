@@ -1,5 +1,3 @@
-// src/app/api/login/route.ts
-  
 import { getReviewsByEventId } from "../../reviews_module";
 import { NextResponse } from "next/server";
 
