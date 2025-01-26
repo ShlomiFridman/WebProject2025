@@ -8,21 +8,30 @@ interface CreateBodyParam {
   event: TR_Event; // The decrypted data contains 'event' as the key
 }
 
+/**
+ * Handles the POST request to create a new event.
+ * 
+ * This function processes the incoming request, decrypts the provided data, 
+ * validates the event data, and attempts to create the new event using the 
+ * `createEvent` function. It returns an appropriate response based on the result.
+ * 
+ * @param request The incoming POST request.
+ * @returns A JSON response indicating success or failure.
+ */
 export async function POST(request: Request) {
   try {
+    // Parse the request body and decrypt the data
     const reqBody = await request.json();
-    
-    // Decrypt data and assert it to the correct type
     const decryptedData = decryptData(reqBody.data) as CreateBodyParam;
 
     console.log("Decrypted data:", decryptedData);
 
-    // Access the 'event' property from decryptedData
+    // Extract the 'event' from decrypted data
     const newEvent = decryptedData?.event;
 
     console.log("Extracted newEvent:", newEvent);
 
-    // Validate the newEvent data
+    // Validate the event data
     if (!newEvent) {
       return NextResponse.json(
         { message: "Invalid event data, 'newEvent' not found" },
@@ -30,7 +39,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // Create the event
+    // Create the event using the provided event data
     const createdEvent = await createEvent(newEvent);
 
     console.log("Event successfully created:", createdEvent);
