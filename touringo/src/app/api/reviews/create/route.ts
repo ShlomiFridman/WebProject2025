@@ -1,5 +1,3 @@
-// src/app/api/login/route.ts
-
 import { Review } from "@/utils/classes";
 import { createReview } from "../reviews_module";
 import { NextResponse } from "next/server";

@@ -2,7 +2,7 @@ export const myStyles = {
     //Repeats
     button_blue: "bg-blue-400 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-400",
     button_green: "bg-green-400 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-400",
-    button_red: "bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-500",
+    button_red: "bg-red-400 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-400",
     container_max_width: "max-w-[1000px] my-4 mx-auto",
     page_title: "text-3xl font-bold",
 

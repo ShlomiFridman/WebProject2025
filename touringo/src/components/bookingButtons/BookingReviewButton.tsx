@@ -5,26 +5,28 @@ import { getLoggedAccount } from "@/utils/util_client";
 import { encryptData } from "@/utils/utils";
 import { myStyles } from "@/components/styles";
 
+// BookingReviewButton component allows users to leave or view a review for a booking
 const BookingReviewButton: React.FC<{
-  booking: Booking;
+  booking: Booking; // The booking object for which the review is related
 }> = ({ booking }) => {
-  // State variables for managing user inputs, review data, and UI status
-  const [rating, setRating] = useState<number | null>(null);
-  const [username, setUsername] = useState<string | null>(null);
-  const [feedback, setFeedback] = useState("");
-  const [review, setReview] = useState<Review | null | undefined>(undefined);
-  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
-  const [isActive, setIsActive] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(true);
+  // State variables to manage review form, submission, and data
+  const [rating, setRating] = useState<number | null>(null); // Stores the selected rating
+  const [username, setUsername] = useState<string | null>(null); // Stores the logged-in user's username
+  const [feedback, setFeedback] = useState(""); // Stores the feedback text
+  const [review, setReview] = useState<Review | null | undefined>(undefined); // Stores the fetched review for this booking
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle"); // Tracks submission status
+  const [isActive, setIsActive] = useState<boolean>(false); // Tracks whether the review form is active
+  const [loading, setLoading] = useState<boolean>(true); // Tracks if data is being loaded
 
-  // Fetch review data and user information when the component mounts
+  // Effect hook to fetch the review for the booking on component mount
   useEffect(() => {
     const account = getLoggedAccount();
     if (account) {
-      setUsername(account.username);
-      setReview(null);
+      setUsername(account.username); // Set the username of the logged-in account
+      setReview(null); // Reset review state on mount
     }
 
+    // Fetch existing review for the booking
     fetch(`/api/reviews/getByBookingId/${booking.booking_id}`)
       .then((response) => {
         const badRequestError = response.status >= 400 && response.status < 500;
@@ -38,54 +40,56 @@ const BookingReviewButton: React.FC<{
       .then((resBody) => {
         if (resBody == null) {
           console.log(`No review for booking ${booking.booking_id}`);
-          setReview(null);
+          setReview(null); // No review found
         } else if (resBody.message) {
-          alert(resBody.message);
+          alert(resBody.message); // Show error message from response
         } else {
           const review = resBody.result as Review;
           console.log(`Review found for booking ${booking.booking_id}`);
-          setReview(review);
-          setRating(review.score);
-          setFeedback(review.description);
+          setReview(review); // Set fetched review
+          setRating(review.score); // Set rating from review
+          setFeedback(review.description); // Set feedback from review
         }
-        setLoading(false);
+        setLoading(false); // Set loading to false once data is fetched
       })
       .catch((err) => {
         console.log(err);
-        setLoading(false);
+        setLoading(false); // Set loading to false on error
       });
-  }, [booking.booking_id]);
+  }, [booking.booking_id]); // Re-fetch review when the booking ID changes
 
-  // Function to create a new review
+  // Function to create a new review and submit to the server
   const createReview = async (rating: number, feedback: string): Promise<boolean> => {
     try {
+      // Send POST request to create a new review
       const response = await fetch("/api/reviews/create", {
         method: "POST",
         body: JSON.stringify({
           data: encryptData({
             newReview: new Review(
               booking.booking_id,
-              username || "unknown",
+              username || "unknown", // Use 'unknown' if no username is available
               booking.event_id,
               rating,
               feedback,
-              new Date().toISOString().split("T")[0]
+              new Date().toISOString().split("T")[0] // Set current date for review
             ),
           }),
         }),
         headers: { "Content-Type": "application/json" },
       });
 
+      // Check for successful response
       if (response.status < 500) {
         const resBody = await response.json();
         if (resBody.result) {
           const review = resBody.result as Review;
           console.log(`Review created successfully:`, review);
-          setReview(review);
+          setReview(review); // Set the newly created review
           return true;
         } else {
-          alert(resBody.message);
-          setIsActive(false);
+          alert(resBody.message); // Show error message from server
+          setIsActive(false); // Reset form state if creation fails
           return false;
         }
       } else {
@@ -104,7 +108,7 @@ const BookingReviewButton: React.FC<{
     setIsActive(!isActive);
   };
 
-  // Handle form submission for creating a review
+  // Handle form submission for new review
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (rating === null) {
@@ -115,22 +119,23 @@ const BookingReviewButton: React.FC<{
       alert("Please provide some feedback.");
       return;
     }
-    setStatus("submitting");
+    setStatus("submitting"); // Set status to submitting during form submission
     const success = await createReview(rating, feedback);
 
     if (success) {
       setStatus("success");
-      alert("Thank you for your feedback!");
+      alert("Thank you for your feedback!"); // Show success message
     } else {
       setStatus("error");
     }
   };
 
-  // Show a loading indicator while data is being fetched
+  // If data is still loading, display loading indicator
   if (loading) {
     return <LoadingBox />;
   }
 
+  // If review data exists, display the review button or review form
   return review !== undefined ? (
     <div className="flex flex-col items-center">
       {/* Button to toggle the review form or view the review */}
